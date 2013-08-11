@@ -1,0 +1,372 @@
+\chapter{Definiciones}
+\label{chap:glossary}
+
+En este capítulo se introducirán los términos utilizados en todo el
+documento que podrían no ser muy claros para el lector. Estos términos
+se mencionan en numerosas ocasiones y son necesarios para entender los
+procesos que se llevan a cabo en el sistema HORUS.
+
+\begin{description}
+\item[GCP o \textit{Ground Control Point} por su sigla en inglés]
+  Puntos de control georreferenciados (generalmente medidos con GPS)
+  asociados a una estación, representados por una coordenada $(x, y,
+  z)$. Los GCPs son usados principalmente para mapear sus coordenadas
+  $(x, y, z)$ con coordenadas $(u, v)$ (medidas en píxeles) relativos
+  al plano de una imagen, escogidas por el usuario. En la
+  figura~\ref{fig:gcp_mark_measure} se muestra la relación entre las
+  coordenadas $(x, y, z)$ de un GCP y las coordenadas $(u, v)$ en el
+  plano de una imagen cuyo origen está en la esquina superior
+  izquierda de la imagen, el eje $u$ es positivo hacia la derecha de
+  la imagen, y el eje $v$ es positivo hacia abajo.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=\textwidth]{img/gcp_mark_measure}
+  \caption{Relación entre $(u, v)$ y $(x, y, z)$}
+  \label{fig:gcp_mark_measure}
+\end{figure}
+
+\item[ROI o \textit{Region Of Interest} por su sigla en inglés] Un ROI
+  es un polígono dentro de una imagen que delimita una región de la
+  misma. El polígono es representado como un conjunto de vértices con
+  coordenadas $(u, v)$ (medidos en píxeles) relativos al plano de la
+  imagen, tales que cada par de vértices consecutivos están conectados
+  por una línea recta. En la figura~\ref{fig:roisample} se muestra un
+  ejemplo de ROI en una imagen costera, donde se pueden identificar
+  los vértices (puntos amarillos) y las líneas que los unen (líneas
+  rojas) que conforman el polígono.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{img/roisample}
+  \caption{Ejemplo de un ROI en una imagen}
+  \label{fig:roisample}
+\end{figure}
+
+\item[Calibración] Es el nombre que se le da al proceso de aplicar un
+  método de optimización para encontrar los parámetros de
+  rectificación y fusión. La calibración involucra la elección del
+  ROI, GCPs, y otros argumentos necesarios para el método.
+
+\item[Imagen Oblicua] Una imagen oblicua es aquella imagen capturada
+  por una cámara con un ángulo de inclinación, de tal manera que la
+  imagen tenga una perspectiva. En la figura~\ref{fig:oblique} se
+  muestra una imagen oblicua.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{img/oblique}
+  \caption{Ejemplo de imagen oblicua}
+  \label{fig:oblique}
+\end{figure}
+
+\item[Imagen Rectificada] Una imagen rectificada es una imagen oblicua
+  que sufre una transformación para que parezca como si hubiera sido
+  capturada perpendicularmente sobre el plano de la zona de estudio,
+  de tal manera que es posible medir distancias y tamaños de objetos
+  dentro de la imagen de forma precisa. En la
+  figura~\ref{fig:rectified} se muestra un ejemplo de una imagen
+  rectificada.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=\textwidth]{img/rectified}
+  \caption{Ejemplo de imagen rectificada}
+  \label{fig:rectified}
+\end{figure}
+
+\item[Imagen Fusionada] Una imagen fusionada es la que resulta de unir
+  dos o más imágenes (sean oblicuas o rectificadas) por los puntos en
+  común entre cada par de imágenes consecutivas. Esta fusión se
+  realiza rotando y distorsionando las imágenes de tal manera que
+  queden acopladas en sus puntos comunes, como se muestra en la
+  figura~\ref{fig:merged}.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=\textwidth]{img/merged}
+  \caption{Ejemplo de imagen fusionada}
+  \label{fig:merged}
+\end{figure}
+
+\item[Imagen \textit{Snap}] Una imagen \textit{snap} es aquella que es
+  capturada por una cámara de manera instantánea. Estas imágenes son
+  útiles para obtener una vista estática de un evento dado, y mediante
+  una secuencia de estas imágenes en el tiempo poder estudiar la
+  evolución de un fenómeno. En la figura~\ref{fig:snapsample} de
+  muestra un ejemplo.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{img/snapsample}
+  \caption{Ejemplo de imagen \textit{snap}}
+  \label{fig:snapsample}
+\end{figure}
+
+\item[Imagen \textit{Timex}] Una imagen \textit{timex} es el resultado
+  de promediar una secuencia de imágenes capturadas a una frecuencia
+  determinada de antemano. Estas imágenes son útiles cuando se quiere
+  generalizar el movimiento, es decir, los objetos que tienen mayor
+  variabilidad dentro de la imagen se muestran suavizados. Por
+  ejemplo, en la figura~\ref{fig:timexsample} se muestra una imagen
+  resultado de promediar 120 imágenes a una frecuencia de captura de 2
+  imágenes por segundo, donde el movimiento de las olas, que es el que
+  tiene mayor variabilidad es promediado.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{img/timexsample}
+  \caption{Ejemplo de imagen \textit{timex}}
+  \label{fig:timexsample}
+\end{figure}
+
+\item[Imagen \textit{Variance}] Una imagen \textit{variance} es el
+  resultado de aplicar la desviación estándar de una secuencia de
+  imágenes capturadas a una frecuencia determinada de antemano. La
+  principal característica de estas imágenes, es que lo que está en
+  movimiento se muestra en la imagen de color claro y lo que está
+  estático se muestra en color oscuro. Esto permite resaltar lo que
+  tiene mayor variabilidad en la imagen. En la
+  figura~\ref{fig:varsample} se muestra un ejemplo de imágen
+  \textit{variance}.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{img/varsample}
+  \caption{Ejemplo de imagen \textit{variance}}
+  \label{fig:varsample}
+\end{figure}
+
+\item[Resolución] Para las imágenes rectificadas, la resolución es un
+  concepto que representa la resolución teórica deseada en la imagen
+  rectificada de modo que el tamaño de la imagen estará definido por
+  dicha resolución y el tamaño del área a rectificar en el espacio,
+  por ejemplo, una región de $10 m \times 10 m$ corresponderá a una
+  imagen de $50 pixeles \times 50 pixeles$ si la resolución elegida es
+  $1/5 (m/pix)$. La resolución de las imágenes oblicuas no es
+  constante debido a que el plano de la imagen no es paralelo a la
+  región de interés o, en otras palabras, la cámara se encuentra
+  inclinada con respecto a dicha región. Como se puede observar en la
+  figura~\ref{fig:resolution}, la cual es un mapa de resolución obtenido de
+  una imagen oblicua, es posible ver que la resolución de la imagen
+  disminuye a medida que el área de interés está más alejada de la
+  imagen puesto que cada pixel contiene información de una región más
+  grande el espacio.
+
+  La resolución de una imagen rectificada es un concepto teórico y es
+  de vital importancia recordar que no es posible ``inventar''
+  información, es decir, no es posible obtener una resolución
+  infinitamente alta en la imagen rectificada, esto porque cuando la
+  resolución de la imagen rectificada es menor que la resolución de la
+  imagen en una región determinada el resultado es una pérdida de una
+  porción de la información contenida en la imagen, pero cuando la
+  resolución de la imagen rectificada es mayor que la resolución de la
+  imagen, lo que se está haciendo es forzar que los pixeles se
+  estiren, lo que simplemente significa que se usa información
+  redundante para crear la imagen. Por este motivo, la resolución
+  usada en la rectificación no debería ser mayor a la resolución media
+  de la imagen, así no se pierde demasiada información pero la imagen
+  rectificada tampoco tendrá un tamaño exorbitante que no adiciona
+  ningún beneficio práctico.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{img/resolution}
+  \caption{Mapa de resolución de una imagen oblicua}
+  \label{fig:resolution}
+\end{figure}
+
+\item[Rectificación] El proceso de rectificación es el proceso
+  mediante el cual se transforma una imagen oblicua como la mostrada
+  en la figura~\ref{fig:oblique} en una imagen como la mostrada en la
+  figura~\ref{fig:rectified}. En las imagenes oblicuas los objetos en
+  el espacio tienen distinta resolución a medida que se alejan o
+  acercan al lente de la cámara. Debido a esto, es imposible hacer
+  mediciones en estas imágenes, tales como hallar distancias, o
+  determinar el tamaño de un objeto.
+
+  En una estación de monitorización se tienen varias cámaras que le
+  toman fotos a determinadas regiones de la zona de estudio en
+  intervalos regulares de tiempo definidos de antemano. En general, es
+  necesario convertir las imágenes oblicuas en imágenes rectificadas
+  para hacer mediciones de algún tipo y extraer información útil
+  aplicando métodos de rectificación basados en un conjunto de
+  GCPs. Los métodos con los que se cuenta son \textit{DLT}
+  \cite{faugueras93,hartley03,salvi02,wolf00} (Transformada Lineal
+  Directa), \textit{RANSAC--DLT} \cite{perez09} y \textit{Pinhole}
+  \cite{hartley03,holland97,osorio07,salvi02}.
+
+  El proceso de rectificación de imágenes se esquematiza en la
+  figura~\ref{fig:geom_rectification}.
+
+  \begin{landscape}
+    \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=0.8\linewidth]{img/geom_rectificacion}
+      \caption{Diagrama de flujo de la rectificación en HORUS}
+      \label{fig:geom_rectification}
+    \end{figure}
+  \end{landscape}
+
+  Los pasos en el proceso de rectificación son los siguientes:
+  \begin{enumerate}
+  \item El usuario ingresa la estación, cámara, resolución e intervalo
+    de tiempo en el cual se van a rectificar imágenes.
+  \item Se cargan todas las imágenes que correspondan a este intervalo
+    de tiempo en el conjunto S y que correspondan a la estación y
+    cámara que se ingresaron.
+  \item Mientras hayan imágenes sin rectificar en el conjunto de
+    imágenes S, se lee cada imagen.
+  \item Se carga la calibración de rectificación más cercana antes del
+    tiempo de la imagen actual.
+  \item Si el usuario decide definir el ROI de rectificación en la
+    imagen, se lee el ROI de rectificación manualmente. Este proceso
+    se repite tantas veces como se requiera.
+  \item Cuando el usuario está conforme con el ROI de rectificación,
+    se almacena.
+  \item Se carga el ROI de rectificación más cercano antes del tiempo
+    de la imagen.
+  \item Se rectifica la imagen teniendo en cuenta los parámetros de
+    rectificación y el ROI de rectificación y se almacena la imagen
+    rectificada.
+  \end{enumerate}
+
+\item[Fusión] En el proceso de fusión se generan los parámetros que
+  sirven para unir dos imágenes a través de unos puntos conocidos en
+  común. En la figura~\ref{fig:fusionprocess} se esquematiza el
+  proceso para generar una fusión entre dos imágenes. Cuando se
+  calibra la fusión se llevan a cabo los siguientes pasos: Primero, se
+  elige un conjunto de puntos comunes entre las dos imágenes (en la
+  figura~\ref{fig:fusionprocess} estos puntos corresponden al
+  triángulo tanto dentro de la imagen de la izquierda como en la
+  imagen de la derecha); se genera una matriz de transformación que es
+  la que permite unir estos puntos en común rotando y/o distorsionando
+  una de las imágenes para que coincida con la otra imagen en sus
+  puntos comunes. Finalmente, las dos imágenes se unen en una sola.
+
+  En HORUS se cuenta con dos métodos para estimar las matrices de
+  transformación, cuando la fusión es para imágenes oblicuas:
+  transformación afín y transformación proyectiva. El primero se
+  emplea cuando la diferencia entre las imágenes es un pequeño
+  movimiento de la cámara, mientras que la transformación proyectiva
+  es buena tanto para estos pequeños movimientos como para diferencias
+  más grandes en la posición y la orientación de las cámaras. En
+  ocasiones, la transformación afín puede dar como resultado mejores
+  imágenes fusionadas que la transformación proyectiva.
+
+  Para la transformación afín se requieren mínimo tres puntos comunes,
+  mientras que para la transformación proyectiva se requieren mínimo
+  cuatro puntos en común. Cuando el número de puntos en común es alto,
+  se puede optimizar el cálculo de la matriz de transformación
+  mediante el método de optimización \emph{Levenberg--Marquardt}.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{img/fusionprocess}
+  \caption{Esquema de la fusión entre dos imágenes}
+  \label{fig:fusionprocess}
+\end{figure}
+
+En el sistema HORUS se capturan imágenes de la zona de estudio que
+además de ser rectificadas también pueden ser fusionadas, dado que
+cada par de imágenes de cámaras consecutivas tengan puntos en
+común. El usuario puede marcar puntos en un par de imágenes que
+corresponden a las mismas coordenadas geográficas. Estas marcaciones
+sirven como insumo para generar los parámetros del modelo que fusiona
+las imágenes.
+
+El proceso de fusionar imágenes en HORUS se esquematiza en la
+figura~\ref{fig:fusiondesign}.
+
+\begin{figure}[htbp] \centering
+  \includegraphics[width=1.0\linewidth]{img/fusiondesign}
+  \caption{Diagrama de flujo de la fusión en HORUS}
+  \label{fig:fusiondesign}
+\end{figure}
+
+Los pasos que se llevan a cabo en el proceso de fusión son los
+siguientes:
+\begin{enumerate}
+\item El primer paso es cargar el orden de las cámaras para la
+  fusión. Cuando se definen los parámetros de una fusión, se debe
+  definir cuáles son las cámaras que participan en la fusión y en qué
+  orden, esto es porque los parámetros utilizan este orden para
+  fusionar las imágenes de cada cámara.
+\item La fusión se realiza en un intervalo de tiempo especificado por
+  el usuario. Se buscan todas las imágenes en este intervalo. El error
+  corresponde al margen para buscar imágenes coincidentes para todas
+  las cámaras en un tiempo específico, ya que es posible que las
+  imágenes difieran por unos pocos segundos.
+\item Para todas las imágenes que estén en el intervalo de tiempo, se
+  lee cada una para ser procesada secuencialmente.
+\item Se verifica que para el instante de tiempo (+/- error) de cada
+  imagen existan imágenes para todas las cámaras presentes en el
+  orden. Si hay imágenes para todas las cámaras, se agregan a la
+  lista.
+\item Si se especificó que las imágenes se rectifican antes de
+  fusionar, para cada imagen en la lista de conjuntos de imágenes se
+  carga la geometría más cercana antes del tiempo de las imágenes,
+  para rectificarlas.
+\item Se rectifican la imágenes con los parámetros cargados, y se
+  reemplazan las imágenes originales con la rectificadas.
+\item Después de que se rectifican las imágenes para el tiempo actual,
+  si se especificó que se rectificaran, o no, se procede a fusionar
+  las imágenes. Se cargan los parámetros de la fusión más cercanos
+  antes del tiempo de las imágenes.
+\item Se fusionan todas las imágenes en el conjunto de imágenes y se
+  almacenan. Mientras hayan más imágenes por procesar, se repite el
+  proceso.
+\end{enumerate}
+
+\item[\textit{Timestamp}] Representa el tiempo de un objeto o evento
+  que contiene la fecha y hora en un formato específico. Para el resto
+  de este manual, este tiempo es representado por un valor numérico,
+  el número de días desde enero $1$ del año $0$ más $1$. Este es el
+  mismo formato que utiliza la función \texttt{datenum} de MATLAB\@.
+
+\item[Hosting o almacenamiento web]
+  Es un servicio que ofrecen algunas compañías en Internet en 
+  el cual ceden un espacio en sus servidores para subir (alojar) 
+  un sitio web para que pueda ser accedido en todo momento de forma online.
+  
+\item[Servidor de archivos]
+  Es una computadora que almacena varios tipos de archivos en 
+  este caso imágenes y puede ser accedido desde otros computadores 
+  de forma online que reciben el nombre de clientes.
+
+\item[Base de datos satélite]
+  Una base de datos es una colección de información organizada 
+  de forma que un software pueda seleccionar rápidamente los fragmentos 
+  de datos que necesite. Se le asigna el nombre de base de datos satélite 
+  a aquella que solo posee información de una o más estaciones pero no de todas.
+
+\item[Base de datos central]
+  Se le asigna el nombre de base de datos central a aquella que posee 
+  la información de todas las base de datos satélites.
+ 
+\item[Base de datos hosting]
+  Se le asigna el nombre de base de datos \textit{hosting} a aquella que 
+  se encuentra en el \textit{hosting} y posee la información de la base 
+  de datos central, y hace las veces de respaldo en un servidor externo.
+  
+\item[Timestack]
+  Es una matriz de series temporales de intensidad de pixel de una región de 
+  interés, en palabras coloquiales se puede definir como una secuencia de 
+  imágenes de una región de interés en el tiempo a cierta frecuencia de 
+  muestreo. En la figura~\ref{fig:timestack} se ve como se selecciona una región de interés 
+  de un timestack en cross-shore o longshore (línea roja y línea 
+  amarilla respectivamente).
+  
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=\textwidth]{img/timestack}
+  \caption{Escogencia de una región para un timestack}
+  \label{fig:timestack}
+\end{figure}
+  
+\item[Frame o fotograma]
+  Es una imagen particular dentro de una sucesión de imágenes que conforman un 
+  video, al hablar de número de frames se hace referencia a cuantas imágenes 
+  va a tener el video.
+  
+\end{description}

@@ -1,0 +1,208 @@
+\chapter{Instalación}
+\label{chap:installation}
+
+\section{Instalación Básica}
+
+El sistema HORUS fue diseñado para trabajar con la versión de
+\textregistered MATLAB R2011b o superior y requiere el Toolbox de
+Procesamiento de Imágenes y el de Bases de datos. Si su instalación de
+\textregistered MATLAB cumple los requisitos básicos puede poner los
+archivos del sistema HORUS en cualquier directorio (e.g.\@
+\verb!/home/horus!). Los archivos del sistema HORUS inicialmente están
+comprimidos en \texttt{horus.zip}, el primer paso es descomprimirlos
+en el directorio de preferencia.  El computador donde se ejecute el
+sistema HORUS debe contar mínimo con 2GB de memoria RAM. Si la captura
+y el procesamiento de las imágenes se hacen en máquinas diferentes, es
+necesario tener un servidor SSH en el computador donde funcione la
+captura para enviar la información al computador de procesamiento. Si
+se tiene un sitio web para enviar información (e.g.\
+\url{www.horusvideo.com}), el sitio debe tener servicio de FTP para
+recibir la información desde el computador de procesamiento.
+
+Para visualizar todas interfaces gráficas apropiadamente, se
+recomienda una resolución de pantalla de mínimo $1200 \times 800$.
+
+\section{Base de Datos}
+
+El sistema HORUS fue diseñado para trabajar con una base de datos
+relacional en MySQL. Antes de trabajar con HORUS es necesario
+configurar la base de datos ya que en ésta va a estar almacenada toda
+la información que necesita HORUS para trabajar. Es posible trabajar
+con el sistema HORUS a partir de una base de datos existente a la que
+se pueda acceder, bien sea mediante una red local o por
+Internet. También es posible configurar una nueva base de datos desde
+cero.
+
+\subsection{Configuración del cliente de MySQL}
+
+Para establecer la conexión a una base de datos MySQL existente, es
+necesario configurar MATLAB para trabajar como cliente. En MATLAB
+existe una variable de entorno llamada \verb!$matlabroot! que
+representa el directorio de instalación de MATLAB (e.g.\@
+\verb!C:\MATLAB\R2011b!), y la utilizaremos para localizar los
+archivos propios de MATLAB. Los pasos para lograr esto son los
+siguientes:
+
+\begin{enumerate}
+\item Asegurarse que el \textit{Database Toolbox} de MATLAB esté
+  instalado junto con MATLAB.
+\item Descargar el \textit{plugin} para conexión con MySQL. En el
+  momento de escribir este manual, este plugin se puede descargar
+  desde \texttt{\url{http://dev.mysql.com/downloads/connector/j}}
+  seleccionando el sistema operativo correspondiente.
+\item Descomprimir el archivo.
+\item En el directorio descomprimido hay un archivo llamado\\
+  \verb!mysql-connector-java-<version>-bin.jar! (donde
+  \verb!<version>! es la versión del plugin). Copiar este archivo al
+  directorio \verb!$matlabroot/java/jarext/!.
+\item Agregar al archivo
+  \verb!$matlabroot/toolbox/local/classpath.txt! la línea\\
+  \verb!$matlabroot/java/jarext/mysql-connector-java-<version>-bin.jar!\\
+  (donde \verb!<version>! es la versión del plugin). En el sistema operativo 
+  Windows 7 este archivo no se puede editar por la ubicación en la que se 
+  encuentra por esta razón se debe copiar este archivo en otra carpeta como 
+  por ejemplo en el escritorio, hacer el cambio y reemplazar el archivo anterior. 
+  Por último si MATLAB se encontraba ejecutándose para que los cambios funcionen 
+  se debe de cerrar y volver a abrir.
+\end{enumerate}
+
+Ahora, es posible que las funciones de MATLAB hagan conexión con una
+base de datos existente. Se debe establecer la dirección de conexión
+del servidor de la base de datos.
+
+\subsection{Configuración de una nueva base de datos}
+
+Las funciones de HORUS utilizan una base de datos cuya estructura se
+detalla en el capítulo~\ref{sec:dbdesign}. Para crear una nueva base
+de datos con esta estructura se deben seguir los siguientes pasos (si
+ya existe una instalación anterior de MySQL, no es necesario volver a
+instalarlo ya que puede generar problemas debido a cuentas de usuario
+anteriores):
+
+\begin{enumerate}
+\item Instalar el servidor de MySQL, que se puede descargar desde
+  \texttt{\url{http://dev.mysql.com/downloads/mysql/}}. En los pasos
+  de la instalación se deben tener en cuenta los siguientes aspectos
+  en Windows:
+  \begin{itemize}
+  \item Seleccionar instalación \emph{Típica}.
+  \item Seleccionar la opción ``Instalar como \emph{Servicio del
+      sistema}''.
+  \item Seleccionar la opción ``Incluir la ruta de la instalación en
+    el \verb!PATH! del sistema''.
+  \item Reiniciar PC.
+  \item Por defecto, existe un usuario administrador del servidor. Se
+    debe especificar la contraseña de este usuario (\verb!root!).
+  \end{itemize}
+
+  Si se quiere instalar el servidor de MySQL en Linux, es suficiente
+  con instalarlo desde el repositorio de paquetes de la distribución
+  específica.
+\item Inicialmente, el único usuario en MySQL es el usuario
+  \texttt{root}. En la línea de comandos acceder a MySQL mediante el
+  comando:
+
+  \begin{flushleft}
+    \verb!mysql -h <dirección> -u root -p!
+  \end{flushleft}
+  
+  Donde \verb!<dirección>! es la dirección IP del servidor MySQL
+  (\verb!localhost! si es local).  Crear la base de datos mediante el
+  comando:
+
+  \begin{flushleft}
+    \verb!mysql> CREATE DATABASE horus!;
+  \end{flushleft}
+
+  El nombre de la base de datos en este caso es \texttt{horus}, sin
+  embargo, este nombre es arbitrario, puede ser cualquiera.
+
+\item Se deben crear los usuarios administradores de la base de datos,
+  que tendrán acceso a la base de datos y sus permisos. Supongamos que
+  queremos crear el usuario \textit{horususer} que tendrá todos los
+  privilegios para manipular la base de datos. Los comandos para crear
+  el usuario con todos los privilegios, son los siguientes:
+
+  \begin{flushleft}
+    \verb!mysql> GRANT ALL PRIVILEGES ON horus.* TO 'horususer'@'%'!\\
+    \verb!  IDENTIFIED BY '<password>' WITH GRANT OPTION;!
+
+    \verb!mysql> FLUSH PRIVILEGES;!
+
+    \verb!mysql> QUIT;!
+  \end{flushleft}
+
+  Donde \verb!<password>! es la contraseña del usuario.
+
+\item Ya hemos creado un usuario y un esquema de la base de datos,
+  ahora debemos crear la estructura de la base de datos. El archivo
+  \texttt{horus.sql} del directorio \verb!examples! en el paquete de
+  HORUS contiene el código SQL para crear la estructura de la base de
+  datos. Para ejecutar este código se ingresa el siguiente comando
+  desde la línea de comandos del sistema (suponiendo que está en el
+  directorio \verb!examples!):
+
+  \begin{flushleft}
+    \verb!mysql -h <dirección> -u horususer -p horus < horus.sql!
+  \end{flushleft}
+
+  Donde \verb!<dirección>! es la dirección IP del servidor MySQL
+  (\verb!localhost! si es local).
+
+  \emph{Precaución}: Al ejecutar este comando, toda la información
+  previa guardada en la base de datos \textit{horus} será eliminada
+  (en caso de una instalación anterior).
+
+\end{enumerate}
+
+Opcionalmente, si se dispone de un archivo de inserciones en SQL de la
+nueva información, podemos utilizar este archivo para alimentar la
+base de datos, en caso contrario, es necesario insertar los datos
+manualmente, mediante las interfaces gráficas descritas en el
+capítulo~\ref{chap:gui}. Supongamos que tenemos el archivo
+\verb!insert.sql! que contiene la información nueva de la base de
+datos. Para insertar toda la información en la base de datos, se
+ejecuta el siguiente comando desde la línea de comandos del sistema
+(suponiendo que está en el mismo directorio donde está el archivo
+\verb!insert.sql!):
+
+  \begin{flushleft}
+    \verb!mysql -h <dirección> -u horususer -p horus < insert.sql!
+  \end{flushleft}
+
+Si se quiere crear un nuevo usuario con permisos limitados (e.g. un
+usuario de sólo lectura), se ejecuta la interfaz gráfica
+\texttt{gui\_create\_user} (ver figura~\ref{fig:guiuser}) donde
+se especifica el nombre de usuario, la contraseña, la base de datos a
+la que tiene permiso de conectarse y si tiene permiso de consultar
+(\textit{query}), insertar (\textit{insert}), borrar (\textit{delete})
+o actualizar (\textit{update}) la información en la base de datos.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{img/guiuser}
+  \caption{Interfaz para crear un nuevo usuario con permisos limitados}
+  \label{fig:guiuser}
+\end{figure}
+
+Cuando se quiere utilizar manualmente alguna de las funciones que se
+comunican con la base de datos, del directorio \texttt{io}, es
+necesario crear la conexión con la base de datos de antemano. El
+siguiente código sirve para crear una nueva conexión:
+
+\begin{verbatim}
+try
+    conn = connection_db();
+catch e
+    disp(e.message)
+end
+\end{verbatim}
+
+Si no se ha iniciado una sesión en HORUS, se solicitan los datos de
+\textit{login}. Es importante que luego de utilizar alguna función de
+\texttt{io}, se cierre la conexión con la base de datos. Esto se puede
+hacer así:
+
+\begin{verbatim}
+close(conn)
+\end{verbatim}

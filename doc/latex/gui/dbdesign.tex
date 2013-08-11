@@ -1,0 +1,548 @@
+\section{Base de datos}
+\label{sec:dbdesign}
+
+\subsection{Modelo Entidad--Relación}
+
+La base de datos de HORUS está implementada en MySQL. En la
+figura~\ref{fig:er} se muestra el modelo Entidad--Relación (ER) donde
+se detallan todas las entidades que componen la base de datos, los
+atributos o características de cada una de estas entidades, y las
+relaciones entre ellas. En este modelo se ven claramente todas las
+componentes de la base de datos, las entidades son los recuadros, los
+atributos son los ítems dentro de los recuadros, y las relaciones se
+representan con las líneas que unen dos entidades.
+
+\begin{landscape}
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\linewidth]{img/ER_BD.png}
+    \caption{Modelo ER de HORUS}
+    \label{fig:er}
+  \end{figure}
+\end{landscape}
+
+
+\newpage
+
+\subsection{Entidades}
+
+En esta sección se hará una descripción detallada de cada entidad que
+aparece en el modelo ER de la figura~\ref{fig:er}. \textit{PK}
+significa clave primaria, el cual es el atributo o conjunto de
+atributos que identifican de manera única a una instancia de una
+entidad con respecto a las otras instancias; \textit{FK} significa
+clave foránea, que es el atributo que referencia a una instancia de
+otra entidad.
+
+\subsubsection{Station}
+
+Representa a la zona de estudio donde están instaladas las cámaras y
+se hace la monitorización. Los atributos que contiene son:
+\begin{itemize}
+\item \emph{name (PK)}: Nombre de la estación (e.g.\ Cartagena,
+  Magdalena). Identifica de manera única al sitio.
+\item \emph{alias}: Abreviatura del nombre de la estación de máximo 5
+  caracteres (e.g.\ CRTG).
+\item \emph{elevation}: Elevación sobre el nivel del mar en metros
+  (e.g.\ $15$).
+\item \emph{lat}: Latitud del sitio en grados (e.g.\ $43.46$).
+\item \emph{lon}: Longitud del sitio en grados (e.g.\ $-3.77$).
+\item \emph{country}: País donde se encuentra ubicada la estación
+  (e.g.\ Colombia).
+\item \emph{state}: Estado o departamento donde se encuentra ubicada
+  la estación (e.g.\ Bolívar).
+\item \emph{city}: Ciudad donde se encuentra ubicada la estación
+  (e.g.\ Cartagena).
+\item \emph{responsible}: Nombre de la entidad o persona responsable
+  de la estación (e.g.\ Universidad de Cantabria).
+\item \emph{description}: Descripción en palabras del sitio donde está
+  ubicada la estación.
+\end{itemize}
+  
+\subsubsection{Camera}
+  
+Esta entidad contiene información sobre las cámaras instaladas en la
+estación. Los atributos son:
+
+\begin{itemize}
+\item \emph{id (PK)}: Identificador de la cámara en la estación
+  (e.g.\ C1, C2).
+\item \emph{station (PK, FK)}: Nombre de la estación, la cual junto
+  con el identificador de la cámara identifican de manera única a
+  una cámara en la base de datos. Es posible que en diferentes
+  sitios haya cámaras con el mismo \emph{id}.
+\item \emph{reference}: Marca o modelo de la cámara (e.g.\ Marlin,
+  Stingray, Sony webcam).
+\item \emph{sizeX}: Número de píxeles que el sensor puede capturar
+  horizontalemte (e.g.\ $1024$).
+\item \emph{sizeY}: Número de píxeles que el sensor puede capturar
+  verticalmente (e.g.\ $768$).
+\end{itemize}
+  
+  
+\subsubsection{ImageType}
+  
+Esta entidad representa los tipos de imagen que se generan en HORUS:
+instantáneas (\textit{snapshot}), \textit{time exposure}
+(\textit{timex}) y \textit{variance}, y sus características. Los
+atributos son:
+
+\begin{itemize}
+\item \emph{idtype (PK)}: Clave que identifica de manera única a cada
+  tipo en la base de datos. Se representa como el alias de la estación
+  más un autonumérico (e.g.\ CRTG00023).
+\item \emph{name}: Nombre del tipo. Sólo se permiten los valores:
+  \textit{snap}, \textit{timex}, \textit{var}.
+\item \emph{description}: Descripción en palabras del tipo de imagen.
+\end{itemize}
+  
+\subsubsection{Image}
+
+Esta entidad es un supertipo que representa a todas las imágenes que
+se guardan en la base de datos (oblicuas, rectificadas,
+fusionadas). No se almacenan las imágenes sino referencias a la
+localización en un disco duro, o una dirección de red. Los atributos
+de esta entidad son comunes a todos los tipos de imágenes y son los
+siguientes:
+
+\begin{itemize}
+\item \emph{filename (PK)}: Nombre del archivo de la imagen\\ (e.g.\
+  09.12.04.19.00.00.GMT.Cartagena.C1.Snap.1024X768.HORUS.jpg). Se
+  supone que este nombre es único entre todas las imágenes presentes
+  en la base de datos.
+\item \emph{type (FK)}: Es una clave foránea a la entidad
+  \textit{ImageType}. Representa al tipo de la imagen (e.g.\
+  \textit{snap}, \textit{timex}, \textit{var}).
+\item \emph{timestamp}: El tiempo de la imagen (e.g.\ $734688.549$).
+\item \emph{ismini}: Atributo booleano que indica si la imagen es o no
+  una miniatura.
+\item \emph{path}: Localización del archivo de la imagen (e.g.\
+  /home/horus/images/).
+\end{itemize}
+  
+\subsubsection{RectifiedImage}
+  
+Es un subtipo de \textit{Image}. Representa a las imágenes
+rectificadas. Sus atributos son:
+
+\begin{itemize}
+\item \emph{filename (PK, FK)}: Clave foránea a la entidad
+  \textit{Image}.
+\item \emph{calibration (FK)}: Clave foránea a la entidad
+  \textit{Calibration} y representa la calibración utilizada para
+  rectificar la imagen.
+\end{itemize}
+  
+\subsubsection{MergedImage}
+
+Es un subtipo de \textit{Image}. Representa a las imágenes fusionadas,
+ya sean rectificadas u oblicuas (este tipo se encuentra en la entidad
+\textit{Fusion}). Sus atributos son:
+
+\begin{itemize}
+\item \emph{filename (PK, FK)}: Clave foránea a la entidad
+  \textit{Image}.
+\item \emph{idfusion (FK)}: Clave foránea a la entidad
+  \textit{Fusion}. Representa la geometría utilizada para fusionar varias
+  imágenes.
+\end{itemize}
+  
+\subsubsection{ObliqueImage}
+
+Es un subtipo de Image. Representa a las imágenes oblicuas a las que
+no se les ha aplicado ninguna transformación. Sus atributos son:
+
+\begin{itemize}
+\item \emph{filename (PK, FK)}: Clave foránea a la entidad
+  \textit{Image}.
+\item \emph{camera (FK)}: Cámara que generó la imagen oblicua. Es
+  clave foránea a la entidad \textit{Camera} (e.g.\ C2).
+\item \emph{station (FK)}: Estación a la que corresponde la imagen. Es
+  clave foránea a la entidad \textit{Camera} (e.g.\ Cartagena).
+\end{itemize}
+  
+\subsubsection{TimeStack}
+  
+Esta entidad representa a otro tipo de captura que se puede realizar
+con las cámaras. Un \textit{timestack} se almacena como un vídeo que
+contiene una secuencia de imágenes capturadas a una determinada
+frecuencia, durante un tiempo determinado por el número de imágenes
+que se capturan. Al igual que las imágenes, no se almacena en la base
+de datos el vídeo como tal sino una referencia a la localización donde
+se encuentra almacenado, bien sea en un disco duro o en una dirección
+de red. Sus atributos son:
+
+\begin{itemize}
+\item \emph{filename (PK)}: Nombre del archivo del timestack\\ (e.g.\
+  11.03.24.12.00.00.GMT.CARTAGENA.C2.STACK.615.0.20X760.HORUS.jpg). Se
+  supone que es único entre todos los \textit{timestacks} presentes en
+  la base de datos.
+\item \emph{camera (FK)}: Cámara que generó el \textit{timestack}. Es
+  clave foránea a la entidad \textit{Camera}.
+\item \emph{station (FK)}: Estación donde se capturó el
+  \textit{timestack}. Es clave foránea a la entidad \textit{Camera}.
+\item \emph{inittime}: Tiempo de inicio de la captura.
+
+\item \emph{path}: Localización del archivo del \textit{timestack}
+  (e.g.\ /home/horus/stacks/).
+\item \emph{fps}: Frecuencia o \textit{framerate} en Hertz. Es el
+  número de imágenes que se capturan por segundo (e.g.\ $2$).
+\item \emph{numFrames}: Número de frames que se capturan a la
+  frecuencia dada (e.g.\ $1200$).
+\end{itemize}
+  
+\subsubsection{GCP}
+
+Esta entidad representa a los puntos de control georeferenciados para
+un sitio que sirven como punto de partida para los modelos de
+optimización utilizados para rectificar y fusionar imágenes. Sus
+atributos son:
+
+\begin{itemize}
+\item \emph{idgcp (PK)}: Es un identificador de cada punto en un
+  sitio. Es posible que haya dos GCPs en estaciones distintas con el
+  mismo identificador.
+\item \emph{station (PK)}: Nombre de la estación a la que corresponde
+  un GCP\@. Junto con el \emph{idgcp} identifican de manera única un
+  GCP en la base de datos.
+\item \emph{name}: Nombre que se le da al GCP para facilidad de
+  representación (e.g.\ GCP001).
+\item \emph{x, y, z}: Coordenada georreferenciada del GCP (e.g.\ $500$,
+  $1000$, $0$).
+\end{itemize}
+
+\subsubsection{Calibration}
+
+Esta entidad representa una calibración de una cámara en una fecha en
+particular mediante un modelo como el \textit{DLT} o
+\textit{Pinhole}. Pueden haber varias calibraciones en el tiempo
+debido a cambios leves en la posición de las cámaras. Sus atributos
+son:
+
+\begin{itemize}
+\item \emph{idcalibration (PK)}: Clave que identifica de manera única
+  a cada calibración en la base de datos. Se representa como el alias
+  de la estación más un autonumérico (e.g.\ CRTG00023).
+\item \emph{camera (FK)}: Cámara en la que se hace la calibración. Es
+  clave foránea a la entidad \textit{Camera}.
+\item \emph{station (FK)}: Estación donde se hace la calibración. Es
+  clave foránea a la entidad \textit{Camera}.
+\item \emph{timestamp}: Fecha en la que se hizo la calibración.
+\item \emph{resolution}: Resolución de la rectificación (e.g. $0.5$).
+\item \emph{EMCuv}: Error cuadrático medio del modelo en píxeles.
+\item \emph{EMCxy}: Error cuadrático medio de las proyecciones en
+  metros.
+\item \emph{NCE}: Error de calibración normalizado.
+    
+\end{itemize}
+  
+\subsubsection{PickedGCP}
+
+Para cada calibración, hay un subconjunto de los GCP de una estación
+que son escogidos como insumo para el modelo de optimización. Esta
+entidad representa cuáles GCP que corresponde a una estación están
+relacionados con una calibración en particular y la relación entre sus
+coordenadas $(x, y, z)$ y las coordenadas $(u, v)$ marcadas por el
+usuario. Los atributos son:
+
+\begin{itemize}
+\item \emph{calibration (PK, FK)}: Es la calibración a la que están
+  relacionados los puntos. Es clave foránea a la entidad
+  \textit{Calibration}.
+\item \emph{gcp (PK, FK)}: Es el número del punto de control que se
+  relaciona. Es clave foránea a la entidad \textit{GCP}.
+\item \emph{station (PK, FK)}: Es la estación a la que corresponde el
+  GCP\@. Es clave foránea a la entidad \textit{GCP}.
+\item \emph{u, v}: Posición en píxeles en la cámara de cada punto de
+  control transformado mediante los parámetros de la calibración a la
+  que está relacionado (e.g.\ $300$, $200$).
+\end{itemize}
+  
+\subsubsection{CalibrationParameter}
+
+Esta entidad representa los parámetros que pueden ser matrices o
+escalares de una calibración. En realidad no se almacena el valor del
+parámetro, sino su información. Los atributos son:
+
+\begin{itemize}
+\item \emph{id (PK)}: Clave que identifica de manera única a cada
+  parámetro en la base de datos. Se representa como el alias de la
+  estación más un autonumérico (e.g.\ CRTG00023).
+\item \emph{calibration (FK)}: Es la clave foránea o la referencia a
+  la calibración que está relacionada con el parámetro.
+\item \emph{name}: Es el nombre del parámetro, es útil para saber
+  exactamente a qué matriz o valor escalar se refiere el parámetro
+  (e.g.\ H, P, K).
+\end{itemize}
+  
+\subsubsection{CalibrationValue}
+
+Esta entidad representa la matriz donde se almacena el valor del
+parámetro de una calibración. La manera de representar a una matriz, ya
+que el gestor de base de datos no posee un tipo de datos matriz, es
+como un conjunto de filas que corresponden a cada elemento de la
+matriz y cada una se identifica mediante un identificador de columna,
+de fila, y valor. Los atributos son:
+
+\begin{itemize}
+\item \emph{idparam (PK, FK)}: Es la clave foránea o referencia a la
+  entidad \textit{CalibrationParameter}, y representa el parámetro al
+  que está relacionado.
+\item \emph{idcol (PK)}: Identificador de la columna de la matriz (los
+  índices comienzan en 1).
+\item \emph{idrow (PK)}: Identificador de la fila de la matriz (los
+  índices comienzan en 1).
+\item \emph{value}: Valor escalar de cada elemento de la matriz.
+\end{itemize}
+  
+\subsubsection{Fusion}
+
+Esta entidad representa los parámetros que son específicos para
+fusionar imágenes, bien sea rectificadas u oblicuas. Los atributos
+son:
+
+\begin{itemize}
+\item \emph{id (PK)}: Clave que identifica de manera única a los datos
+  de la fusión en la base de datos. Se representa como el alias de la
+  estación más un autonumérico (e.g.\ CRTG00023).
+\item \emph{timestamp}: Tiempo en el que se crearon los parámetros para
+  la fusión. Sirve para encontrar la fusión más cercana a una fecha
+  especificada.
+\item \emph{type}: Es el tipo de imágenes que se va a fusionar. Los
+  valores que puede tomar son: \textit{rectified} y \textit{oblique}.
+\end{itemize}
+  
+
+\subsubsection{FusionParameter}
+
+Al igual que la entidad \textit{CalibrationParameter}, representa una
+matriz o escalar de la calibración para una fusión o la transformación
+afín entre dos imágenes. No se almacena aquí el valor. Los atributos
+son:
+
+\begin{itemize}
+\item \emph{id (PK)}: Clave que identifica de manera única a una
+  matriz de fusión en la base de datos. Se representa como el alias de
+  la estación más un autonumérico (e.g.\ CRTG00023).
+\item \emph{idfusion (FK)}: Clave foránea o referencia a la entidad
+  \textit{Fusion} e identifica la fusión a la que corresponde la
+  matriz.
+\item \emph{name}: Es el nombre de la matriz (e.g.\ H12, H23).
+\end{itemize}
+
+
+\subsubsection{FusionValue}
+
+Esta entidad representa la matriz donde se almacena el valor del
+parámetro de una fusión. La manera de representar a una matriz, ya que
+el gestor de base de datos no posee un tipo de datos matriz, es como
+un conjunto de filas que corresponden a cada elemento de la matriz y
+cada una se identifica mediante un identificador de columna, de fila,
+y valor. Los atributos son:
+
+\begin{itemize}
+\item \emph{idmatrix (PK, FK)}: Es la clave foránea o referencia a la
+  entidad \textit{FusionParameter}, y representa la matriz al que está
+  relacionado.
+\item \emph{idcol (PK)}: Identificador de la columna de la matriz (los
+  índices comienzan en 1).
+\item \emph{idrow (PK)}: Identificador de la fila de la matriz (los
+  índices comienzan en 1).
+\item \emph{value}: Valor escalar de cada elemento de la matriz.
+\end{itemize}
+  
+\subsubsection{CameraByFusion}
+
+Para realizar una fusión es necesario saber cuáles cámaras están
+involucradas y en qué orden de la fusión va cada cámara. Para
+representar esto se utiliza esta entidad que almacena para cada fusión
+las cámaras relacionadas y el orden de cada una. Los atributos son:
+
+\begin{itemize}
+\item \emph{idfusion (PK, FK)}: Es la clave foránea o referencia a la
+  fusión a la que se le quieren relacionar las cámaras.
+\item \emph{camera (PK, FK)}: Es el identificador de la cámara que se
+  quiere incluir. Es clave foránea a la entidad \textit{Camera}.
+\item \emph{station (PK, FK)}: Es la estación en la que se realiza el
+  proceso. Es clave foránea a la entidad \textit{Camera}.
+\item \emph{sequence}: El orden en el que la cámara actúa en la fusión
+  (comenzando en $1$).
+\end{itemize}
+
+\subsubsection{Common Point}
+
+Para cada fusión, hay un conjunto de puntos comunes entre cada par de
+cámaras de una estación que son escogidos como insumo para el modelo
+de optimización. Esta entidad representa estos puntos, asociados a una
+cámara de la estación relacionados con una fusión en particular. Los
+atributos son:
+
+\begin{itemize}
+\item \emph{idfusion (PK, FK)}: Es la fusión a la que están
+  relacionados los puntos. Es clave foránea a la entidad
+  \textit{Fusion}.
+\item \emph{camera (PK, FK)}: Es el ID de la cámara a la que está
+  asignado cada punto. Es clave foránea a la entidad \textit{Camera}.
+\item \emph{station (PK, FK)}: Es la estación a la que corresponde el
+  punto. Es clave foránea a la entidad \textit{Camera}.
+\item \emph{name (PK)}: Nombre asignado al punto en común. Este nombre
+  es compartido con el otro punto correspondiente en la otra cámara.
+\item \emph{u, v}: Posición en píxeles en la cámara de cada punto
+  común (e.g.\ $300$, $200$).
+\end{itemize}
+  
+\subsubsection{ROI}
+
+En HORUS los ROIs tienen diversas aplicaciones, por ejemplo, para
+definir el área de la imagen que se captura en un \textit{timestack},
+el área que se quiere rectificar o fusionar en una imagen, entre
+otros. La manera de representar un ROI es mediante un conjunto de
+coordenadas $(u, v)$ en píxeles que representan los vértices del
+polígono. La entidad ROI representa esto, aunque no almacena las
+coordenadas como tal. Sus atributos son los siguientes:
+
+\begin{itemize}
+\item \emph{idroi (PK)}: Clave que identifica de manera única a un ROI
+  en la base de datos. Se representa como el alias de la estación más
+  un autonumérico (e.g.\ CRTG00023).
+\item \emph{idcalibration (FK)}: Es la clave foránea a la entidad
+  \textit{Calibration} y representa la calibración a la que está
+  relacionado el ROI.
+\item \emph{type}: Es el tipo de ROI o el tipo de aplicación de un ROI
+  en particular. Los valores que puede tomar son: \textit{fusion},
+  \textit{rect}, \textit{stack}, \textit{user}.
+\item \emph{timestamp}: Fecha en la que se creó el ROI\@.
+\end{itemize}
+  
+\subsubsection{ROICoordinate}
+
+Esta entidad representa las coordenadas de los vértices del polígono
+que definen un ROI en particular. Los atributos son:
+
+\begin{itemize}
+\item \emph{idroi (PK, FK)}: Es la clave foránea al ROI al que
+  pertenece cada coordenada.
+\item \emph{idcoord (PK)}: Es un número que identifica cada
+  coordenada. Pueden haber números iguales en distintos ROIs. El
+  polígono se forma uniendo mediante líneas rectas dos puntos con
+  \textit{idcoord} consecutivos. El último se une con el primero.
+\item \emph{u, v}: El valor de la coordenada en píxeles.
+\end{itemize}
+  
+\subsubsection{Measurement}
+
+Esta entidad representa las series de tiempo de medición de
+diversas variables que es interesante mantener almacenadas, por
+ejemplo, altura de ola, marea astronómica, densidad de usuarios,
+posición de la línea de costa, entre otros. En esta entidad no se
+guarda el valor como tal de la medición ya que puede ser un
+escalar, una matriz de dos o incluso tres dimensiones. Los atributos
+son:
+
+\begin{itemize}
+\item \emph{idmeasurement (PK)}: Autonumérico que identifica de manera
+  única a una medición en la base de datos.
+\item \emph{station}: Nombre de la estación a la que está relacionado
+  (e.g.\ Cartagena, Magdalena).
+\item \emph{type (FK)}: Tipo de medición. Es clave foránea a la
+  entidad MeasurementType.
+\item \emph{timestamp}: Tiempo de la medición.
+\end{itemize}
+  
+\subsubsection{MeasurementType}
+
+Esta entidad representa el tipo de una medición en particular. Los
+atributos son:
+
+\begin{itemize}
+\item \emph{id (PK)}: Autonumérico que identifica a un tipo de
+  medición en la base de datos.
+\item \emph{station (PK FK)}: Estación a la que pertenece la
+  medición.
+\item \emph{sensor (FK)}: Es la clave foránea a la entidad
+  \textit{Sensor} y representa el sensor con el que se miden las
+  mediciones de un tipo en particular.
+\item \emph{paramname}: Es el nombre del parámetro (e.g.\ Hs, T).
+\item \emph{datatype}: Es el tipo de dato que se esta guardando. Los
+  valores que puede tomar son: \textit{series}, \textit{matrix}.
+
+\item \emph{unitx}: Unidad de medida del eje x en el tipo de
+  medición (e.g.\ m, °C, m/s).
+\item \emph{unity}: Unidad de medida del eje y en el tipo de
+  medición (e.g.\ m, °C, m/s).
+\item \emph{unitz}: Unidad de medida del eje z en el tipo de
+  medición (e.g.\ m, °C, m/s).
+\item \emph{axisnamex}: Es el mensaje que se colocaría en el eje x de
+  una gráfica.
+\item \emph{axisnamey}: Es el mensaje que se colocaría en el eje y de
+  una gráfica.
+\item \emph{axisnamez}: Es el mensaje que se colocaría de titulo de
+  una gráfica.
+\item \emph{description}: Descripción verbal del tipo de medición.
+\end{itemize}
+  
+\subsubsection{MeasurementValue}
+
+Esta entidad representa el valor de una medición. Una medición se
+puede representar como un valor escalar, una matriz de dos o tres
+dimensiones. Cada valor de la matriz se identifica por la medición
+a la que corresponde, un identificador de fila, columna y
+profundidad. Los atributos son:
+
+\begin{itemize}
+\item \emph{idmeasurement (PK, FK)}: Clave foránea o referencia a la
+  medición a la que corresponde cada elemento de la matriz.
+\item \emph{station (PK FK)}: Estación a la que pertenece la
+  medición.
+\item \emph{idcol (PK)}: Identificador de la columna de la matriz (los
+  índices comienzan en 1).
+\item \emph{idrow (PK)}: Identificador de la fila de la matriz (los
+  índices comienzan en 1).
+\item \emph{iddepth (PK)}: Identificador de la profundidad (tercera
+  dimensión) de la matriz (los índices comienzan en 1).
+\item \emph{value}: Valor del elemento de la matriz.
+\end{itemize}
+
+  
+\subsubsection{Sensor}
+
+Esta entidad representa la información de un sensor con el que se mide
+algún tipo de medición (e.g.\@ Boya es un sensor para medir altura
+de ola, período de la ola, entre otros). Los atributos son los
+siguientes:
+
+\begin{itemize}
+\item \emph{name}: Nombre único del sensor (e.g.\ DCX22).
+\item \emph{station (PK FK)}: Nombre de la estación a la que está
+  relacionado el sensor. Es clave foránea a la entidad
+  \textit{Station}.
+\item \emph{x, y, z}: Coordenada georreferenciada del sensor (e.g.\
+  $500$, $1000$, $0$).
+\item \emph{description}: Descripción verbal del sensor.
+\end{itemize}
+
+\subsubsection{AutomaticParams}
+
+Esta entidad contiene la configuración de los tiempos de los automáticos para
+una estación. Con estos tiempos, es posible sincronizar procesos como
+la rectificación y fusión automáticas. Los atributos que contiene son:
+
+\begin{itemize}
+\item \emph{idauto (PK)}: Autonumérico que identifica de manera
+  única a un automático en la base de datos.
+\item \emph{station (FK)}: Estación a la que pertenece la captura.
+\item \emph{type}: Tipo de la captura, puede ser \textit{image},
+  \textit{stack}, \textit{transfer} o \textit{process}.
+\item \emph{start\_hour}: Hora de inicio de la captura en el día
+  (e.g.\ $06$).
+\item \emph{start\_minute}: Minuto de inicio de la captura en una hora
+  (e.g.\ $30$).
+\item \emph{end\_hour}: Hora de finalización de la captura en el día
+  (e.g.\ $18$).
+\item \emph{end\_minute}: Minuto de finalización de la captura en una
+  hora (e.g.\ $30$).
+\item \emph{step}: Tiempo de espera entre captura y captura, en
+  minutos.
+\item \emph{duration}: Tiempo de duración de la captura.
+\item \emph{num\_images}: Numero de imágenes capturadas.
+\end{itemize}

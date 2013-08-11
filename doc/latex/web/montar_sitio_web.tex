@@ -1,0 +1,396 @@
+\documentclass[a4paper,pdftex,12pt]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{lmodern,textcomp}
+\usepackage[pdftex]{graphicx}
+\usepackage[margin=2cm]{geometry}
+\usepackage{url}
+\usepackage{pdflscape}
+\usepackage[pdftex]{hyperref}
+\usepackage{listings}
+
+\lstset{language=Matlab,
+  breaklines=true,
+  breakatwhitespace=true,
+  %numbers=left,
+  stepnumber=1,
+  numberstyle=\small\color{black},
+  tabsize=2,
+  basicstyle=\ttfamily,
+  numbersep=10pt,
+  showspaces=false,
+  showstringspaces=false
+  %frame=single
+}
+
+\hypersetup{
+  colorlinks=true,
+  bookmarks,
+  % citecolor=black,
+  % filecolor=black,
+  % linkcolor=black,
+  % urlcolor=black,
+  pdfauthor={César Augusto Cartagena Ocampo},
+  pdftitle={Manual para montar un sitio a la web HORUS},
+  pdfkeywords={monitorización costera, HORUS},
+  pdfsubject={Manual para montar un sitio a la web HORUS}
+}
+
+\addto\captionsspanish{%
+  \renewcommand{\contentsname}%
+    {Contenido}%
+  \renewcommand{\listfigurename}%
+    {Lista de Figuras}%
+  \renewcommand{\listtablename}%
+    {Lista de Tablas}%
+}
+
+\title{Manual Para Montar Un Sitio A La Web HORUS}
+
+\begin{document}
+% \maketitle
+
+\begin{titlepage}
+  \large \null\vfill
+  
+  \begin{center}
+
+    {\huge \textbf{MANUAL PARA MONTAR UN SITIO A LA WEB HORUS}}
+
+    \vskip 2cm
+
+    \begin{minipage}[htbp]{1.0\linewidth}
+      \begin{center}
+        \textbf{Director}:\\
+        Andrés Fernando Osorio Arias, Ph.D.\\
+        \href{mailto:afosorioar@unal.edu.co}{<\texttt{afosorioar@unal.edu.co}>}\\
+      \end{center}
+    \end{minipage}
+  
+    \vskip 2cm
+
+    \begin{minipage}[htbp]{1.0\linewidth}
+      \begin{center}
+        \textbf{Desarrollo}: \\
+        Cristian Andrés Ortiz Alarcón, M.Ing.\\
+        \href{mailto:caortiz1@unal.edu.co}{<\texttt{caortiz1@unal.edu.co}>}\\
+      \end{center}
+    \end{minipage}
+
+    \vskip 1cm
+
+    \begin{minipage}[htbp]{0.5\linewidth}
+      \begin{center}
+        Juan Camilo Pérez Muñoz, M.Sc.\\
+        \href{mailto:jcperezmu@gmail.com
+        }{<\texttt{jcperezmu@gmail.com}>}
+      \end{center}
+    \end{minipage}
+    \begin{minipage}[htbp]{0.4\linewidth}
+      \begin{center}
+        Sebastián Múnera Álvarez, Ing\\
+        \href{mailto:sfmunera@unal.edu.co}{<\texttt{sfmunera@unal.edu.co}>}
+      \end{center}
+    \end{minipage}
+  
+    \vskip 1cm
+
+    \begin{minipage}[htbp]{1.0\linewidth}
+      \begin{center}
+        César Augusto Cartagena Ocampo, Ing\\
+        \href{mailto:cacartag@unal.edu.co}{<\texttt{cacartag@unal.edu.co}>}\\
+      \end{center}
+    \end{minipage}
+
+    \vfill
+    \begin{minipage}[htbp]{0.4\linewidth}
+      \begin{flushleft}
+        \includegraphics[height=3cm]{img/horuslogo}
+      \end{flushleft}
+    \end{minipage}
+    \begin{minipage}[htbp]{0.4\linewidth}
+      \begin{flushright}
+        \includegraphics[height=3cm]{img/unallogo2}
+      \end{flushright}
+    \end{minipage}
+
+    \begin{minipage}[htbp]{0.4\linewidth}
+      \begin{flushleft}
+        \includegraphics[height=3cm]{img/aecidlogo}
+      \end{flushleft}
+    \end{minipage}
+    \begin{minipage}[htbp]{0.4\linewidth}
+      \begin{flushright}
+        \includegraphics[height=2.5cm]{img/ihlogo}
+      \end{flushright}
+    \end{minipage}
+  \end{center}
+
+\end{titlepage}
+
+% \tableofcontents
+% \listoffigures
+% \listoftables
+
+
+\maketitle
+
+
+Para iniciar el proceso de agregar un sitio al portal web de HORUS
+\texttt{\url{www.horusvideo.com}} se debe poner en contacto con el
+equipo HORUS en el correo:
+\href{mailto:horus.unal@gmail.com}{\texttt{horus.unal@gmail.com}}
+indicando que desea agregar un nuevo sitio y solicitando la
+información de conexión al FTP para así poder subir las imágenes
+miniaturas a la página web. El correo también debe contener la siguiente información:
+
+\begin{itemize}
+\item Nombre del sitio.
+\item País del sitio.
+\item Dirección de la estación.
+\item Departamento o comunidad del sitio.
+\item Ciudad del sitio.
+\item Pequeña descripción del sitio.
+\item Latitud y longitud del sitio.
+\end{itemize}
+
+Para agregar un sitio existente a la página web de HORUS se deben
+tener las imágenes almacenadas con la estructura de carpetas y
+nombradas con la estructura HORUS.  La estructura de carpetas para
+imágenes oblicuas o rectificadas se muestra en la
+figura~\ref{fig:tutorial_insert_obli} y debe contener lo siguiente,
+en forma anidada:
+\begin{enumerate}
+\item Una carpeta que tendrá las estaciones, en la figura tiene el
+nombre \texttt{dbimage} ya que son imágenes oblicuas, pero no hay
+restricciones con el nombre de la carpeta
+\item Carpeta con el nombre de la estación en mayúsculas
+\item Carpeta con el año, en formato \texttt{aaaa}
+\item Carpeta con el mes, en formato \texttt{mm}
+\item Carpeta con el día, en formato \texttt{dd}
+\item Carpeta con el nombre de la cámara con el formato \texttt{C<numero de cámara>}
+\end{enumerate}
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[scale=1]{img/tutorial_insert_obli}
+  \caption{Estructura de las carpetas para imágenes oblicuas o rectificadas}
+  \label{fig:tutorial_insert_obli}
+\end{figure}
+
+La estructura de carpetas para imágenes fusionadas ya sean oblicuas o
+rectificadas se muestra en la figura~\ref{fig:tutorial_insert_fusion}
+esta es básicamente igual a la de las imágenes oblicuas con la
+diferencia de que no se tiene en cuenta la carpeta correspondiente a
+las cámaras.
+\\
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[scale=1]{img/tutorial_insert_fusion}
+  \caption{Estructura de las carpetas para las imágenes fusionadas}
+  \label{fig:tutorial_insert_fusion}
+\end{figure}
+
+La estructura del nombre de la imagen oblicua se muestra en la
+figura~\ref{fig:tutorial_insert_obli2}, y debe ser de la forma:\\
+<año(aa)>.<mes(mm)>.<dia(dd)>.<hora(HH)>.<minutos(MM)>.<segundos(SS)>.<zonahoraria>. <estación>.C<numero
+de cámara>.<tipo de fotografía>.<ancho>X<largo>.<sistema>.jpg, la hora
+debe estar en formato 24 horas.
+\\
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[scale=1]{img/tutorial_insert_obli2}
+  \caption{Estructura del nombre de las imágenes oblicuas}
+  \label{fig:tutorial_insert_obli2}
+\end{figure}
+
+La estructura del nombre de la imagen rectificada se muestra en la
+figura~\ref{fig:tutorial_insert_obli3}, y debe ser de la forma:\\
+<año(aa)>.<mes(mm)>.<dia(dd)>.<hora(HH)>.<minutos(MM)>.<segundos(SS)>.<zonahoraria>. <estación>.C<numero
+de cámara>.<tipo de fotografía>.RECT.<sistema>.jpg, la hora debe estar
+en formato 24 horas.
+\\
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[scale=1]{img/tutorial_insert_obli3}
+  \caption{Estructura del nombre de las imágenes rectificadas}
+  \label{fig:tutorial_insert_obli3}
+\end{figure}
+
+La estructura del nombre de la imagen fusionada oblicua o panorámicas se muestra en
+la figura~\ref{fig:tutorial_insert_obli4}, y debe ser de la forma:\\
+<año(aa)>.<mes(mm)>.<dia(dd)>.<hora(HH)>.<minutos(MM)>.<segundos(SS)>.<zonahoraria>. <estación>.<tipo
+de fotografía>.PAN.<sistema>.jpg, la hora debe estar en formato 24
+horas.
+\\
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[scale=1]{img/tutorial_insert_obli4}
+  \caption{Estructura del nombre de las imágenes oblicuas fucionadas}
+  \label{fig:tutorial_insert_obli4}
+\end{figure}
+
+La estructura del nombre de la imagen fusionada rectificada se muestra
+en la figura~\ref{fig:tutorial_insert_obli5}, y debe ser de la forma:\\
+<año(aa)>.<mes(mm)>.<dia(dd)>.<hora(HH)>.<minutos(MM)>.<segundos(SS)>.<zonahoraria>. <estación>.<tipo
+de fotografía>.RECT.<sistema>.jpg, la hora debe estar en formato 24
+horas.
+\\
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[scale=1]{img/tutorial_insert_obli5}
+  \caption{Estructura del nombre de las imágenes rectificadas fusionadas}
+  \label{fig:tutorial_insert_obli5}
+\end{figure}
+
+Estas imágenes deben poder ser accesibles desde internet ya que la
+página web solo guarda las imágenes miniaturas, se debe poder dar clic
+en la miniatura y que se abra una nueva ventana donde se muestra la
+imagen original. Para ello se debe tener una dirección IP pública fija
+o un nombre de dominio que direccione a la dirección IP que tiene el
+equipo donde se almacenan las imágenes, este equipo también debe
+contar con un servidor web es recomendado el servidor apache. Para
+configurar esto en su equipo póngase en contacto con el administrador
+de la red.
+\\
+
+También se debe contar con la base de datos de HORUS que contenga toda
+la información de las imágenes para más información de cómo instalar
+la base de datos HORUS diríjase al tutorial en el apartado Instalar y
+configurar BD. Ya que la base de datos en un principio no cuenta con
+ninguna información se recomienda seguir el tutorial de HORUS en los
+apartados Insertar información: Estación, cámaras y GCP, y Cambiar las
+rutas. Se debe tener en cuenta cambiar la información del sitio por el
+que se desea agregar a la página web.
+\\
+
+Si en el sitio se tienen imágenes oblicuas estas se deben insertar en
+la base de datos llamando la función
+\begin{verbatim}
+insert_images_recursively(ruta,estación,'oblique')
+\end{verbatim}
+que está en la carpeta \emph{io} del sistema HORUS, si el sitio tiene
+imágenes rectificadas estas se deben insertar con la misma función
+pero el ultimo parámetro de entrada cambia por 'rectified' quedando
+\begin{verbatim}
+insert_images_recursively(ruta,estación,'rectified')
+\end{verbatim}
+Si se tiene imágenes oblicuas fusionadas (panorámicas) estas se deben insertarse
+llamando a la función de la forma
+\begin{verbatim}
+insert_images_recursively(ruta,estación,'merge_oblique')
+\end{verbatim}
+o si se tienen imágenes rectificadas fusionadas se insertan llamando
+la función de la forma
+\begin{verbatim}
+insert_images_recursively(ruta,estación,'merge_rectified')
+\end{verbatim}
+El primer parámetro de entrada es la ruta donde están las
+imágenes. El segundo parámetro es la estación este debe ser el nombre
+de la carpeta de la estación donde están las imágenes, el último
+parámetro de entrada es el tipo de imagen y es para indicarle a la
+función que las imágenes que se están insertando a la base de datos
+son oblicuas, rectificadas, oblicuas fusionadas o rectificadas fusionadas.
+\\
+
+La función \emph{insert\_images\_recursively} insertará todas las
+imágenes que están en la ruta y dentro de la estación. Cada vez que se
+inserte una imagen se mostrará un mensaje en la línea de comandos de
+Matlab, indicando el éxito o el fracaso de la operación, el mensaje
+puede ser:\\
+\emph{Image
+  10.05.01.16.00.00.GMT.CARTAGENA.C3.Timex.1024X768.HORUS.jpg \\
+  successfully inserted!}.
+\\
+
+La base de datos puede estar en el mismo equipo en el que se almacenan
+las imágenes del sitio en caso contrario la base de datos también debe
+poder ser accedida desde internet ya que la página web se conectara a
+esta base de datos para mostrar las imágenes. Para ello se debe tener
+una dirección IP pública fija o un nombre de dominio que las
+peticiones al puerto 3306 las direccione a la dirección IP que tiene
+el equipo donde está la base de datos. Se debe mirar que el firewall
+no esté bloqueando el servicio de la base de datos para esto se puede
+agregar la excepción en el puerto 3306 que es por defecto el de la
+base de datos mysql si al instalarla se cambio el puerto este también
+debe cambiar en el excepción y en el direccionamiento del nombre de
+dominio. Si la base de datos no está en el mismo equipo que almacena
+las imágenes lo único que se debe tener presente es al momento de la
+captura y en el momento de utilizar el sistema HORUS configurar la
+información correcta de la base de datos.
+\\
+
+Antes de generar las imágenes miniaturas se deben escoger la rutas en
+donde se encuentran las imágenes originales y en donde se desean
+guardar las miniaturas, esto se hace con la interfaz \emph{gui\_paths\_editor}
+para mayor información de su manejo diríjase al manual en el apartado
+Path Editor.
+\\
+
+Para generar y subir las imágenes miniaturas al hosting se puede hacer
+de forma manual o automática.
+
+\section*{Manual}
+
+Utilizando la interfaz \emph{gui\_thumbnails\_tool} para generar las imágenes
+miniaturas, ya que la idea es que se inserten las imágenes en la base
+de datos y se suban a la página web se deben seleccionar las
+opciones \emph{Upload hosting} e \emph{Insert to database}, para mayor información
+se puede dirigir al manual en el apartado Thumbnails Tool y Upload to
+Hosting.
+\\
+
+Después de generar las imágenes miniaturas se debe utilizar la
+interfaz \emph{gui\_upload\_hosting} que es usada para subir las imágenes a la
+página web, para esto se deben ingresar los datos de FTP
+proporcionados por el equipo HORUS los cuales fueron solicitados
+anteriormente, para mayor información se puede dirigir al manual en el
+apartado Thumbnails Tool y Upload to Hosting.
+
+\section*{Automático}
+
+Se deben configurar los automáticos por medio de la interfaz
+\emph{gui\_processing}, en la parte de \emph{Thumbs generation} seleccionar los tipos de
+miniaturas, los tipos de imágenes a generar y el porcentaje de
+resolución de las imágenes y en la parte de \emph{Web configuration} se debe
+seleccionar la opción \emph{Upload thumbs to the web} y ingresar los datos de
+FTP proporcionados por el equipo HORUS los cuales fueron solicitados
+anteriormente. Este automático lo que hará es buscar en la base de
+datos la última miniatura y esa va a ser la fecha inicial para la
+generación de las miniaturas, en caso de no tener ninguna miniatura la
+fecha inicial es la fecha de la primera imagen original que este en la
+base de datos. Para mayor información de la interfaz \emph{gui\_processing}
+diríjase al manual en el apartado Configure processing automatic.
+\\
+
+En ambos casos se recomienda que las imágenes miniaturas que se
+generen sean de imágenes oblicuas, oblicuas fusionadas (panorámicas) y
+rectificadas fusionadas todas estas de tipo snap.
+\\
+
+Si se están capturando imágenes constantemente se recomienda
+configurar los automáticos para que se puedan tener las imágenes más
+rápidamente en la página web.
+\\
+
+Después de haber hecho lo anterior se debe poner en contacto con el
+equipo HORUS en el correo:
+\href{mailto:horus.unal@gmail.com}{\texttt{horus.unal@gmail.com}}
+indicando que ya siguió todo este proceso. El correo también debe
+contener la siguiente información:
+\\
+\begin{itemize}
+\item Nombre del sitio (como esta en la base de datos).
+\item Host (Dirección IP o nombre de dominio) y el puerto de la base
+  de datos si no es el por defecto (3306), usuario y contraseña de la
+  base de datos. Es recomendable por seguridad que este usuario solo
+  tenga permisos de consulta es decir que solo pueda ejecutar la
+  instrucción select. Consulte con el administrador de red como hacer
+  esto.
+\item Dirección IP o nombre de dominio donde se encuentran las imágenes
+originales, se debe enviar también la ruta que se debe seguir para
+llegar al sitio (e.g.\@ http://domainname/dbimage/sitio).
+\end{itemize}
+\end{document}

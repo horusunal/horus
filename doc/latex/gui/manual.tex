@@ -1,0 +1,190 @@
+\documentclass[a4paper,pdftex,12pt]{report}
+
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{lmodern,textcomp}
+\usepackage[pdftex]{graphicx}
+\usepackage[margin=2cm]{geometry}
+\usepackage{url}
+\usepackage{pdflscape}
+\usepackage{multirow}
+\usepackage[pdftex]{hyperref}
+
+\hypersetup{
+  colorlinks=true,
+  bookmarks,
+  % citecolor=black,
+  % filecolor=black,
+  % linkcolor=black,
+  % urlcolor=black,
+  pdfauthor={Sebastián Múnera Álvarez},
+  pdftitle={Documentación de HORUS},
+  pdfkeywords={monitorización costera, HORUS},
+  pdfsubject={Documentación de HORUS}
+}
+
+\addto\captionsspanish{%
+  \renewcommand{\contentsname}%
+    {Contenido}%
+  \renewcommand{\listfigurename}%
+    {Lista de Figuras}%
+  \renewcommand{\listtablename}%
+    {Lista de Tablas}%
+}
+
+
+
+\begin{document}
+%\maketitle
+
+\begin{titlepage}
+  \large
+  \null\vfill
+  
+  \begin{center}
+
+    {\huge \textbf{SISTEMA DE MONITORIZACIÓN} \\[0.1cm]
+      \textbf{AMBIENTAL BASADO EN VIDEO:}\\[0.3cm]
+      \textbf{HORUS}}
+
+    \vskip 2cm
+
+    \begin{minipage}[htbp]{1.0\linewidth}
+    \begin{center}
+      \textbf{Director}:\\
+      Andrés Fernando Osorio Arias, Ph.D.\\
+      \href{mailto:afosorioar@unal.edu.co}{<\texttt{afosorioar@unal.edu.co}>}\\
+    \end{center}
+  \end{minipage}
+  
+  \vskip 2cm
+
+  \begin{minipage}[htbp]{1.0\linewidth}
+    \begin{center}
+      \textbf{Desarrollo}: \\
+      Cristian Andrés Ortiz Alarcón, M.Ing.\\
+      \href{mailto:cristian.ortiz.alarcon@gmail.com}{<\texttt{cristian.ortiz.alarcon@gmail.com}>}\\
+    \end{center}
+  \end{minipage}
+
+  \vskip 1cm
+
+  \begin{minipage}[htbp]{0.5\linewidth}
+    \begin{center}
+      Juan Camilo Pérez Muñoz, M.Sc.\\
+      \href{mailto:jcperezmu@gmail.com }{<\texttt{jcperezmu@gmail.com}>}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}[htbp]{0.4\linewidth}
+    \begin{center}
+      Sebastián Múnera Álvarez, Ing\\
+      \href{mailto:sfmunera@unal.edu.co}{<\texttt{sfmunera@unal.edu.co}>}
+    \end{center}
+  \end{minipage}
+  
+  \vskip 1cm
+
+  \begin{minipage}[htbp]{1.0\linewidth}
+    \begin{center}
+      César Augusto Cartagena Ocampo, Ing\\
+      \href{mailto:cacartag@unal.edu.co}{<\texttt{cacartag@unal.edu.co}>}\\
+    \end{center}
+  \end{minipage}
+
+  \vfill
+  \begin{minipage}[htbp]{0.4\linewidth}
+    \begin{flushleft}
+      \includegraphics[height=3cm]{img/horuslogo}
+    \end{flushleft}
+  \end{minipage}
+  \begin{minipage}[htbp]{0.4\linewidth}
+    \begin{flushright}
+      \includegraphics[height=3cm]{img/unallogo2}
+    \end{flushright}
+  \end{minipage}
+
+  \begin{minipage}[htbp]{0.4\linewidth}
+    \begin{flushleft}
+      \includegraphics[height=3cm]{img/aecidlogo}
+    \end{flushleft}
+  \end{minipage}
+  \begin{minipage}[htbp]{0.4\linewidth}
+    \begin{flushright}
+      \includegraphics[height=2.5cm]{img/ihlogo}
+    \end{flushright}
+  \end{minipage}
+\end{center}
+
+
+  
+\end{titlepage}
+
+\tableofcontents
+\listoffigures
+% \listoftables
+
+\input{glossary}
+
+\input{intro}
+
+\input{design}
+
+\input{installation}
+
+\input{gui}
+
+\input{faq}
+
+\begin{thebibliography}{99}
+\bibitem{faugueras93}
+   Faugueras, O.
+   \emph{Three-Dimensional Computer Vision: a Geometric Viewpoint}.
+   MIT Press, Cambridge, Massachusetts.
+   2nd Edition.
+   1993.
+\bibitem{hartley03}
+   Hartley R., Zisserman, A.
+   \emph{Multiple View Geometry in Computer Vision}.
+   Cambridge University Press, New York.
+   2nd Edition.
+   2003.
+\bibitem{salvi02}
+   Salvi J., Armangué, X., Batlle, J.
+   \emph{A comparative review of camera calibrating methods with accuracy evaluation}.
+   The Journal of Pattern Recognition.
+   35.
+   pp. 1617--1635.
+   2002.
+\bibitem{wolf00}
+   Wolf, P., DeWitt, B., Wilkinson, B.
+   \emph{Elements of Photogrammetry with Application in GIS}.
+   McGraw--Hill, Massachusetts.
+   3nd Edition.
+   2000.
+\bibitem{holland97}
+   Holland, K. T., Holman, R. A., Lippmann, T. C., Stanley J., Plant, N.
+   \emph{Practical use of video imagery in nearshore oceanographic field studies}.
+   IEEE Journal of Oceanic Engineering.
+   22.
+   1.
+   pp. 81-92.
+   1997.
+\bibitem{osorio07}
+   Osorio, A., Pérez, J. C., Ortiz, C., Medina, R.
+   \emph{Tecnicas basadas en imagenes de video para cuantificar variables ambientales en zonas costeras}.
+   Avances en Recursos Hidráulicos.
+   16.
+   pp. 51-64.
+   2007.
+\bibitem{perez09}
+   Pérez, J. C.
+   \emph{Optimización No Lineal y Calibración de Cámaras Fotográficas}.
+   Tesis de Maestría.
+   Universidad Nacional de Colombia.
+   2009.
+
+\end{thebibliography}
+
+
+\end{document}
