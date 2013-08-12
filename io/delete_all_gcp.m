@@ -41,7 +41,7 @@ try
     end
     
     try
-        query = ['DELETE FROM gcp_ ' station ' '...
+        query = ['DELETE FROM gcp_' station ' '...
             'WHERE station LIKE "' station '"' ];
         cursor = exec(conn, query);
         if nargout==1
