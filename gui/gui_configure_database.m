@@ -168,7 +168,8 @@ try
         warndlg(message, 'Success')
     else
         if isempty(message)
-            message = 'There was an error when configuring the database';
+            message = ['There was an error when configuring the database: ' 
+                message];
         end
          warndlg(message, 'Failure')
     end
