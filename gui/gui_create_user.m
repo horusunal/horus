@@ -239,12 +239,12 @@ try
         privileges = [privileges 'UPDATE'];
     end
     
-    tables = {'TimeStack', 'Sensor', 'Camera', 'RectifiedImage', ...
-        'MergedImage', 'ObliqueImage', 'Image', 'Fusion', 'FusionParameter', ...
-        'FusionValue', 'CameraByFusion', 'Calibration', 'CalibrationParameter', ...
-        'CalibrationValue', 'ROI', 'ROICoordinate', 'GCP', 'PickedGCP', ...
-        'AutomaticParams', 'Measurement', 'MeasurementType', ...
-        'MeasurementValue', 'Station', 'ImageType', 'CommonPoint'};
+    tables = {'timestack', 'sensor', 'camera', 'rectifiedimage', ...
+        'mergedimage', 'obliqueimage', 'image', 'fusion', 'fusionparameter', ...
+        'fusionvalue', 'camerabyfusion', 'calibration', 'calibrationparameter', ...
+        'calibrationvalue', 'roi', 'roicoordinate', 'gcp', 'pickedgcp', ...
+        'automaticparams', 'measurement', 'measurementtype', ...
+        'measurementvalue', 'station', 'imagetype', 'commonpoint'};
     
     %reboot connection to the database if necessary
     [handles.conn status] = renew_connection_db(handles.conn);
@@ -257,15 +257,17 @@ try
         
         % Station have no views
         if  ~strcmpi(tables{i}, 'Station')
-            view = [tables{i} '_' station];
+            view = [tables{i} '_' lower(station)];
         else
             view = tables{i};
         end
         
-        statement = ['GRANT ' privileges ' ON ' database '.' view ' TO ''' username '''@''%'' IDENTIFIED BY ''' password ''''];
+        statement = ['GRANT ' privileges ' ON ' database '.' view ' TO ''' username '''@''localhost'' IDENTIFIED BY ''' password ''''];
+        statement2 = ['GRANT ' privileges ' ON ' database '.' view ' TO ''' username '''@''%'' IDENTIFIED BY ''' password ''''];
         
         try
             exec(handles.conn, statement);
+            exec(handles.conn, statement2);
             exec(handles.conn, 'FLUSH PRIVILEGES');
             %         disp(statement)
         catch e

@@ -2090,7 +2090,7 @@ try
                 delete(h);
             end
             if status ==0
-                createViews(handles.conn, get(handles.NamestationText,'String'));
+                createViews(handles.conn, lower(get(handles.NamestationText,'String')));
                 
                 %%%%%%%%% INSERT DEFAULT IMAGE TYPES
                 insert_imagetype(handles.conn, 'Snap', get(handles.NamestationText,'String'));
