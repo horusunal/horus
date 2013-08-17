@@ -287,8 +287,29 @@ function buttonCancel_Callback(hObject, eventdata, handles)
 % hObject    handle to buttonCancel (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+try
+    
+    close_session = questdlg('Do you want to close this session?', ...
+            'Close session', 'Yes', 'No', 'Cancel', 'Cancel');
+        
+    if strcmp(close_session, 'Yes')
+        destroy_session
+    elseif strcmp(close_session, 'Cancel')
+        return
+    end
+    
+    if isconnection(handles.conn)
+        close(handles.conn)
+    end
+    
+    % Update handles structure
+    guidata(hObject, handles);
+    
+    closereq
+catch e
+    disp(e.message)
+end
 
-closereq
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

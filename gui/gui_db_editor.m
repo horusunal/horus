@@ -2114,6 +2114,7 @@ try
             stations{1, 1}= 'Select the station';
             stations{2, 1} = 'New station';
             j=3;
+            valueselect = 2;
             for k = 1:length(station)
                 stations{j, 1}=char(station(k));
                 if strcmpi(get(handles.NamestationText,'String'),char(station(k)))
@@ -2172,6 +2173,7 @@ try
                 cameras = cell(0);
                 cameras{1, 1}= 'Select the camera';
                 cameras{2, 1} = 'New camera';
+                valuecamera = 2;
                 j=3;
                 for k = 1:length(camera)
                     cameras{j, 1}=char(camera(k));
@@ -2260,6 +2262,7 @@ try
                 gcps{3, 1} = 'Import GCPs';
                 gcps{4, 1} = 'Delete all GCPs';
                 j=5;
+                valuegcp = 2;
                 for k = 1:length(gcp)
                     gcps{j, 1}=char(gcp(k));
                     if strcmpi(get(handles.NamegcpText,'String'),char(gcp(k)))
@@ -2376,6 +2379,7 @@ try
                 sensors = cell(0);
                 sensors{1, 1}= 'Select the sensor';
                 sensors{2, 1} = 'New sensor';
+                valuesensor = 2;
                 j=3;
                 for k = 1:length(sensor)
                     sensors{j, 1}=char(sensor(k));
@@ -2471,6 +2475,7 @@ try
                 measurementtypes = cell(0);
                 measurementtypes{1, 1}= 'Select the measurement type';
                 measurementtypes{2, 1} = 'New measurement type';
+                valuemeasurement = 2;
                 j=3;
                 for k = 1:size(measurementtype,1)
                     measurementtypes{j, 1}=[char(measurementtype(k,1)) ' - ' char(measurementtype(k,2))];
