@@ -2090,48 +2090,50 @@ try
                 delete(h);
             end
             if status ==0
-                createViews(handles.conn, get(handles.NamestationText,'String'));
+                createViews(handles.conn, lower(get(handles.NamestationText,'String')));
                 
                 %%%%%%%%% INSERT DEFAULT IMAGE TYPES
                 insert_imagetype(handles.conn, 'Snap', get(handles.NamestationText,'String'));
                 insert_imagetype(handles.conn, 'Timex', get(handles.NamestationText,'String'));
                 insert_imagetype(handles.conn, 'Var', get(handles.NamestationText,'String'));
+                
+                % Initialize stations in popup menu
+                set(handles.StationSelect,'Value',1);
+                set(handles.StationSelect,'String',{''});
+                h=gui_message('Loading from database, this might take a while!',...
+                    'Loading');
+                station=load_station(handles.conn);
+                if ishandle(h)
+                    delete(h);
+                end
+                stations = cell(0);
+                stations{1, 1}= 'Select the station';
+                stations{2, 1} = 'New station';
+                j=3;
+                valueselect = 2;
+                for k = 1:length(station)
+                    stations{j, 1}=char(station(k));
+                    if strcmpi(get(handles.NamestationText,'String'),char(station(k)))
+                        valueselect = j;
+                    end
+                    j=j+1;
+                end
+                
+                set(handles.NamestationText,'Enable','inactive');
+                set(handles.AliasstationText,'Enable','inactive');
+                set(handles.StationSelect,'String',stations);
+                set(handles.StationSelect,'Value',valueselect);
+                set(handles.Station,'Visible','on')
+                set(handles.InsertButton,'Visible','off')
+                set(handles.UpdateButton,'Visible','on')
+                set(handles.UpdateButton,'Enable','off')
+                set(handles.DeleteButton,'Enable','on')
+                
                 warndlg('Insert successful','Successful');
             else
                 warndlg('Insert unsuccessful','Unsuccessful');
             end
-            
-            % Initialize stations in popup menu
-            set(handles.StationSelect,'Value',1);
-            set(handles.StationSelect,'String',{''});
-            h=gui_message('Loading from database, this might take a while!',...
-                'Loading');
-            station=load_station(handles.conn);
-            if ishandle(h)
-                delete(h);
-            end
-            stations = cell(0);
-            stations{1, 1}= 'Select the station';
-            stations{2, 1} = 'New station';
-            j=3;
-            for k = 1:length(station)
-                stations{j, 1}=char(station(k));
-                if strcmpi(get(handles.NamestationText,'String'),char(station(k)))
-                    valueselect = j;
-                end
-                j=j+1;
-            end
-            
-            set(handles.NamestationText,'Enable','inactive');
-            set(handles.AliasstationText,'Enable','inactive');
-            set(handles.StationSelect,'String',stations);
-            set(handles.StationSelect,'Value',valueselect);
-            set(handles.Station,'Visible','on')
-            set(handles.InsertButton,'Visible','off')
-            set(handles.UpdateButton,'Visible','on')
-            set(handles.UpdateButton,'Enable','off')
-            set(handles.DeleteButton,'Enable','on')
-            
+  
         end
         
     elseif(strcmp(handles.typeInsert,'Camera'))
@@ -2151,13 +2153,13 @@ try
             if ishandle(h)
                 delete(h);
             end
-            if status ==0
+            if status == 0
                 warndlg('Insert successful','Successful');
             else
                 warndlg('Insert unsuccessful','Unsuccessful');
             end
             
-            if get(handles.StationSelect,'value')>1
+            if get(handles.StationSelect,'value')>1 && status == 0
                 % Initialize camera in popup menu
                 set(handles.CameraSelect,'Value',1);
                 set(handles.CameraSelect,'String',{''});
@@ -2172,6 +2174,7 @@ try
                 cameras = cell(0);
                 cameras{1, 1}= 'Select the camera';
                 cameras{2, 1} = 'New camera';
+                valuecamera = 2;
                 j=3;
                 for k = 1:length(camera)
                     cameras{j, 1}=char(camera(k));
@@ -2242,7 +2245,7 @@ try
                 end
                 
             end
-            if get(handles.StationSelect,'value')>1
+            if get(handles.StationSelect,'value')>1 & status == 0
                 % Initialize GCP in popup menu
                 set(handles.gcpSelect,'Value',1);
                 set(handles.gcpSelect,'String',{''});
@@ -2260,6 +2263,7 @@ try
                 gcps{3, 1} = 'Import GCPs';
                 gcps{4, 1} = 'Delete all GCPs';
                 j=5;
+                valuegcp = 2;
                 for k = 1:length(gcp)
                     gcps{j, 1}=char(gcp(k));
                     if strcmpi(get(handles.NamegcpText,'String'),char(gcp(k)))
@@ -2361,7 +2365,7 @@ try
                 warndlg('Insert unsuccessful','Unsuccessful');
             end
             
-            if get(handles.StationSelect,'value')>1
+            if get(handles.StationSelect,'value')>1 && status == 0
                 % Initialize camera in popup menu
                 set(handles.SensorSelect,'Value',1);
                 set(handles.SensorSelect,'String',{''});
@@ -2376,6 +2380,7 @@ try
                 sensors = cell(0);
                 sensors{1, 1}= 'Select the sensor';
                 sensors{2, 1} = 'New sensor';
+                valuesensor = 2;
                 j=3;
                 for k = 1:length(sensor)
                     sensors{j, 1}=char(sensor(k));
@@ -2456,7 +2461,7 @@ try
                 delete(h);
             end
             
-            if get(handles.StationSelect,'value')>1
+            if get(handles.StationSelect,'value')>1 && status == 0
                 % Initialize camera in popup menu
                 set(handles.MeasurementtypeSelect,'Value',1);
                 set(handles.MeasurementtypeSelect,'String',{''});
@@ -2471,6 +2476,7 @@ try
                 measurementtypes = cell(0);
                 measurementtypes{1, 1}= 'Select the measurement type';
                 measurementtypes{2, 1} = 'New measurement type';
+                valuemeasurement = 2;
                 j=3;
                 for k = 1:size(measurementtype,1)
                     measurementtypes{j, 1}=[char(measurementtype(k,1)) ' - ' char(measurementtype(k,2))];
