@@ -134,7 +134,7 @@ try
         warndlg('Invalid admin password!', 'Warning')
         return
     end
-    if ~check_sqlpath(handles)
+    if ~check_sqlpath(handles, hObject)
         warndlg('You have not selected the SQL file!', 'Warning')
         return
     end
@@ -302,9 +302,23 @@ end
 
 %--------------------------------------------------------------------------
 % Check if there SQL path has been selected
-function ok = check_sqlpath(handles)
+function ok = check_sqlpath(handles,hObject)
 try
-    ok = ~isempty(handles.sqlPath);
+    pathsql = get(handles.editSQL, 'String');
+    if ~isempty(pathsql)
+        handles.sqlPath = pathsql;
+    end
+    
+    [pathstr, name, ext] = fileparts(handles.sqlPath);
+    
+    if strcmpi(ext,'.sql')
+        ok = 1;
+    else
+        ok = 0;
+    end
+    
+    % Update handles structure
+    guidata(hObject, handles);
 catch e
     disp(e.message)
 end
