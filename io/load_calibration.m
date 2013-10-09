@@ -76,10 +76,10 @@ try
         data{6} = cell2mat(calibration(1,7));
         for i=1:size(ids, 1)
             
-            posi = 1;
-            posf = pos1(i);
-            if i > 1
-                posi = pos1(i - 1) + 1;
+            posi = pos1(i);
+            posf = size(calibration, 1);
+            if i < size(ids, 1)
+                posf = pos1(i + 1) - 1;
             end
             row = cell2mat(calibration(posi:posf, 9));
             col = cell2mat(calibration(posi:posf, 10));
@@ -88,7 +88,7 @@ try
             for j = posi:posf
                 matrix (valuematrix(j,1),valuematrix(j,2))= valuematrix(j,3);
             end
-            data{end+1}=calibration(j,8);
+            data{end+1}=calibration(posf,8);
             data{end+1}=matrix;
         end
     catch e

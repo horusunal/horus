@@ -70,6 +70,9 @@ try
         handles.root = fileparts(root);
         addpath(genpath(handles.root));
         handles.datapath = fullfile(handles.root, 'data');
+        if ~exist('tmp', 'dir')
+            mkdir('tmp');
+        end
         handles.tmppath = fullfile(handles.root, 'tmp');
     else
         pathinfo = what('data');
@@ -167,11 +170,11 @@ try
     if status == 0 % success
         warndlg(message, 'Success')
     else
-        if isempty(message)
-            message = ['There was an error when configuring the database: ' 
-                message];
+        if ~isempty(message)
+            message = strcat('There was an error when configuring the database: ',...
+                message);
         end
-         warndlg(message, 'Failure')
+        warndlg(message, 'Failure')
     end
     
 catch e
