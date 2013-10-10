@@ -463,9 +463,7 @@ try
     trigger(camobj);
     im = getdata(camobj, 1);
     stop(camobj), delete(camobj), clear camobj;
-    
-    % Update handles structure
-    guidata(hObject, handles);
+
 catch e
     disp(e.message)
 end
