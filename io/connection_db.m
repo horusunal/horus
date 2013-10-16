@@ -30,8 +30,10 @@ try
         root = fileparts(root);
         addpath(genpath(root));
     end
-    jconnection = which('mysql-connector-java-5.1.25-bin.jar');
-    javaaddpath(jconnection)
+    if ~exist('com.mysql.jdbc.Driver', 'class')
+        jconnection = which('mysql-connector-java-5.1.25-bin.jar');
+        javaaddpath(jconnection)
+    end
     if nargin == 0
         reset = true;
     end
@@ -79,6 +81,7 @@ try
         dbConn = database(dbase, user, password, jdbcDriver, jdbcString);
         
         if ~isconnection(dbConn)
+            warndlg(dbConn.message, 'Database connection issue!');
             if reset
                 delete(fullfile(tmppath, 'userinfo.dat'));
                 delete(fullfile(tmppath, 'skeySpec.mat'));
@@ -89,6 +92,7 @@ try
     
 catch e
     disp(e.message)
+    warndlg(e.message, 'Error detected!');
 end
 
 %--------------------------------------------------------------------------

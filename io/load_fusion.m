@@ -11,8 +11,8 @@ function  data  = load_fusion(conn, type, station, timestamp)
 %
 %   Output:
 %   data: cell array with these elements:
-%         {fusion id, fusion parameter id, timestamp, ...}
-%         From the fourth element, each four parameters are repeated the name of
+%         {fusion id, timestamp, ...}
+%         From the third element, each four parameters are repeated the name of
 %         the matrix, the ids of the matrix and the values.
 %
 %   Example:
@@ -76,10 +76,10 @@ try
         data{2} = cell2mat(fusion(1,3));
         for i=1:size(ids, 1)
             
-            posi = 1;
-            posf = pos1(i);
-            if i > 1
-                posi = pos1(i - 1) + 1;
+            posi = pos1(i);
+            posf = size(fusion, 1);
+            if i < size(ids, 1)
+                posf = pos1(i + 1) - 1;
             end
             row = cell2mat(fusion(posi:posf, 5));
             col = cell2mat(fusion(posi:posf, 6));

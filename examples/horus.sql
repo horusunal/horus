@@ -5,11 +5,11 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 
 -- -----------------------------------------------------
--- Table `Station`
+-- Table `station`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Station` ;
+DROP TABLE IF EXISTS `station` ;
 
-CREATE  TABLE IF NOT EXISTS `Station` (
+CREATE  TABLE IF NOT EXISTS `station` (
   `name` VARCHAR(45) NOT NULL ,
   `alias` VARCHAR(5) NOT NULL ,
   `elevation` DOUBLE NOT NULL ,
@@ -28,21 +28,21 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `Camera`
+-- Table `camera`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Camera` ;
+DROP TABLE IF EXISTS `camera` ;
 
-CREATE  TABLE IF NOT EXISTS `Camera` (
+CREATE  TABLE IF NOT EXISTS `camera` (
   `id` VARCHAR(10) NOT NULL ,
   `station` VARCHAR(45) NOT NULL ,
   `reference` VARCHAR(100) NOT NULL ,
   `sizeX` INT NOT NULL ,
   `sizeY` INT NOT NULL ,
   PRIMARY KEY (`id`, `station`) ,
-  INDEX `fk_Camera_Station_idx` (`station` ASC) ,
-  CONSTRAINT `fk_Camera_Station`
+  INDEX `fk_camera_station_idx` (`station` ASC) ,
+  CONSTRAINT `fk_camera_station`
     FOREIGN KEY (`station` )
-    REFERENCES `Station` (`name` )
+    REFERENCES `station` (`name` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -51,11 +51,11 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `ImageType`
+-- Table `imagetype`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ImageType` ;
+DROP TABLE IF EXISTS `imagetype` ;
 
-CREATE  TABLE IF NOT EXISTS `ImageType` (
+CREATE  TABLE IF NOT EXISTS `imagetype` (
   `idtype` VARCHAR(10) NOT NULL ,
   `name` VARCHAR(20) NOT NULL ,
   `description` VARCHAR(500) NULL ,
@@ -66,11 +66,11 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `Image`
+-- Table `image`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Image` ;
+DROP TABLE IF EXISTS `image` ;
 
-CREATE  TABLE IF NOT EXISTS `Image` (
+CREATE  TABLE IF NOT EXISTS `image` (
   `filename` VARCHAR(120) NOT NULL ,
   `type` VARCHAR(10) NOT NULL ,
   `timestamp` DECIMAL(17,10) NOT NULL ,
@@ -79,10 +79,10 @@ CREATE  TABLE IF NOT EXISTS `Image` (
   PRIMARY KEY (`filename`) ,
   INDEX `index_filename` USING HASH (`filename` ASC) ,
   INDEX `index_timestamp` USING BTREE (`timestamp` ASC) ,
-  INDEX `fk_Image_ImageType1_idx` (`type` ASC) ,
-  CONSTRAINT `fk_Image_ImageType1`
+  INDEX `fk_image_imagetype1_idx` (`type` ASC) ,
+  CONSTRAINT `fk_image_imagetype1`
     FOREIGN KEY (`type` )
-    REFERENCES `ImageType` (`idtype` )
+    REFERENCES `imagetype` (`idtype` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -91,24 +91,24 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `ObliqueImage`
+-- Table `obliqueimage`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ObliqueImage` ;
+DROP TABLE IF EXISTS `obliqueimage` ;
 
-CREATE  TABLE IF NOT EXISTS `ObliqueImage` (
+CREATE  TABLE IF NOT EXISTS `obliqueimage` (
   `filename` VARCHAR(120) NOT NULL ,
   `camera` VARCHAR(10) NOT NULL ,
   `station` VARCHAR(45) NOT NULL ,
   PRIMARY KEY (`filename`) ,
   INDEX `index_filename` USING HASH (`filename` ASC) ,
-  CONSTRAINT `fk_ObliqueImage_Camera1`
+  CONSTRAINT `fk_obliqueimage_camera1`
     FOREIGN KEY (`camera` , `station` )
-    REFERENCES `Camera` (`id` , `station` )
+    REFERENCES `camera` (`id` , `station` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_ObliqueImage_Image1`
+  CONSTRAINT `fk_obliqueimage_image1`
     FOREIGN KEY (`filename` )
-    REFERENCES `Image` (`filename` )
+    REFERENCES `image` (`filename` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -117,11 +117,11 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `Calibration`
+-- Table `calibration`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Calibration` ;
+DROP TABLE IF EXISTS `calibration` ;
 
-CREATE  TABLE IF NOT EXISTS `Calibration` (
+CREATE  TABLE IF NOT EXISTS `calibration` (
   `idcalibration` VARCHAR(10) NOT NULL ,
   `camera` VARCHAR(10) NOT NULL ,
   `station` VARCHAR(45) NOT NULL ,
@@ -131,10 +131,10 @@ CREATE  TABLE IF NOT EXISTS `Calibration` (
   `EMCxy` DOUBLE NULL ,
   `NCE` DOUBLE NULL ,
   PRIMARY KEY (`idcalibration`) ,
-  INDEX `fk_Calibration_Camera1_idx` (`camera` ASC, `station` ASC) ,
-  CONSTRAINT `fk_Calibration_Camera1`
+  INDEX `fk_calibration_camera1_idx` (`camera` ASC, `station` ASC) ,
+  CONSTRAINT `fk_calibration_camera1`
     FOREIGN KEY (`camera` , `station` )
-    REFERENCES `Camera` (`id` , `station` )
+    REFERENCES `camera` (`id` , `station` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -143,11 +143,11 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `Sensor`
+-- Table `sensor`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Sensor` ;
+DROP TABLE IF EXISTS `sensor` ;
 
-CREATE  TABLE IF NOT EXISTS `Sensor` (
+CREATE  TABLE IF NOT EXISTS `sensor` (
   `name` VARCHAR(45) NOT NULL ,
   `station` VARCHAR(45) NOT NULL ,
   `x` DOUBLE NOT NULL ,
@@ -156,10 +156,10 @@ CREATE  TABLE IF NOT EXISTS `Sensor` (
   `isvirtual` TINYINT(1) NOT NULL ,
   `description` VARCHAR(500) NULL ,
   PRIMARY KEY (`name`, `station`) ,
-  INDEX `fk_Sensor_Station1_idx` (`station` ASC) ,
-  CONSTRAINT `fk_Sensor_Station1`
+  INDEX `fk_sensor_station1_idx` (`station` ASC) ,
+  CONSTRAINT `fk_sensor_station1`
     FOREIGN KEY (`station` )
-    REFERENCES `Station` (`name` )
+    REFERENCES `station` (`name` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -168,11 +168,11 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `MeasurementType`
+-- Table `measurementtype`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `MeasurementType` ;
+DROP TABLE IF EXISTS `measurementtype` ;
 
-CREATE  TABLE IF NOT EXISTS `MeasurementType` (
+CREATE  TABLE IF NOT EXISTS `measurementtype` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `station` VARCHAR(45) NOT NULL ,
   `sensor` VARCHAR(45) NOT NULL ,
@@ -186,10 +186,10 @@ CREATE  TABLE IF NOT EXISTS `MeasurementType` (
   `axisnamez` VARCHAR(60) NULL ,
   `description` VARCHAR(500) NULL ,
   PRIMARY KEY (`id`, `station`) ,
-  INDEX `fk_MeasurementType_Sensor1_idx` (`sensor` ASC, `station` ASC) ,
-  CONSTRAINT `fk_MeasurementType_Sensor1`
+  INDEX `fk_measurementtype_sensor1_idx` (`sensor` ASC, `station` ASC) ,
+  CONSTRAINT `fk_measurementtype_sensor1`
     FOREIGN KEY (`sensor` , `station` )
-    REFERENCES `Sensor` (`name` , `station` )
+    REFERENCES `sensor` (`name` , `station` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -198,20 +198,20 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `Measurement`
+-- Table `measurement`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Measurement` ;
+DROP TABLE IF EXISTS `measurement` ;
 
-CREATE  TABLE IF NOT EXISTS `Measurement` (
+CREATE  TABLE IF NOT EXISTS `measurement` (
   `idmeasurement` INT NOT NULL AUTO_INCREMENT ,
   `station` VARCHAR(45) NOT NULL ,
   `type` INT NOT NULL ,
   `timestamp` DECIMAL(17,10) NOT NULL ,
   PRIMARY KEY (`idmeasurement`, `station`) ,
-  INDEX `fk_Measurement_MeasurementType1_idx` (`type` ASC, `station` ASC) ,
-  CONSTRAINT `fk_Measurement_MeasurementType1`
+  INDEX `fk_measurement_measurementtype1_idx` (`type` ASC, `station` ASC) ,
+  CONSTRAINT `fk_measurement_measurementtype1`
     FOREIGN KEY (`type` , `station` )
-    REFERENCES `MeasurementType` (`id` , `station` )
+    REFERENCES `measurementtype` (`id` , `station` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -220,11 +220,11 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `GCP`
+-- Table `gcp`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `GCP` ;
+DROP TABLE IF EXISTS `gcp` ;
 
-CREATE  TABLE IF NOT EXISTS `GCP` (
+CREATE  TABLE IF NOT EXISTS `gcp` (
   `idgcp` INT NOT NULL ,
   `station` VARCHAR(45) NOT NULL ,
   `name` VARCHAR(10) NOT NULL ,
@@ -232,10 +232,10 @@ CREATE  TABLE IF NOT EXISTS `GCP` (
   `y` DOUBLE NOT NULL ,
   `z` DOUBLE NOT NULL ,
   PRIMARY KEY (`idgcp`, `station`) ,
-  INDEX `fk_GCP_Station1_idx` (`station` ASC) ,
-  CONSTRAINT `fk_GCP_Station1`
+  INDEX `fk_gcp_station1_idx` (`station` ASC) ,
+  CONSTRAINT `fk_gcp_station1`
     FOREIGN KEY (`station` )
-    REFERENCES `Station` (`name` )
+    REFERENCES `station` (`name` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -244,26 +244,26 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `PickedGCP`
+-- Table `pickedgcp`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PickedGCP` ;
+DROP TABLE IF EXISTS `pickedgcp` ;
 
-CREATE  TABLE IF NOT EXISTS `PickedGCP` (
+CREATE  TABLE IF NOT EXISTS `pickedgcp` (
   `calibration` VARCHAR(10) NOT NULL ,
   `gcp` INT NOT NULL ,
   `station` VARCHAR(45) NOT NULL ,
   `u` DOUBLE NOT NULL ,
   `v` DOUBLE NOT NULL ,
   PRIMARY KEY (`calibration`, `gcp`, `station`) ,
-  INDEX `fk_PickedGCP_GCP1_idx` (`gcp` ASC, `station` ASC) ,
-  CONSTRAINT `fk_PickedGCP_Calibration1`
+  INDEX `fk_pickedgcp_gcp1_idx` (`gcp` ASC, `station` ASC) ,
+  CONSTRAINT `fk_pickedgcp_calibration1`
     FOREIGN KEY (`calibration` )
-    REFERENCES `Calibration` (`idcalibration` )
+    REFERENCES `calibration` (`idcalibration` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_PickedGCP_GCP1`
+  CONSTRAINT `fk_pickedgcp_gcp1`
     FOREIGN KEY (`gcp` , `station` )
-    REFERENCES `GCP` (`idgcp` , `station` )
+    REFERENCES `gcp` (`idgcp` , `station` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -272,11 +272,11 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `TimeStack`
+-- Table `timestack`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `TimeStack` ;
+DROP TABLE IF EXISTS `timestack` ;
 
-CREATE  TABLE IF NOT EXISTS `TimeStack` (
+CREATE  TABLE IF NOT EXISTS `timestack` (
   `filename` VARCHAR(120) NOT NULL ,
   `camera` VARCHAR(10) NOT NULL ,
   `station` VARCHAR(45) NOT NULL ,
@@ -284,11 +284,11 @@ CREATE  TABLE IF NOT EXISTS `TimeStack` (
   `path` VARCHAR(200) NOT NULL ,
   `fps` DOUBLE NOT NULL ,
   `numFrames` INT NOT NULL ,
-  INDEX `fk_TimeStack_Camera1_idx` (`camera` ASC, `station` ASC) ,
+  INDEX `fk_timestack_camera1_idx` (`camera` ASC, `station` ASC) ,
   PRIMARY KEY (`filename`) ,
-  CONSTRAINT `fk_TimeStack_Camera1`
+  CONSTRAINT `fk_timestack_camera1`
     FOREIGN KEY (`camera` , `station` )
-    REFERENCES `Camera` (`id` , `station` )
+    REFERENCES `camera` (`id` , `station` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -297,19 +297,19 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `CalibrationParameter`
+-- Table `calibrationparameter`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `CalibrationParameter` ;
+DROP TABLE IF EXISTS `calibrationparameter` ;
 
-CREATE  TABLE IF NOT EXISTS `CalibrationParameter` (
+CREATE  TABLE IF NOT EXISTS `calibrationparameter` (
   `id` VARCHAR(10) NOT NULL ,
   `calibration` VARCHAR(10) NOT NULL ,
   `name` VARCHAR(20) NOT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_GeometryParameter_Calibration1_idx` (`calibration` ASC) ,
-  CONSTRAINT `fk_GeometryParameter_Calibration1`
+  INDEX `fk_GeometryParameter_calibration1_idx` (`calibration` ASC) ,
+  CONSTRAINT `fk_GeometryParameter_calibration1`
     FOREIGN KEY (`calibration` )
-    REFERENCES `Calibration` (`idcalibration` )
+    REFERENCES `calibration` (`idcalibration` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -318,11 +318,11 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `CalibrationValue`
+-- Table `calibrationvalue`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `CalibrationValue` ;
+DROP TABLE IF EXISTS `calibrationvalue` ;
 
-CREATE  TABLE IF NOT EXISTS `CalibrationValue` (
+CREATE  TABLE IF NOT EXISTS `calibrationvalue` (
   `idparam` VARCHAR(10) NOT NULL ,
   `idcol` INT NOT NULL ,
   `idrow` INT NOT NULL ,
@@ -331,7 +331,7 @@ CREATE  TABLE IF NOT EXISTS `CalibrationValue` (
   INDEX `fk_ParameterValue_GeometryParameter1_idx` (`idparam` ASC) ,
   CONSTRAINT `fk_ParameterValue_GeometryParameter1`
     FOREIGN KEY (`idparam` )
-    REFERENCES `CalibrationParameter` (`id` )
+    REFERENCES `calibrationparameter` (`id` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -340,20 +340,20 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `ROI`
+-- Table `roi`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ROI` ;
+DROP TABLE IF EXISTS `roi` ;
 
-CREATE  TABLE IF NOT EXISTS `ROI` (
+CREATE  TABLE IF NOT EXISTS `roi` (
   `idroi` VARCHAR(10) NOT NULL ,
   `idcalibration` VARCHAR(10) NOT NULL ,
   `type` VARCHAR(45) NOT NULL ,
   `timestamp` DECIMAL(17,10) NOT NULL ,
   PRIMARY KEY (`idroi`) ,
-  INDEX `fk_ROI_Calibration1_idx` (`idcalibration` ASC) ,
-  CONSTRAINT `fk_ROI_Calibration1`
+  INDEX `fk_roi_calibration1_idx` (`idcalibration` ASC) ,
+  CONSTRAINT `fk_roi_calibration1`
     FOREIGN KEY (`idcalibration` )
-    REFERENCES `Calibration` (`idcalibration` )
+    REFERENCES `calibration` (`idcalibration` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -362,11 +362,11 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `Fusion`
+-- Table `fusion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Fusion` ;
+DROP TABLE IF EXISTS `fusion` ;
 
-CREATE  TABLE IF NOT EXISTS `Fusion` (
+CREATE  TABLE IF NOT EXISTS `fusion` (
   `id` VARCHAR(10) NOT NULL ,
   `timestamp` DECIMAL(17,10) NOT NULL ,
   `type` VARCHAR(15) NOT NULL ,
@@ -377,20 +377,20 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `ROICoordinate`
+-- Table `roicoordinate`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ROICoordinate` ;
+DROP TABLE IF EXISTS `roicoordinate` ;
 
-CREATE  TABLE IF NOT EXISTS `ROICoordinate` (
+CREATE  TABLE IF NOT EXISTS `roicoordinate` (
   `idroi` VARCHAR(10) NOT NULL ,
   `idcoord` INT NOT NULL AUTO_INCREMENT ,
   `u` DOUBLE NOT NULL ,
   `v` DOUBLE NOT NULL ,
   PRIMARY KEY (`idcoord`, `idroi`) ,
-  INDEX `fk_ROICoordinate_ROI1_idx` (`idroi` ASC) ,
-  CONSTRAINT `fk_ROICoordinate_ROI1`
+  INDEX `fk_roicoordinate_roi1_idx` (`idroi` ASC) ,
+  CONSTRAINT `fk_roicoordinate_roi1`
     FOREIGN KEY (`idroi` )
-    REFERENCES `ROI` (`idroi` )
+    REFERENCES `roi` (`idroi` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -399,11 +399,11 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `MeasurementValue`
+-- Table `measurementvalue`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `MeasurementValue` ;
+DROP TABLE IF EXISTS `measurementvalue` ;
 
-CREATE  TABLE IF NOT EXISTS `MeasurementValue` (
+CREATE  TABLE IF NOT EXISTS `measurementvalue` (
   `idmeasurement` INT NOT NULL ,
   `station` VARCHAR(45) NOT NULL ,
   `idcol` INT NOT NULL ,
@@ -411,10 +411,10 @@ CREATE  TABLE IF NOT EXISTS `MeasurementValue` (
   `iddepth` INT NOT NULL ,
   `value` DOUBLE NOT NULL ,
   PRIMARY KEY (`idmeasurement`, `station`, `idcol`, `idrow`, `iddepth`) ,
-  INDEX `fk_MeasurementValue_Measurement1_idx` (`idmeasurement` ASC, `station` ASC) ,
-  CONSTRAINT `fk_MeasurementValue_Measurement1`
+  INDEX `fk_measurementvalue_measurement1_idx` (`idmeasurement` ASC, `station` ASC) ,
+  CONSTRAINT `fk_measurementvalue_measurement1`
     FOREIGN KEY (`idmeasurement` , `station` )
-    REFERENCES `Measurement` (`idmeasurement` , `station` )
+    REFERENCES `measurement` (`idmeasurement` , `station` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -423,25 +423,25 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `CameraByFusion`
+-- Table `camerabyfusion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `CameraByFusion` ;
+DROP TABLE IF EXISTS `camerabyfusion` ;
 
-CREATE  TABLE IF NOT EXISTS `CameraByFusion` (
+CREATE  TABLE IF NOT EXISTS `camerabyfusion` (
   `idfusion` VARCHAR(10) NOT NULL ,
   `camera` VARCHAR(10) NOT NULL ,
   `station` VARCHAR(45) NOT NULL ,
   `sequence` INT NOT NULL ,
   PRIMARY KEY (`idfusion`, `camera`, `station`) ,
-  INDEX `fk_CameraByFusion_Camera1_idx` (`camera` ASC, `station` ASC) ,
-  CONSTRAINT `fk_CameraByFusion_Fusion1`
+  INDEX `fk_camerabyfusion_camera1_idx` (`camera` ASC, `station` ASC) ,
+  CONSTRAINT `fk_camerabyfusion_fusion1`
     FOREIGN KEY (`idfusion` )
-    REFERENCES `Fusion` (`id` )
+    REFERENCES `fusion` (`id` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_CameraByFusion_Camera1`
+  CONSTRAINT `fk_camerabyfusion_camera1`
     FOREIGN KEY (`camera` , `station` )
-    REFERENCES `Camera` (`id` , `station` )
+    REFERENCES `camera` (`id` , `station` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -450,19 +450,19 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `FusionParameter`
+-- Table `fusionparameter`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `FusionParameter` ;
+DROP TABLE IF EXISTS `fusionparameter` ;
 
-CREATE  TABLE IF NOT EXISTS `FusionParameter` (
+CREATE  TABLE IF NOT EXISTS `fusionparameter` (
   `id` VARCHAR(10) NOT NULL ,
   `idfusion` VARCHAR(10) NOT NULL ,
   `name` VARCHAR(10) NOT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_FusionMatrix_Fusion1_idx` (`idfusion` ASC) ,
-  CONSTRAINT `fk_FusionMatrix_Fusion1`
+  INDEX `fk_fusionMatrix_fusion1_idx` (`idfusion` ASC) ,
+  CONSTRAINT `fk_fusionMatrix_fusion1`
     FOREIGN KEY (`idfusion` )
-    REFERENCES `Fusion` (`id` )
+    REFERENCES `fusion` (`id` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -471,20 +471,20 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `FusionValue`
+-- Table `fusionvalue`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `FusionValue` ;
+DROP TABLE IF EXISTS `fusionvalue` ;
 
-CREATE  TABLE IF NOT EXISTS `FusionValue` (
+CREATE  TABLE IF NOT EXISTS `fusionvalue` (
   `idmatrix` VARCHAR(10) NOT NULL ,
   `idcol` INT NOT NULL ,
   `idrow` INT NOT NULL ,
   `value` DOUBLE NOT NULL ,
   PRIMARY KEY (`idmatrix`, `idcol`, `idrow`) ,
-  INDEX `fk_FusionValue_FusionMatrix1_idx` (`idmatrix` ASC) ,
-  CONSTRAINT `fk_FusionValue_FusionMatrix1`
+  INDEX `fk_fusionvalue_fusionMatrix1_idx` (`idmatrix` ASC) ,
+  CONSTRAINT `fk_fusionvalue_fusionMatrix1`
     FOREIGN KEY (`idmatrix` )
-    REFERENCES `FusionParameter` (`id` )
+    REFERENCES `fusionparameter` (`id` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -493,24 +493,24 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `RectifiedImage`
+-- Table `rectifiedimage`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `RectifiedImage` ;
+DROP TABLE IF EXISTS `rectifiedimage` ;
 
-CREATE  TABLE IF NOT EXISTS `RectifiedImage` (
+CREATE  TABLE IF NOT EXISTS `rectifiedimage` (
   `filename` VARCHAR(120) NOT NULL ,
   `calibration` VARCHAR(10) NOT NULL ,
-  INDEX `fk_RectifiedImage_Calibration1_idx` (`calibration` ASC) ,
+  INDEX `fk_rectifiedimage_calibration1_idx` (`calibration` ASC) ,
   PRIMARY KEY (`filename`) ,
   INDEX `index_filename` USING HASH (`filename` ASC) ,
-  CONSTRAINT `fk_RectifiedImage_Calibration1`
+  CONSTRAINT `fk_rectifiedimage_calibration1`
     FOREIGN KEY (`calibration` )
-    REFERENCES `Calibration` (`idcalibration` )
+    REFERENCES `calibration` (`idcalibration` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_RectifiedImage_Image1`
+  CONSTRAINT `fk_rectifiedimage_image1`
     FOREIGN KEY (`filename` )
-    REFERENCES `Image` (`filename` )
+    REFERENCES `image` (`filename` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -519,24 +519,24 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `MergedImage`
+-- Table `mergedimage`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `MergedImage` ;
+DROP TABLE IF EXISTS `mergedimage` ;
 
-CREATE  TABLE IF NOT EXISTS `MergedImage` (
+CREATE  TABLE IF NOT EXISTS `mergedimage` (
   `filename` VARCHAR(120) NOT NULL ,
   `idfusion` VARCHAR(10) NOT NULL ,
-  INDEX `fk_FusionImage_Fusion1_idx` (`idfusion` ASC) ,
+  INDEX `fk_fusionimage_fusion1_idx` (`idfusion` ASC) ,
   PRIMARY KEY (`filename`) ,
   INDEX `index_filename` USING HASH (`filename` ASC) ,
-  CONSTRAINT `fk_FusionImage_Fusion1`
+  CONSTRAINT `fk_fusionimage_fusion1`
     FOREIGN KEY (`idfusion` )
-    REFERENCES `Fusion` (`id` )
+    REFERENCES `fusion` (`id` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_MergedImage_Image1`
+  CONSTRAINT `fk_mergedimage_image1`
     FOREIGN KEY (`filename` )
-    REFERENCES `Image` (`filename` )
+    REFERENCES `image` (`filename` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -545,11 +545,11 @@ COLLATE = latin1_spanish_ci;
 
 
 -- -----------------------------------------------------
--- Table `AutomaticParams`
+-- Table `automaticparams`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AutomaticParams` ;
+DROP TABLE IF EXISTS `automaticparams` ;
 
-CREATE  TABLE IF NOT EXISTS `AutomaticParams` (
+CREATE  TABLE IF NOT EXISTS `automaticparams` (
   `idauto` INT NOT NULL ,
   `station` VARCHAR(45) NOT NULL ,
   `type` VARCHAR(15) NOT NULL ,
@@ -560,11 +560,11 @@ CREATE  TABLE IF NOT EXISTS `AutomaticParams` (
   `step` INT NOT NULL ,
   `duration` INT NULL ,
   `num_images` INT NULL ,
-  INDEX `fk_AutomaticParams_Station1_idx` (`station` ASC) ,
+  INDEX `fk_automaticparams_station1_idx` (`station` ASC) ,
   PRIMARY KEY (`idauto`) ,
-  CONSTRAINT `fk_AutomaticParams_Station1`
+  CONSTRAINT `fk_automaticparams_station1`
     FOREIGN KEY (`station` )
-    REFERENCES `Station` (`name` )
+    REFERENCES `station` (`name` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -574,11 +574,11 @@ COMMENT = 'El atributo \"type\" puede ser \"image\", \"stack\", \"transfer\", \"
 
 
 -- -----------------------------------------------------
--- Table `CommonPoint`
+-- Table `commonpoint`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `CommonPoint` ;
+DROP TABLE IF EXISTS `commonpoint` ;
 
-CREATE  TABLE IF NOT EXISTS `CommonPoint` (
+CREATE  TABLE IF NOT EXISTS `commonpoint` (
   `idfusion` VARCHAR(10) NOT NULL ,
   `camera` VARCHAR(10) NOT NULL ,
   `station` VARCHAR(45) NOT NULL ,
@@ -586,16 +586,16 @@ CREATE  TABLE IF NOT EXISTS `CommonPoint` (
   `u` DOUBLE NOT NULL ,
   `v` DOUBLE NOT NULL ,
   PRIMARY KEY (`idfusion`, `camera`, `station`, `name`) ,
-  INDEX `fk_CommonPoint_Fusion1_idx` (`idfusion` ASC) ,
-  INDEX `fk_CommonPoint_Camera1_idx` (`camera` ASC, `station` ASC) ,
-  CONSTRAINT `fk_CommonPoint_Fusion1`
+  INDEX `fk_commonpoint_fusion1_idx` (`idfusion` ASC) ,
+  INDEX `fk_commonpoint_camera1_idx` (`camera` ASC, `station` ASC) ,
+  CONSTRAINT `fk_commonpoint_fusion1`
     FOREIGN KEY (`idfusion` )
-    REFERENCES `Fusion` (`id` )
+    REFERENCES `fusion` (`id` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_CommonPoint_Camera1`
+  CONSTRAINT `fk_commonpoint_camera1`
     FOREIGN KEY (`camera` , `station` )
-    REFERENCES `Camera` (`id` , `station` )
+    REFERENCES `camera` (`id` , `station` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
