@@ -91,8 +91,8 @@ try
             
             disp('The camera transformation matrix is:')
             disp(H)
-            disp(['The image reprojection error is ' num2str(MSEuv, '%e') ' pixels'])
-            disp(['The space reprojection error is ' num2str(MSExy, '%e') ' meters'])
+            disp(['The image projection error is ' num2str(MSEuv, '%e') ' pixels'])
+            disp(['The space back projection error is ' num2str(MSExy, '%e') ' meters'])
         end
         
     elseif strcmpi(method, 'ransac-dlt')
@@ -116,8 +116,8 @@ try
             
             disp('The camera transformation matrix is:')
             disp(H)
-            disp(['The image reprojection error is ' num2str(MSEuv, '%e') ' pixels'])
-            disp(['The space reprojection error is ' num2str(MSExy, '%e') ' meters'])
+            disp(['The image projection error is ' num2str(MSEuv, '%e') ' pixels'])
+            disp(['The space back projection error is ' num2str(MSExy, '%e') ' meters'])
         end
         
     elseif strcmpi(method, 'pinhole')
@@ -145,8 +145,8 @@ try
             disp(H)
             disp(['The distortion parameters are: k1 = ' num2str(k1, '%e')...
                 ', k2 = ' num2str(k2, '%e')])
-            disp(['The image reprojection error is ' num2str(MSEuv, '%e') ' pixels'])
-            disp(['The space reprojection error is ' num2str(MSExy, '%e') ' meters'])
+            disp(['The image projection error is ' num2str(MSEuv, '%e') ' pixels'])
+            disp(['The space back projection error is ' num2str(MSExy, '%e') ' meters'])
             disp(['The normalized calibration error is ' num2str(ECN, '%e')])
         end
     end

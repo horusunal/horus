@@ -180,7 +180,7 @@ try
     if check_station(handles)
         
         %reboot connection to the database if necessary
-        [handles.conn status] = renew_connection_db(handles.conn);
+        [handles.conn, status] = renew_connection_db(handles.conn);
 
         if status == 1
             return
@@ -405,12 +405,11 @@ catch e
     disp(e.message)
 end
 
-% --- Executes on button press in buttonROI.
-function buttonROI_Callback(hObject, eventdata, handles)
-% hObject    handle to buttonROI (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+%--------------------------------------------------------------------------
+% Capture an image using the configured camera
+function im = captureImage(handles)
 
+im = [];
 try
     station = get_station(handles);
     cam = get_stack_camera(handles);
@@ -420,7 +419,6 @@ try
         ']/CameraConfig/Camera[id=', cam, ']');
     cameraNode = getNodes(xml, xmlPath);
     if isempty(cameraNode)
-        errordlg('This camera is not configured yet!', 'Error');
         return;
     end
     
@@ -465,6 +463,23 @@ try
     trigger(camobj);
     im = getdata(camobj, 1);
     stop(camobj), delete(camobj), clear camobj;
+
+catch e
+    disp(e.message)
+end
+
+% --- Executes on button press in buttonROI.
+function buttonROI_Callback(hObject, eventdata, handles)
+% hObject    handle to buttonROI (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+try
+    im = captureImage(handles);
+    if isempty(im)
+        errordlg('This camera is not configured yet!', 'Error');
+        return;
+    end
     
     fig = figure;
     imshow(im);
@@ -1751,11 +1766,33 @@ if captureval > 1 % Do nothing if captureval == 1
         warndlg('The stack number of frames is invalid!', 'Warning')
         ok = false;
     end
-    if ok && isempty(handles.curroi.xcoords) || isempty(handles.curroi.ycoords) ||...
-             length(handles.curroi.xcoords) ~= length(handles.curroi.ycoords) ||...
-             length(handles.curroi.xcoords) < 3 || length(handles.curroi.ycoords) < 3
-        warndlg('The stack ROI is invalid!', 'Warning')
-        ok = false;
+    
+    % If there is no selected ROI, choose the entire image by default.
+    if isempty(handles.curroi.xcoords)
+        im = captureImage(handles);
+        if isempty(im)
+            errordlg('This camera is not configured yet!', 'Error');
+            ok = false;
+        end
+        
+        if ok
+            [m, n, o] = size(im);
+            handles.curroi.xcoords(1) = 1;
+            handles.curroi.ycoords(1) = 1;
+            handles.curroi.xcoords(2) = 1;
+            handles.curroi.ycoords(2) = m;
+            handles.curroi.xcoords(3) = n;
+            handles.curroi.ycoords(3) = m;
+            handles.curroi.xcoords(4) = n;
+            handles.curroi.ycoords(4) = 1;
+        end
+    else
+        if ok && isempty(handles.curroi.xcoords) || isempty(handles.curroi.ycoords) ||...
+                 length(handles.curroi.xcoords) ~= length(handles.curroi.ycoords) ||...
+                 length(handles.curroi.xcoords) < 3 || length(handles.curroi.ycoords) < 3
+            warndlg('The stack ROI is invalid!', 'Warning')
+            ok = false;
+        end
     end
     
     xml = loadXML(handles.xmlfile, 'Configuration', 'station', station);
