@@ -16,8 +16,8 @@ procesos que se llevan a cabo en el sistema HORUS.
   figura~\ref{fig:gcp_mark_measure} se muestra la relación entre las
   coordenadas $(x, y, z)$ de un GCP y las coordenadas $(u, v)$ en el
   plano de una imagen cuyo origen está en la esquina superior
-  izquierda de la imagen, el eje $u$ es positivo hacia la derecha de
-  la imagen, y el eje $v$ es positivo hacia abajo.
+  izquierda. El eje $u$ es positivo de izquierda a derecha, y el eje
+  $v$ es positivo hacia abajo.
 
 \begin{figure}[htbp!]
   \centering
@@ -46,12 +46,12 @@ procesos que se llevan a cabo en el sistema HORUS.
 \item[Calibración] Es el nombre que se le da al proceso de aplicar un
   método de optimización para encontrar los parámetros de
   rectificación y fusión. La calibración involucra la elección del
-  ROI, GCPs, y otros argumentos necesarios para el método.
+  ROI, GCPs, y otros parámetros necesarios para el método.
 
-\item[Imagen Oblicua] Una imagen oblicua es aquella imagen capturada
-  por una cámara con un ángulo de inclinación, de tal manera que la
-  imagen tenga una perspectiva. En la figura~\ref{fig:oblique} se
-  muestra una imagen oblicua.
+\item[Imagen Oblicua] Es aquella imagen capturada por una cámara con
+  un ángulo de inclinación, de tal manera que la imagen tenga una
+  perspectiva. En la figura~\ref{fig:oblique} se muestra una imagen
+  oblicua.
 
 \begin{figure}[htbp!]
   \centering
@@ -60,13 +60,12 @@ procesos que se llevan a cabo en el sistema HORUS.
   \label{fig:oblique}
 \end{figure}
 
-\item[Imagen Rectificada] Una imagen rectificada es una imagen oblicua
-  que sufre una transformación para que parezca como si hubiera sido
-  capturada perpendicularmente sobre el plano de la zona de estudio,
-  de tal manera que es posible medir distancias y tamaños de objetos
-  dentro de la imagen de forma precisa. En la
-  figura~\ref{fig:rectified} se muestra un ejemplo de una imagen
-  rectificada.
+\item[Imagen Rectificada] Es una imagen oblicua que sufre una
+  transformación para que parezca como si hubiera sido capturada
+  perpendicularmente sobre el plano de la zona de estudio, de tal
+  manera que es posible medir distancias y tamaños de objetos dentro
+  de la imagen de forma precisa. En la figura~\ref{fig:rectified} se
+  muestra un ejemplo de una imagen rectificada.
 
 \begin{figure}[htbp!]
   \centering
@@ -75,12 +74,11 @@ procesos que se llevan a cabo en el sistema HORUS.
   \label{fig:rectified}
 \end{figure}
 
-\item[Imagen Fusionada] Una imagen fusionada es la que resulta de unir
-  dos o más imágenes (sean oblicuas o rectificadas) por los puntos en
-  común entre cada par de imágenes consecutivas. Esta fusión se
-  realiza rotando y distorsionando las imágenes de tal manera que
-  queden acopladas en sus puntos comunes, como se muestra en la
-  figura~\ref{fig:merged}.
+\item[Imagen Fusionada] Es la que resulta de unir dos o más imágenes
+  (sean oblicuas o rectificadas) por los puntos en común entre cada
+  par de imágenes consecutivas. Esta fusión se realiza rotando y
+  distorsionando las imágenes de tal manera que queden acopladas en
+  sus puntos comunes, como se muestra en la figura~\ref{fig:merged}.
 
 \begin{figure}[htbp!]
   \centering
@@ -89,12 +87,12 @@ procesos que se llevan a cabo en el sistema HORUS.
   \label{fig:merged}
 \end{figure}
 
-\item[Imagen \textit{Snap}] Una imagen \textit{snap} es aquella que es
-  capturada por una cámara de manera instantánea. Estas imágenes son
-  útiles para obtener una vista estática de un evento dado, y mediante
-  una secuencia de estas imágenes en el tiempo poder estudiar la
-  evolución de un fenómeno. En la figura~\ref{fig:snapsample} de
-  muestra un ejemplo.
+\item[Imagen \textit{Snap} o \textit{Snapshot}] Una imagen
+  \textit{snap} es aquella que es capturada por una cámara de manera
+  instantánea. Estas imágenes son útiles para obtener una vista
+  estática de un evento dado, y mediante una secuencia de estas
+  imágenes en el tiempo se puede estudiar la evolución de un
+  fenómeno. En la figura~\ref{fig:snapsample} se muestra un ejemplo.
 
 \begin{figure}[htbp!]
   \centering
@@ -103,15 +101,15 @@ procesos que se llevan a cabo en el sistema HORUS.
   \label{fig:snapsample}
 \end{figure}
 
-\item[Imagen \textit{Timex}] Una imagen \textit{timex} es el resultado
-  de promediar una secuencia de imágenes capturadas a una frecuencia
-  determinada de antemano. Estas imágenes son útiles cuando se quiere
-  generalizar el movimiento, es decir, los objetos que tienen mayor
-  variabilidad dentro de la imagen se muestran suavizados. Por
-  ejemplo, en la figura~\ref{fig:timexsample} se muestra una imagen
-  resultado de promediar 120 imágenes a una frecuencia de captura de 2
-  imágenes por segundo, donde el movimiento de las olas, que es el que
-  tiene mayor variabilidad es promediado.
+\item[Imagen \textit{Timex}] Es el resultado de promediar una
+  secuencia de imágenes capturadas a una frecuencia determinada de
+  antemano. Estas imágenes son útiles cuando se quiere generalizar el
+  movimiento, es decir, los objetos que tienen mayor variabilidad
+  dentro de la imagen se muestran suavizados. Por ejemplo, en la
+  figura~\ref{fig:timexsample} se muestra una imagen resultado de
+  promediar 120 imágenes a una frecuencia de captura de 2 imágenes por
+  segundo, donde el movimiento de las olas, que es el que tiene mayor
+  variabilidad es promediado.
 
 \begin{figure}[htbp!]
   \centering
@@ -120,15 +118,14 @@ procesos que se llevan a cabo en el sistema HORUS.
   \label{fig:timexsample}
 \end{figure}
 
-\item[Imagen \textit{Variance}] Una imagen \textit{variance} es el
-  resultado de aplicar la desviación estándar de una secuencia de
-  imágenes capturadas a una frecuencia determinada de antemano. La
-  principal característica de estas imágenes, es que lo que está en
-  movimiento se muestra en la imagen de color claro y lo que está
-  estático se muestra en color oscuro. Esto permite resaltar lo que
-  tiene mayor variabilidad en la imagen. En la
-  figura~\ref{fig:varsample} se muestra un ejemplo de imágen
-  \textit{variance}.
+\item[Imagen \textit{Variance}] Es el resultado de aplicar la
+  desviación estándar de una secuencia de imágenes capturadas a una
+  frecuencia determinada de antemano. La principal característica de
+  estas imágenes, es que lo que está en movimiento se muestra en la
+  imagen de color claro y lo que está estático se muestra en color
+  oscuro. Esto permite resaltar lo que tiene mayor variabilidad en la
+  imagen. En la figura~\ref{fig:varsample} se muestra un ejemplo de
+  imagen \textit{variance}.
 
 \begin{figure}[htbp!]
   \centering
@@ -137,37 +134,34 @@ procesos que se llevan a cabo en el sistema HORUS.
   \label{fig:varsample}
 \end{figure}
 
-\item[Resolución] Para las imágenes rectificadas, la resolución es un
-  concepto que representa la resolución teórica deseada en la imagen
-  rectificada de modo que el tamaño de la imagen estará definido por
-  dicha resolución y el tamaño del área a rectificar en el espacio,
-  por ejemplo, una región de $10 m \times 10 m$ corresponderá a una
-  imagen de $50 pixeles \times 50 pixeles$ si la resolución elegida es
-  $1/5 (m/pix)$. La resolución de las imágenes oblicuas no es
-  constante debido a que el plano de la imagen no es paralelo a la
-  región de interés o, en otras palabras, la cámara se encuentra
-  inclinada con respecto a dicha región. Como se puede observar en la
-  figura~\ref{fig:resolution}, la cual es un mapa de resolución obtenido de
-  una imagen oblicua, es posible ver que la resolución de la imagen
-  disminuye a medida que el área de interés está más alejada de la
-  imagen puesto que cada pixel contiene información de una región más
-  grande el espacio.
+\item[Resolución] Para las imágenes rectificadas, es la resolución
+  teórica deseada de modo que el tamaño de la imagen estará definido
+  por ella y el tamaño del área a rectificar en el espacio.  Por
+  ejemplo, una región de $10 m \times 10 m$ corresponderá a una imagen
+  de $50 pixeles \times 50 pixeles$ si la resolución elegida es $1/5
+  (m/pix)$. La resolución de las imágenes oblicuas no es constante
+  debido a que el plano de la imagen no es paralelo a la región de
+  interés o, en otras palabras, la cámara se encuentra inclinada con
+  respecto a dicha región. Como se puede observar en la
+  figura~\ref{fig:resolution}, la cual es un mapa de resolución
+  obtenido de una imagen oblicua, es posible ver que la resolución de
+  la imagen disminuye a medida que el área de interés está más alejada
+  de la cámara puesto que cada pixel contiene información de una
+  región más grande el espacio.
 
-  La resolución de una imagen rectificada es un concepto teórico y es
-  de vital importancia recordar que no es posible ``inventar''
-  información, es decir, no es posible obtener una resolución
-  infinitamente alta en la imagen rectificada, esto porque cuando la
+  Es importante notar que no es posible obtener una resolución
+  infinitamente alta en la imagen rectificada, porque cuando la
   resolución de la imagen rectificada es menor que la resolución de la
-  imagen en una región determinada el resultado es una pérdida de una
-  porción de la información contenida en la imagen, pero cuando la
-  resolución de la imagen rectificada es mayor que la resolución de la
-  imagen, lo que se está haciendo es forzar que los pixeles se
-  estiren, lo que simplemente significa que se usa información
+  imagen oblicua en una región determinada el resultado es la pérdida
+  de una porción de la información contenida en la imagen, pero cuando
+  la resolución de la imagen rectificada es mayor que la resolución de
+  la imagen oblicua, lo que se está haciendo es forzar que los pixeles
+  se estiren, lo que simplemente significa que se usa información
   redundante para crear la imagen. Por este motivo, la resolución
-  usada en la rectificación no debería ser mayor a la resolución media
-  de la imagen, así no se pierde demasiada información pero la imagen
-  rectificada tampoco tendrá un tamaño exorbitante que no adiciona
-  ningún beneficio práctico.
+  usada en la rectificación no debería ser mayor que la resolución
+  media de la imagen, así no se pierde demasiada información pero la
+  imagen rectificada tampoco tendrá un gran tamaño, lo cual no es
+  práctico.
 
 \begin{figure}[htbp!]
   \centering
@@ -176,21 +170,21 @@ procesos que se llevan a cabo en el sistema HORUS.
   \label{fig:resolution}
 \end{figure}
 
-\item[Rectificación] El proceso de rectificación es el proceso
-  mediante el cual se transforma una imagen oblicua como la mostrada
-  en la figura~\ref{fig:oblique} en una imagen como la mostrada en la
-  figura~\ref{fig:rectified}. En las imagenes oblicuas los objetos en
-  el espacio tienen distinta resolución a medida que se alejan o
-  acercan al lente de la cámara. Debido a esto, es imposible hacer
-  mediciones en estas imágenes, tales como hallar distancias, o
-  determinar el tamaño de un objeto.
+\item[Rectificación] Es el proceso mediante el cual se transforma una
+  imagen oblicua como la mostrada en la figura~\ref{fig:oblique} en
+  una imagen como la mostrada en la figura~\ref{fig:rectified}. En las
+  imagenes oblicuas los objetos en el espacio tienen distinta
+  resolución a medida que se alejan o acercan al lente de la
+  cámara. Debido a esto, es imposible hacer mediciones en estas
+  imágenes, tales como hallar distancias, o determinar el tamaño de un
+  objeto.
 
   En una estación de monitorización se tienen varias cámaras que le
   toman fotos a determinadas regiones de la zona de estudio en
   intervalos regulares de tiempo definidos de antemano. En general, es
   necesario convertir las imágenes oblicuas en imágenes rectificadas
-  para hacer mediciones de algún tipo y extraer información útil
-  aplicando métodos de rectificación basados en un conjunto de
+  para hacer mediciones de algún tipo y extraer información útil de
+  ellas, aplicando métodos de rectificación basados en un conjunto de
   GCPs. Los métodos con los que se cuenta son \textit{DLT}
   \cite{faugueras93,hartley03,salvi02,wolf00} (Transformada Lineal
   Directa), \textit{RANSAC--DLT} \cite{perez09} y \textit{Pinhole}
@@ -246,7 +240,7 @@ procesos que se llevan a cabo en el sistema HORUS.
 
   En HORUS se cuenta con dos métodos para estimar las matrices de
   transformación, cuando la fusión es para imágenes oblicuas:
-  transformación afín y transformación proyectiva. El primero se
+  transformación afín y transformación proyectiva. La primera se
   emplea cuando la diferencia entre las imágenes es un pequeño
   movimiento de la cámara, mientras que la transformación proyectiva
   es buena tanto para estos pequeños movimientos como para diferencias
@@ -290,7 +284,7 @@ siguientes:
 \item El primer paso es cargar el orden de las cámaras para la
   fusión. Cuando se definen los parámetros de una fusión, se debe
   definir cuáles son las cámaras que participan en la fusión y en qué
-  orden, esto es porque los parámetros utilizan este orden para
+  orden, esto es porque el método utiliza este orden para
   fusionar las imágenes de cada cámara.
 \item La fusión se realiza en un intervalo de tiempo especificado por
   el usuario. Se buscan todas las imágenes en este intervalo. El error
@@ -305,7 +299,7 @@ siguientes:
   lista.
 \item Si se especificó que las imágenes se rectifican antes de
   fusionar, para cada imagen en la lista de conjuntos de imágenes se
-  carga la geometría más cercana antes del tiempo de las imágenes,
+  carga la calibración más cercana antes del tiempo de las imágenes,
   para rectificarlas.
 \item Se rectifican la imágenes con los parámetros cargados, y se
   reemplazan las imágenes originales con la rectificadas.
@@ -321,52 +315,53 @@ siguientes:
 \item[\textit{Timestamp}] Representa el tiempo de un objeto o evento
   que contiene la fecha y hora en un formato específico. Para el resto
   de este manual, este tiempo es representado por un valor numérico,
-  el número de días desde enero $1$ del año $0$ más $1$. Este es el
+  el número de días desde enero $1$ del año $0$ más $1$. Éste es el
   mismo formato que utiliza la función \texttt{datenum} de MATLAB\@.
 
-\item[Hosting o almacenamiento web]
-  Es un servicio que ofrecen algunas compañías en Internet en 
-  el cual ceden un espacio en sus servidores para subir (alojar) 
-  un sitio web para que pueda ser accedido en todo momento de forma online.
+\item[Hosting o almacenamiento web] Es un servicio que ofrecen algunas
+  compañías en Internet donde ceden un espacio en sus servidores para
+  subir (alojar) un sitio web para que pueda ser accedido de forma
+  online.
   
-\item[Servidor de archivos]
-  Es una computadora que almacena varios tipos de archivos en 
-  este caso imágenes y puede ser accedido desde otros computadores 
-  de forma online que reciben el nombre de clientes.
+\item[Servidor de archivos] Es un computado que almacena varios
+  tipos de archivos, en este caso imágenes, y puede ser accedido desde
+  otros computadores de forma online que reciben el nombre de
+  clientes.
 
-\item[Base de datos satélite]
-  Una base de datos es una colección de información organizada 
-  de forma que un software pueda seleccionar rápidamente los fragmentos 
-  de datos que necesite. Se le asigna el nombre de base de datos satélite 
-  a aquella que solo posee información de una o más estaciones pero no de todas.
+\item[Base de datos satélite] Una base de datos es una colección de
+  información organizada de forma que un software pueda seleccionar
+  rápidamente los fragmentos de datos que necesite. Se le asigna el
+  nombre de base de datos satélite a aquella que sólo posee
+  información de una o más estaciones pero no de todas.
 
-\item[Base de datos central]
-  Se le asigna el nombre de base de datos central a aquella que posee 
-  la información de todas las base de datos satélites.
+\item[Base de datos central] Se le asigna el nombre de base de datos
+  central a aquella que posee la información de todas las base de
+  datos satélites.
  
-\item[Base de datos hosting]
-  Se le asigna el nombre de base de datos \textit{hosting} a aquella que 
-  se encuentra en el \textit{hosting} y posee la información de la base 
-  de datos central, y hace las veces de respaldo en un servidor externo.
+\item[Base de datos hosting] Se le asigna el nombre de base de datos
+  \textit{hosting} a aquella que se encuentra en el \textit{hosting} y
+  posee la información de la base de datos central, y hace las veces
+  de respaldo en un servidor externo.
   
-\item[Timestack]
-  Es una matriz de series temporales de intensidad de pixel de una región de 
-  interés, en palabras coloquiales se puede definir como una secuencia de 
-  imágenes de una región de interés en el tiempo a cierta frecuencia de 
-  muestreo. En la figura~\ref{fig:timestack} se ve como se selecciona una región de interés 
-  de un timestack en cross-shore o longshore (línea roja y línea 
-  amarilla respectivamente).
+\item[Timestack] Es una matriz de series temporales de intensidad de
+  pixel de una región de interés, en palabras coloquiales se puede
+  definir como una secuencia de imágenes de una región de interés en
+  el tiempo a cierta frecuencia de muestreo. En la
+  figura~\ref{fig:timestack} se ve como se selecciona una región de
+  interés de un timestack en \textit{cross-shore} o
+  \textit{alongshore} (línea roja y línea amarilla
+  respectivamente). En HORUS los \textit{timestacks} se capturan y
+  almacenan como videos que contienen la secuencia de imágenes.
   
 \begin{figure}[htbp!]
   \centering
   \includegraphics[width=\textwidth]{img/timestack}
-  \caption{Escogencia de una región para un timestack}
+  \caption{Selección de una región para un timestack}
   \label{fig:timestack}
 \end{figure}
   
-\item[Frame o fotograma]
-  Es una imagen particular dentro de una sucesión de imágenes que conforman un 
-  video, al hablar de número de frames se hace referencia a cuantas imágenes 
-  va a tener el video.
+\item[Frame o fotograma] Es una imagen particular dentro de una
+  sucesión de imágenes que conforman un video, al hablar de número de
+  frames se hace referencia a cuantas imágenes va a tener el video.
   
 \end{description}
