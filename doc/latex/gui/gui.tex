@@ -3,23 +3,36 @@
 
 Las secciones que siguen contienen una descripción de las interfaces
 gráficas usadas en HORUS para llevar a cabo los diferentes procesos
-como configuración de la captura, procesamiento de las imágenes y
-almacenamiento en la base de datos. Estas interfaces se encuentran en
-el directorio \verb!gui! de HORUS y para poder ejecutarlas, se debe
-agregar la ruta\footnote{Es posible que al copiar y pegar este
-  comando, las \texttt{'} no sean las mismas que MATLAB utiliza}:
+como configuración de la base de datos, configuración de la captura,
+procesamiento de las imágenes y almacenamiento en la base de
+datos. Estas interfaces se encuentran en el directorio \verb!gui!.
+
+Todas las interfaces que serán descritas pueden ser llamadas desde la
+interfaz principal de HORUS (\verb!gui_main!), como se muestra en la
+figura~\ref{fig:guimain}.
+
+\begin{figure}[htbp!]
+  \centering
+%  \includegraphics[width=\textwidth]{img/guimain}
+  \caption{Interfaz principal de HORUS}
+  \label{fig:guimain}
+\end{figure}
+
+Para ejecutar la interfaz principal desde Matlab, ubicarse en el
+directorio principal de HORUS y ejecutar el siguiente comando:
 
 \begin{verbatim}
->> addpath('gui')
+> gui_main
 \end{verbatim}
 
 Cuando se ejecuta por primera vez alguna de las interfaces que se
-detallan a continuación, se despliega una interfaz para hacer el
-\textit{login} en la base de datos, con el usuario creado previamente
-en la instalación. En la figura~\ref{fig:login} se muestra la ventana
-de \textit{login}. Este \textit{login} solamente se hace una vez
-mientras dura la sesión de usuario. Cuando se cierra alguna interfaz,
-se pregunta al usuario si desea cerrar la sesión o no.
+detallan a continuación (excepto la interfaz \emph{Setup database}),
+se despliega una interfaz para hacer el \textit{login} en la base de
+datos, con el usuario creado previamente en la instalación. En la
+figura~\ref{fig:login} se muestra la ventana de \textit{login}. Este
+\textit{login} solamente se hace una vez mientras dura la sesión de
+usuario. Cuando se cierra alguna interfaz, se pregunta al usuario si
+desea cerrar la sesión o no.
 
 \begin{figure}[htbp!]
   \centering
@@ -61,19 +74,25 @@ desea cerrar la sesión, en caso afirmativo, el archivo
 En conclusión, mientras el archivo \texttt{userinfo.dat} exista, hay
 una sesión de HORUS abierta, y se cierra cuando el archivo es borrado.
 
-\section{DB Editor}
+\section{Setup database}
+
+Ver sección~\ref{sec:db}.
+
+
+
+\section{Edit database}
 
 El sistema HORUS cuenta con una base de datos en la cual se ingresa
-toda la información generada necesaria para el correcto funcionamiento
-del sistema (ver sección~\ref{sec:dbdesign}). Con esta interfaz se
-puede insertar, actualizar o eliminar la información de una estación,
-una cámara, un GCP, un sensor o un tipo de medición (los cuales son
-los parámetros que mide un sensor). Al abrir la interfaz se muestra la
-opción de insertar una nueva estación a la base de datos de HORUS. Si
-se desea, con el menú de la parte superior se puede cambiar de opción
-para actualizar o insertar estaciones, cámaras, GCPs, sensores y tipos
-de mediciones. A continuación se explica cada una de las opciones
-de la interfaz.
+toda la información generada necesaria para su correcto funcionamiento
+(ver sección~\ref{sec:dbdesign}). Con esta interfaz se puede insertar,
+actualizar o eliminar la información de una estación, una cámara, un
+GCP, un sensor o un tipo de medición (los cuales son los parámetros
+que mide un sensor). Al abrir la interfaz se muestra la opción de
+insertar una nueva estación a la base de datos de HORUS. Si se desea,
+con el menú de la parte superior se puede cambiar de opción para
+actualizar o insertar estaciones, cámaras, GCPs, sensores y tipos de
+mediciones. A continuación se explica cada una de las opciones de la
+interfaz.
 
 El comando para ejecutar esta interfaz es: \texttt{gui\_db\_editor}.
 
@@ -98,7 +117,7 @@ la opción de actualizar o eliminar una estación existente.
 \end{figure}
 
 Las componentes numeradas en la figura se explican a continuación (los
-campos que tienen * son obligatorios):
+campos con * son obligatorios):
 
 \begin{enumerate}
 \item En esta lista se debe seleccionar la estación que se desea
@@ -110,12 +129,9 @@ campos que tienen * son obligatorios):
   de la estación. Debe ser de máximo 5 caracteres. Éste debe ser
   diferente al alias de las demás estaciones y no es posible
   actualizarlo.
-\item Elevación de la estación, éste es un valor numérico posiblemente
-  con cifras decimales después del (.).
-\item Latitud de la estación, éste es un valor numérico posiblemente
-  con cifras decimales después del (.).
-\item Longitud de la estación, éste es un valor numérico posiblemente
-  con cifras decimales después del (.).
+\item Elevación de la estación, éste es un número real.
+\item Latitud de la estación, éste es un número real.
+\item Longitud de la estación, éste es un número real.
 \item País en donde se encuentra la estación.
 \item Estado del país donde se encuentra la estación.
 \item Ciudad del estado donde se encuentra la estación.
@@ -171,7 +187,7 @@ opción de actualizar o eliminar.
 \end{figure}
 
 Las componentes numeradas en la figura se explican a continuación (los
-campos que tienen * son obligatorios):
+campos con * son obligatorios):
 
 \begin{enumerate}
 
@@ -232,7 +248,7 @@ opción de actualizar o eliminar.
 \end{figure}
 
 Las componentes numeradas en la figura se explican a continuación (los
-campos que tienen * son obligatorios):
+campos con * son obligatorios):
 
 \begin{enumerate}
 \item En esta lista se debe seleccionar la estación en la cual se
@@ -247,13 +263,11 @@ campos que tienen * son obligatorios):
   figura~\ref{fig:gcp_excel}. Las columnas contienen en orden, los IDs
   de los GCPs los cuales deben ser numéricos y únicos para cada
   estación, los nombres de los GCPs los cuales deben ser únicos para
-  cada estación, los valores de la coordenada $X$, $Y$ y $Z$ del GCP
+  cada estación, los valores de la coordenada ($X$, $Y$, $Z$) del GCP
   en el sistema coordenado correspondiente, estas tres últimas
-  columnas deben ser numéricas. El archivo de Excel solo debe tener
-  una hoja de calculo, todas las demás deben ser eliminadas, también
-  el separador decimal del archivo debe ser un punto (.) en caso de
-  que sea una coma (,) se debe proceder a cambiarlo, esto con el fin
-  de garantizar un buen funcionamiento del sistema.
+  columnas deben ser numéricas. El archivo de Excel sólo debe tener
+  una hoja de cálculo, todas las demás deben ser eliminadas, también
+  el separador decimal del archivo debe ser un punto (.).
 
 \begin{figure}[htbp!]
   \centering
@@ -267,29 +281,25 @@ contener los datos del primer GCP a insertar en la base de
 datos. Después de seleccionar el archivo se debe dar clic en el botón
 insertar. Al terminar el proceso saldrá un mensaje indicando la
 cantidad de GCPs insertados exitosamente. Se debe tener en cuenta que
-los GCPs importados no reemplazarán los existentes haciendo las veces
-de actualización, si se desean actualizar se deberán eliminar todos y
-luego importarlos o hacerlo uno a la vez.
+los GCPs importados no reemplazarán los existentes, si se desean
+actualizar se deberán eliminar todos y luego importarlos o actualizar
+cada uno a la vez.
  
 En las opciones, también se puede seleccionar o eliminar todos los
 GCPs (incluyendo las marcaciones del usuario) en la estación que se
 seleccionó anteriormente.  Después de seleccionar esta opción se debe
 dar clic en el botón ``\textit{Delete}'', al terminar el proceso
 saldrá un mensaje indicando el éxito o el fracaso de la operación.
-\item ID para el GCP, éste debe ser único para cada estación, ser
-  numérico y entero. Este campo no es posible actualizarlo.
+
+\item ID para el GCP, és un entero que debe ser único para cada
+  estación. Este campo no es posible actualizarlo.
 \item Estación asociada al GCP. Este campo no es posible actualizarlo.
-\item Nombre del GCP, por lo general es GCP y tres dígitos (e.g.\
-  GCP001). Este campo debe ser único para cada estación.
-\item Valor de la coordenada $x$ del GCP en el sistema coordenado
-  correspondiente. Éste es un valor numérico posiblemente con cifras
-  decimales después del (.).
-\item Valor de la coordenada $y$ del GCP en el sistema coordenado
-  correspondiente. Éste es un valor numérico posiblemente con cifras
-  decimales después del (.).
-\item Valor de la coordenada $z$ del GCP en el sistema coordenado
-  correspondiente. Éste es un valor numérico posiblemente con cifras
-  decimales después del (.).
+\item Nombre del GCP, por lo general es \texttt{GCP} seguido por tres
+  dígitos (e.g.\ \texttt{GCP001}). Este campo debe ser único para cada
+  estación.
+\item Valor real de la coordenada $x$ del GCP.
+\item Valor real de la coordenada $y$ del GCP.
+\item Valor real de la coordenada $z$ del GCP.
 \item Botones para insertar/actualizar y eliminar un GCP. El primer
   botón se habilita cuando se ha ingresado la información
   correctamente, y se comprueba que no haya campos vacíos y los campos
@@ -316,10 +326,10 @@ la función que utiliza.
 
 
 Los sensores son los equipos utilizados para hacer mediciones, por
-ejemplo, una boya puede medir altura de ola, período de ola, entre
-otros. En la figura~\ref{fig:sensor} se muestra la opción de insertar
-un sensor en la base de datos y en la figura~\ref{fig:sensor2} la
-opción de actualizar o eliminar.
+ejemplo, una boya puede medir altura de ola y período de ola. En la
+figura~\ref{fig:sensor} se muestra la opción de insertar un sensor en
+la base de datos y en la figura~\ref{fig:sensor2} la opción de
+actualizar o eliminar.
 
 \begin{figure}[htbp!]
   \centering
@@ -337,7 +347,7 @@ opción de actualizar o eliminar.
 
 
 Las componentes numeradas en la figura se explican a continuación (los
-campos que tienen * son obligatorios):
+campos con * son obligatorios):
 
 \begin{enumerate}
 \item En esta lista se debe seleccionar la estación en la cual se
@@ -350,15 +360,9 @@ campos que tienen * son obligatorios):
   estación. Este campo no es posible actualizarlo.
 \item Estación asociada al sensor. Este campo no es posible
   actualizarlo.
-\item Valor de la coordenada $x$ del sensor en el sistema coordenado
-  correspondiente. Éste es un valor numérico posiblemente con cifras
-  decimales después del (.).
-\item Valor de la coordenada $y$ del sensor en el sistema coordenado
-  correspondiente. Éste es un valor numérico posiblemente con cifras
-  decimales después del (.).
-\item Valor de la coordenada $z$ del sensor en el sistema coordenado
-  correspondiente. Éste es un valor numérico posiblemente con cifras
-  decimales después del (.).
+\item Valor real de la coordenada $x$ del sensor.
+\item Valor real de la coordenada $y$ del sensor.
+\item Valor real de la coordenada $z$ del sensor.
 \item Descripción verbal del sensor.
 \item Botones para insertar/actualizar y eliminar un sensor. El primer
   botón se habilita cuando se ha ingresado la información
@@ -381,7 +385,6 @@ la función que utiliza.
 \end{figure}
 
 \subsection{Tipo de Medición}
-
 
 Los tipos de medición son los parámetros que pueden ser medidos por
 un sensor, por ejemplo, marea, altura significante de ola, período
@@ -409,7 +412,7 @@ figura~\ref{fig:measurementtype2} la opción de actualizar o eliminar.
 \end{figure}
 
 Las componentes numeradas en la figura se explican a continuación (los
-campos que tienen * son obligatorios):
+campos con * son obligatorios):
 
 \begin{enumerate}
 \item En esta lista se debe seleccionar la estación en la cual se
@@ -444,9 +447,9 @@ campos que tienen * son obligatorios):
   inserción.
 \item Botón para agregar los datos de la medición a la base de
   datos, el cual es obligatorio sólo si se desea agregar
-  información. Dando clic en este botón se abrirá una ventana en la
+  información. Haciendo clic en este botón se abrirá una ventana en la
   cual se escogerá el archivo que tiene los datos de la
-  medición. Este archivo puede tener format MAT o Excel, y no debe
+  medición. Este archivo puede tener formato MAT o Excel, y no debe
   tener ningún encabezado.  La estructura que debe tener el archivo es
   la siguiente:
 
@@ -479,9 +482,7 @@ muestra la estructura necesaria.
 Si el archivo tiene formato MAT, éste sólo podrá contener una matriz
 que tenga los datos, si el archivo es de Excel sólo debe tener una
 hoja de cálculo, todas las demás deben ser eliminadas, también el
-separador decimal del archivo debe ser un punto (.) en caso de que sea
-una coma (,) se debe proceder a cambiarlo esto con el fin de
-garantizar un buen funcionamiento del sistema.
+separador decimal del archivo debe ser un punto (.).
 
 \item Botones para insertar/actualizar y eliminar un tipo de
   medición. El primer botón se habilita cuando se ha ingresado la
@@ -511,15 +512,60 @@ la función que utiliza.
   \end{figure}
 \end{landscape}
 
+\subsection{Generar rutas de imágenes}
+\label{sec:pathdbeditor}
+
+Todas las imágenes generadas por HORUS se deben almacenar en el disco
+duro local. La interfaz \emph{Generate Image Paths}, permite, dado un
+directorio raíz, generar automáticamente las rutas para los diferentes
+tipos de imágenes procesadas (oblicuas, rectificadas,
+oblicuas--fusionadas, rectificadas--fusionadas y miniaturas).
+
+En la figura~\ref{fig:genpaths} se muestra la interfaz para generar
+las rutas de las imágenes automáticamente.
+
+\begin{figure}[htbp!]
+  \centering
+%  \includegraphics[width=0.6\textwidth]{img/genpaths}
+  \caption{Interfaz para generar las rutas automáticamente}
+  \label{fig:genpaths}
+\end{figure}
+
+Las componentes numeradas en la figura se explican a continuación:
+
+\begin{enumerate}
+\item Lista donde el usuario puede seleccionar la estación para la
+  cual, las imágenes van a estar asociadas.
+\item Selección de la ruta raíz para las imágenes oblicuas, capturadas
+  desde la estación de captura.
+\item Selección de la ruta raíz para las imágenes procesadas.
+\item Botón para guardar la configuración en el archivo XML
+  \verb!path_info.xml! del directorio de HORUS \verb!data!.
+\end{enumerate}
+
+\section{Create new user}
+
+Si se quiere crear un nuevo usuario con permisos limitados (e.g. un
+usuario de sólo lectura), se ejecuta la interfaz gráfica
+\texttt{gui\_create\_user} (ver figura~\ref{fig:guiuser}) donde
+se especifica el nombre de usuario, la contraseña, la base de datos a
+la que tiene permiso de conectarse y si tiene permiso de consultar
+(\textit{query}), insertar (\textit{insert}), borrar (\textit{delete})
+o actualizar (\textit{update}) la información en la base de datos.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{img/guiuser}
+  \caption{Interfaz para crear un nuevo usuario con permisos limitados}
+  \label{fig:guiuser}
+\end{figure}
+
 \section{Configure cameras}
 
-Luego de configurar las estaciones y las cámaras para cada estación en
-la base de datos, es necesario configurar físicamente las cámaras para
-la captura. En esta sección se describe la interfaz utilizada para
-llevar a cabo esta tarea, configurar las cámaras conectadas al
-computador de captura con los parámetros de captura requeridos. Para
-utilizar esta interfaz es necesario disponer del toolbox de
-Adquisición de Imágenes de MATLAB.
+En esta sección se describe la interfaz utilizada para configurar las
+cámaras conectadas al computador de captura con los parámetros de
+captura requeridos. Para utilizar esta interfaz es necesario disponer
+del toolbox de Adquisición de Imágenes de MATLAB.
 
 Para configurar las cámaras se debe tener instalado el adaptador
 correspondiente en el caso de cámaras \textit{Firewire} o cámaras
@@ -548,9 +594,12 @@ adaptador es \texttt{avtmatlabadaptor.dll} (el correspondiente a las
 cámaras \textit{Firewire} de la marca AVT) y se encuentra en el
 directorio \texttt{C:}, el comando para registrarlo en MATLAB sería:
 \\
-\verb!> imaqregister('C:\avtmatlabadaptor.dll')!.
+\begin{verbatim}
+> imaqregister('C:\avtmatlabadaptor.dll')
 
-\verb!> imaqreset!
+> imaqreset
+\end{verbatim}
+
 
 En la figura~\ref{fig:confcam} se muestra la interfaz de configuración
 de cámaras.
@@ -607,175 +656,19 @@ nombra la función que utiliza.
 \end{figure}
 
 
-\section{Capture configuration}
+\section{Setup image paths}
 
-En la sección anterior, se mostró la interfaz para configurar las
-cámaras de captura después de haber sido asociadas con las cámaras de
-la base de datos. En esta sección, se muestra la interfaz para
-configurar la captura como tal, entre las cosas que se configuran se
-encuentran las horas del día en que se capturan imágenes y
-\textit{stacks}, así como la información para el envío de los
-datos. La configuración se guarda en el archivo XML
-\texttt{capture\_info.xml} que se utiliza por el programa automático
-de captura.
-
-En la figura~\ref{fig:captureconf} se muestra la interfaz de
-configuración de captura.
-
-\begin{figure}[htbp!]
-  \centering
-  \includegraphics[width=\textwidth]{img/captureconf}
-  \caption{Interfaz de Configuración de capturas}
-  \label{fig:captureconf}
-\end{figure}
-
-El comando para ejecutar esta interfaz es:
-\texttt{gui\_configure\_capture}.
-
-Las componentes numeradas en la figura se explican a continuación:
-
-\begin{enumerate}
-\item Lista desplegable para seleccionar la estación.
-\item Tiempo inicial de la captura de imágenes.
-\item Tiempo final de la captura de imágenes.
-\item Tamaño de paso entre captura y captura, en minutos.
-\item Tiempo de captura, en segundos.
-\item Tipos de imágenes que se desean capturar.
-\item Lista desplegable donde se puede seleccionar una configuración
-  de captura de \textit{stacks} para actualización o la opción de
-  crear una nueva configuración.
-\item Botón para eliminar la configuración de \textit{stacks}
-  seleccionada (sólo se habilita si hay una configuración
-  seleccionada).
-\item Botón para guardar en memoria la configuración de
-  \textit{stacks} actual. Esta configuración solamente se guarda en el
-  archivo \texttt{capture\_info.xml} al presionar el botón
-  \textit{Save configuration}.
-\item Tiempo inicial de la captura de \textit{stacks}.
-\item Tiempo final de la captura de \textit{stacks}.
-\item Tamaño de paso entre captura y captura, en minutos.
-\item Lista de las cámaras guardadas en la base de datos, se debe
-  seleccionar una para asociarla a la captura.
-\item Número de frames del vídeo. El \textit{framerate} de la captura
-  es el mismo que se eligió al configurar la cámara.
-\item Botón para escoger una región de interés para la captura. La
-  región de interés se define como el conjunto de coordenadas $(u, v)$
-  de un polígono cerrado dentro de la imagen, en sentido horario o
-  antihorario. Para seleccionar un ROI, se debe haber configurado la
-  cámara seleccionada de antemano; al presionar este botón, la cámara
-  captura una imagen y la muestra para seleccionar los puntos
-  correspondientes a los vértices del polígono que conforma el ROI.
-\item Botón para generar el automático de captura de imágenes y
-  \textit{stacks}.
-\item La configuración del envío de datos contiene varios campos. Este
-  campo es la dirección del servidor SSH al que se envían las
-  imágenes.
-\item Nombre de usuario del cliente SSH.
-\item Contraseña del cliente SSH.
-\item Tiempo inicial del envío.
-\item Tiempo final del envío.
-\item Tamaño de paso entre envío y envío, en minutos.
-\item Cuenta de e--mail desde donde se envían mensajes de error sobre
-  el envío de datos.
-\item Contraseña de la cuenta de e--mail.
-\item Lista de e--mails separados por comas que reciben los mensajes
-  de error.
-\item Ruta remota en el servidor en donde se almacenarán los datos
-  enviados.
-\item Botón para generar el automático de transferencia.
-\item Botón para almacenar la configuración en el archivo XML y en la
-  base de datos (si todos los campos son válidos y no hay solapamiento
-  entre tiempos de captura).
-\item Botón que muestra gráficamente los tiempos de captura,
-  transferencia y procesamiento previamente configurados.
-\end{enumerate}
-
-En la figura~\ref{fig:flow_captureconf} se muestra el diagrama de
-flujo para la configuración de capturas, donde para cada proceso se
-nombra la función que utiliza.
-
-\begin{figure}[htbp!]
-  \centering
-  \includegraphics[width=\textwidth]{img/flow_captureconf}
-  \caption{Diagrama de flujo del proceso de configuración de captura}
-  \label{fig:flow_captureconf}
-\end{figure}
-
-Toda esta información es utilizada por el algoritmo automático que
-lleva a cabo la captura. En la figura~\ref{fig:flow_autocapture} se
-muestra el diagrama de flujo que describe el proceso de este
-automático. El automático se ejecuta como un servicio o demonio, es
-decir, se ejecuta infinitamente hasta que ocurre un evento que dispara
-una acción, en este caso, ese evento son las horas programadas para
-realizar la captura.
-
-\begin{landscape}
-  \begin{figure}[htbp!]
-    \centering
-    \includegraphics[height=0.8\textwidth]{img/flow_autocapture}
-    \caption{Diagrama de flujo del automático de captura}
-    \label{fig:flow_autocapture}
-  \end{figure}
-\end{landscape}
-
-Para utilizar el automático de captura, es necesario compilar las
-funciones \verb!auto_capture_images.m! y \verb!auto_transfer.m! del
-directorio \texttt{src}, mediante los botones correspondientes en la
-interfaz. Sin embargo, si se quieren compilar manualmente, se ejecutan
-los siguientes comandos en la línea de comandos de MATLAB (suponiendo
-que el directorio de HORUS es \verb!C:\horus!):
-
-\begin{flushleft}
-  \verb!cd C:\horus!
-
-  \verb!addpath('src')!
-
-  \verb!mcc -m auto_capture_images -a ./data -I ./tmp!
-
-  \verb!mcc -m auto_transfer -a ./data -I ./tmp!
-
-\end{flushleft}
-
-Si la compilación se realizó mediante la interfaz, se generan los
-archivos ejecutables \texttt{run\_auto\_capture\_images.bat} y
-\texttt{run\_auto\_transfer.bat}.
-
-Si los archivos se compilaron manualmente, en el sistema operativo
-Windows, se generan dos ejecutables \texttt{auto\_capture\_images.exe}
-y \texttt{auto\_transfer.exe}, los cuales reciben unos parámetros de
-entrada. El automático de captura recibe el nombre de la estación, y
-el automático de transferencia recibe el nombre de la estación y la
-dirección IP del servidor al que se enviarán los datos. Para
-ejecutarlos, se debe crear para cada uno, un archivo BAT que recibe
-los parámetros. Un ejemplo de archivo BAT para el automático de
-captura podría contener el siguiente código
-(\texttt{run\_auto\_capture\_images.bat}):
-
-\begin{flushleft}
-  \verb!auto_capture_images.exe CARTAGENA!
-\end{flushleft}
-
-Para el automático de transferencia (\texttt{run\_auto\_transfer.bat}):
-
-\begin{flushleft}
-   \verb!auto_transfer.exe CARTAGENA 168.176.124.165!
-\end{flushleft}
-
-\emph{Nota:} Es posible que al compilar el automático de transferencia
-aparezca un mensaje de advertencia. Esto es normal y se puede hacer
-caso omiso de él.
-
-\section{Path Editor}
-
-Actualmente, el sistema HORUS trabaja cuatro tipos de imágenes:
+Actualmente, el sistema HORUS trabaja con cuatro tipos de imágenes:
 oblicuas, rectificadas, oblicuas--fusionadas y
 rectificadas--fusionadas, pero se pueden agregar más a la base de
 datos cuando sea necesario. De cada uno de estos tipos se pueden
 generar imágenes miniaturas.
 
-En esta sección se describe la interfaz que sirve para configurar las
-rutas de almacenamiento en disco de cada uno de estos tipos de
-imágenes. En total, son ocho rutas que se deben configurar.
+En la sección~\ref{sec:pathdbeditor} se vio cómo se pueden generar
+automáticamente las rutas para las imágenes. En esta sección se
+describe la interfaz que sirve para configurar manualmente las rutas
+de almacenamiento en disco de cada uno de estos tipos de imágenes. En
+total, son ocho rutas que se deben configurar.
 
 El Toolbox de HORUS cuenta con un archivo XML que contiene las rutas a
 las imágenes de cada estación, \texttt{path\_info.xml}. Con esta
@@ -795,7 +688,7 @@ interfaz.
 \begin{figure}[htbp!]
   \centering
   \includegraphics[width=0.6\textwidth]{img/edit_path2}
-  \caption{Interfaz para editar las rutas ya con cambios realizados}
+  \caption{Interfaz para editar las rutas con los campos rellenos}
   \label{fig:edit_path2}
 \end{figure}
 
@@ -803,24 +696,23 @@ El comando para ejecutar esta interfaz es:
 \texttt{gui\_paths\_editor}.
 
 Las componentes numeradas en la figura se explican a continuación (los
-campos que tienen * son obligatorios):
+campos con * son obligatorios):
 
 \begin{enumerate}
 \item Se debe seleccionar la estación a la cual se le desea cambiar la
-  ruta de las imágenes. Después de haber seleccionado la estación se
-  muestran todas las rutas actuales desde que existan en el computador
-  donde se está haciendo el cambio o una dirección web. Si no cumple
-  con esto la ruta se mostrará vacía.
+  ruta de las imágenes. Después de haber seleccionado la estación, se
+  muestran todas las rutas actuales siempre y cuando hayan sido
+  configuradas previamente.
 
   En las opciones de la (2) a la (9) se selecciona la nueva ruta ya
-  sea reescribiéndola en el campo de texto o dando clic en el botón
+  sea reescribiéndola en el campo de texto o haciendo clic en el botón
   ``\ldots'' que abrirá una nueva ventana en donde se puede
   seleccionar la nueva ruta. La ruta debe ser a un directorio
   existente o una dirección web con la estructura
   \emph{http://IP/ruta} o \emph{http://dominio/ruta}. Se debe tener en
   cuenta que las rutas que sean direcciones web sólo sirven para hacer
-  la lectura de las imágenes, si se desean guardar las imágenes
-  generadas debe ser una ruta en el disco duro.
+  la lectura de las imágenes, para las imágenes almacenadas
+  \emph{siempre} se deben guardar en el disco duro.
 \item Ruta de las imágenes oblicuas.
 \item Ruta de las imágenes rectificadas.
 \item Ruta de las imágenes oblicuas--fusionadas.
@@ -834,7 +726,7 @@ campos que tienen * son obligatorios):
   no existan campos vacíos, y que las rutas sean directorios que
   existan en el disco duro o sean direcciones web, con la estructura
   \emph{http://IP/ruta} o \emph{http://dominio/ruta}. Si al hacer la
-  comprobación encuentra que algún campo no cumple con esto, lo
+  comprobación se encuentra que algún campo no cumple con esto, lo
   mostrará en rojo, el cual deberá cambiarse para poder guardar las
   rutas. Al terminar se mostrará una ventana indicando el éxito o el
   fracaso de la operación.
@@ -851,132 +743,8 @@ la función que utiliza.
   \label{fig:edit_path3}
 \end{figure}
 
-\section{ROI Tool}
 
-Con esta interfaz se puede insertar, actualizar o eliminar la
-información en la base de datos de un ROI. Al abrir la interfaz, se
-muestran los ROIs disponibles en la base de datos, los cuales pueden
-ser actualizados. También es posible agregar un nuevo ROI.
-
-En esta interfaz cada vez que se hace alguna consulta, se inserta,
-actualiza o elimina información de la base de datos, se mostrará una
-ventana indicando esto y se cerrará automáticamente cuando haya
-finalizado.
-
-En la figura~\ref{fig:roi} se muestra la opción de insertar un ROI en
-la base de datos y en la figura~\ref{fig:roi2} la opción de actualizar
-o eliminar.
-
-\begin{figure}[htbp!]
-  \centering
-  \includegraphics[width=\textwidth]{img/roi}
-  \caption{Interfaz para insertar un nuevo ROI}
-  \label{fig:roi}
-\end{figure}
-
-\begin{figure}[htbp!]
-  \centering
-  \includegraphics[width=\textwidth]{img/roi2}
-  \caption{Interfaz para actualizar un ROI}
-  \label{fig:roi2}
-\end{figure}
-
-El comando para ejecutar esta interfaz es: \texttt{gui\_roi\_tool}.
-
-Las componentes numeradas en la figura se explican a continuación (los
-campos que tienen * son obligatorios):
-
-\begin{enumerate}
-\item Lista para seleccionar la estación en la cual se encuentra el
-  ROI a actualizar o en donde se desea insertar.
-\item Lista para seleccionar la cámara en la cual se encuentra el ROI
-  a actualizar o en donde se desea insertar.
-\item Lista para seleccionar un tiempo de una calibración en el cual
-  se desea actualizar o insertar el ROI.
-\item Lista para seleccionar el tipo del ROI el cual puede ser
-  \textit{rect} (para la rectificación), \textit{stack} (para
-  \textit{timestacks}) o \textit{user} (para densidad de usuarios).
-\item Tiempo del ROI que se desea actualizar. También se puede
-  seleccionar insertar un nuevo ROI.  Este tiempo es una fecha que
-  sirve para definir a partir de qué momento es válido el ROI. Cuando
-  se debe usar un ROI en algún algoritmo se toma el último que existe
-  en la base de datos con un tiempo antes de la fecha de la imagen.
-\item Si se va a insertar un nuevo ROI, esta opción se activará y se
-  debe ingresar el tiempo del ROI.
-\item Botón para cargar las imágenes candidatas para marcar los
-  ROIs. Este botón debe ser presionado para poder visualizar una lista
-  de imágenes en (10) para posteriormente ser mostrada una imagen en
-  (15), si esto no se hace no se podrá mostrar la imagen. Las imágenes
-  que se listan son las veinte primeras imágenes que existan a partir
-  de la fecha que se muestra acá y hasta doce horas después de ésta.
-\item Posiciones en $u$ si se escogió la opción de actualizar y hay
-  información en la base de datos, por el contrario si se escogió
-  insertar se mostrará vacío para que se ingrese la información. Éste
-  es un valor numérico posiblemente con cifras decimales después del
-  (.). El campo que se muestra al lado derecho es para visualizar la
-  posición de los puntos cuando se está haciendo la marcación con
-  (11). Deben ser mínimo tres puntos para poder así cerrar el
-  polígono.
-\item Posiciones en $v$ si se escogió la opción de actualizar y hay
-  información en la base de datos, por el contrario si se escogió
-  insertar se mostrará vacío para que se ingrese la información. Éste
-  es un valor numérico posiblemente con cifras decimales después del
-  (.). El campo que se muestra al lado derecho es para visualizar la
-  posición de los puntos cuando se está haciendo la marcación con
-  (11).  Deben ser mínimo tres puntos para poder así cerrar el
-  polígono.
-\item Lista para seleccionar la imagen que se quiere mostrar en (15) y
-  sobre la cual se hará la marcación.
-\item Botón para comenzar las marcaciones de los puntos $(u, v)$ sobre
-  la imagen y que son mostrados en (8) y (9). La marcación de los
-  vértices se logra haciendo clic izquierdo sobre la imagen y marcando
-  el último punto con clic derecho para cerrar el polígono. Si se
-  desean agregar más vértices después de cerrar el polígono se puede
-  presionar de nuevo (11) y éste borrará la línea de cierre y se
-  podrán agregar los nuevos puntos. Para eliminar un vértice se puede
-  hacer con el botón <- que se encuentra en (14).
-\item Botón de insertar/actualizar un ROI que debe ser presionado para
-  generar la acción, éste se habilita cuando se ha ingresado la
-  información correctamente y se comprueba que no hayan campos vacíos
-  en la parte obligatoria y sí sean numéricos los campos (8) y (9). Al
-  terminar, se mostrará una ventana indicando el éxito o el fracaso de
-  la operación.
-\item Este botón aparece cuando se ha ingresado la información como si
-  se fuese a actualizar un ROI y sirve para eliminarlo de la base de
-  datos. Si se desea insertar un nuevo ROI, este botón no estará
-  visible. Al terminar, se mostrará una ventana indicando el éxito o
-  el fracaso de la operación.
-\item Opciones para hacer \textit{zoom}, desplazarse sobre la imagen y
-  borrar el último vértice marcado sobre la imagen (<-). Se pueden
-  eliminar la cantidad de puntos que sean necesarios.
-\item Área donde se muestra una imagen en la que se marcan los puntos
-  U y V del ROI. Cuando se activa la opción de insertar o actualizar
-  un ROI, las líneas se verán rojas y los puntos amarillos. Cuando se
-  está visualizando la anterior marcación (la que se va a actualizar)
-  las líneas se ven amarillas y los puntos rojos.
-
-\end{enumerate}
-
-Se puede hacer la marcación de dos formas: agregando los puntos en los
-campos de texto (8) y (9) o marcándolos en la imagen con (11). Se debe
-tener en cuenta que si se está actualizando, al presionar (11) por
-primera vez se deberá empezar a marcar el polígono desde el principio,
-si la idea es agregar sólo un punto es recomendable hacerlo con (8) y
-(9), o marcar encima de los puntos anteriores del polígono. Estas dos
-formas no son excluyentes y se pueden combinar a gusto del usuario.
-
-En la figura~\ref{fig:roi3} se muestra un diagrama de flujo que explica 
-los procesos de la interfaz donde para cada proceso se nombra
-la función que utiliza.
-
-\begin{figure}[htbp!]
-  \centering
-  \includegraphics[width=0.8\textwidth]{img/roi3}
-  \caption{Diagrama de flujo interfaz ROI Tool}
-  \label{fig:roi3}
-\end{figure}
-
-\section{Generate Calibration}
+\section{Configure rectification}
 
 En HORUS es posible generar calibraciones para la rectificación. En la
 figura~\ref{fig:calibration} se muestra el proceso de
@@ -1139,18 +907,142 @@ la función que utiliza.
 \end{figure}
 
 
-\section{Rectify images}
+\section{Create new ROI}
 
-La interfaz para la rectificación tiene como fin proveer al usuario
-una manera de rectificar un conjunto de imágenes dados una estación,
-una cámara, un tipo de imagen y un rango de tiempo. El usuario puede
-definir un ROI en la imagen para la rectificación. Se presupone que ya
-hay calibraciones almacenadas en la base de datos, de lo contrario el
-usuario debe proceder a generar una con la interfaz
-correspondiente. Por defecto, se escoge la última calibración
-almacenada en la base de datos cuyo tiempo de generación sea el más
-cercano antes del tiempo de cada imagen, sin embargo, es posible
-escoger cualquier otra calibración para rectificar el conjunto
+Con esta interfaz se puede insertar, actualizar o eliminar la
+información en la base de datos de un ROI asociado a una
+calibración. Al abrir la interfaz, se muestran los ROIs disponibles en
+la base de datos, los cuales pueden ser actualizados. También es
+posible agregar uno nuevo.
+
+En esta interfaz cada vez que se hace alguna consulta, se inserta,
+actualiza o elimina información de la base de datos, se mostrará una
+ventana indicando esto y se cerrará automáticamente cuando haya
+finalizado.
+
+En la figura~\ref{fig:roi} se muestra la opción de insertar un ROI en
+la base de datos y en la figura~\ref{fig:roi2} la opción de actualizar
+o eliminar.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=\textwidth]{img/roi}
+  \caption{Interfaz para insertar un nuevo ROI}
+  \label{fig:roi}
+\end{figure}
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=\textwidth]{img/roi2}
+  \caption{Interfaz para actualizar un ROI}
+  \label{fig:roi2}
+\end{figure}
+
+El comando para ejecutar esta interfaz es: \texttt{gui\_roi\_tool}.
+
+Las componentes numeradas en la figura se explican a continuación (los
+campos con * son obligatorios):
+
+\begin{enumerate}
+\item Lista para seleccionar la estación en la cual se encuentra el
+  ROI a actualizar o en donde se desea insertar.
+\item Lista para seleccionar la cámara en la cual se encuentra el ROI
+  a actualizar o en donde se desea insertar.
+\item Lista para seleccionar un tiempo de una calibración en el cual
+  se desea actualizar o insertar el ROI.
+\item Lista para seleccionar el tipo del ROI el cual puede ser
+  \textit{rect} (para la rectificación), \textit{stack} (para
+  \textit{timestacks}) o \textit{user} (para densidad de usuarios).
+\item Tiempo del ROI que se desea actualizar. También se puede
+  seleccionar insertar un nuevo ROI.  Este tiempo es una fecha que
+  sirve para definir a partir de qué momento es válido el ROI. Cuando
+  se debe usar un ROI en algún algoritmo se toma el último que existe
+  en la base de datos con un tiempo antes de la fecha de la imagen.
+\item Si se va a insertar un nuevo ROI, esta opción se activará y se
+  debe ingresar el tiempo del ROI.
+\item Botón para cargar las imágenes candidatas para marcar los
+  ROIs. Este botón debe ser presionado para poder visualizar una lista
+  de imágenes en (10) para posteriormente ser mostrada una imagen en
+  (15), si esto no se hace no se podrá mostrar la imagen. Las imágenes
+  que se listan son las veinte primeras imágenes que existan a partir
+  de la fecha que se muestra acá y hasta doce horas después de ésta.
+\item Posiciones en $u$ (valores reales), si se escogió la opción de
+  actualizar y hay información en la base de datos, por el contrario,
+  si se escogió la opción de insertar se mostrará vacío para que se
+  ingrese la información. El campo que se muestra al lado derecho es
+  para visualizar la posición de los puntos cuando se está haciendo la
+  marcación con (11). Deben ser mínimo tres puntos para poder así
+  cerrar el polígono.
+\item Posiciones en $v$ (valores reales), si se escogió la opción de
+  actualizar y hay información en la base de datos, por el contrario,
+  si se escogió insertar se mostrará vacío para que se ingrese la
+  información. El campo que se muestra al lado derecho es para
+  visualizar la posición de los puntos cuando se está haciendo la
+  marcación con (11).  Deben ser mínimo tres puntos para poder así
+  cerrar el polígono.
+\item Lista para seleccionar la imagen que se quiere mostrar en (15) y
+  sobre la cual se hará la marcación.
+\item Botón para comenzar las marcaciones de los puntos $(u, v)$ sobre
+  la imagen y que son mostrados en (8) y (9). La marcación de los
+  vértices se logra haciendo clic izquierdo sobre la imagen y marcando
+  el último punto con clic derecho para cerrar el polígono. Si se
+  desean agregar más vértices después de cerrar el polígono se puede
+  presionar de nuevo (11) y éste borrará la línea de cierre y se
+  podrán agregar los nuevos puntos. Para eliminar un vértice se puede
+  presionar el botón <- que se encuentra en (14).
+\item Botón de insertar/actualizar un ROI que debe ser presionado para
+  generar la acción, éste se habilita cuando se ha ingresado la
+  información correctamente y se comprueba que no hayan campos vacíos
+  en la parte obligatoria y sí sean numéricos los campos (8) y (9). Al
+  terminar, se mostrará una ventana indicando el éxito o el fracaso de
+  la operación.
+\item Este botón aparece cuando se ha ingresado la información como si
+  se fuese a actualizar un ROI y sirve para eliminarlo de la base de
+  datos. Si se desea insertar un nuevo ROI, este botón no será
+  visible. Al terminar, se mostrará una ventana indicando el éxito o
+  el fracaso de la operación.
+\item Opciones para hacer \textit{zoom}, desplazarse sobre la imagen y
+  borrar el último vértice marcado sobre la imagen (<-). Se puede
+  eliminar cualquier cantidad de puntos.
+\item Área donde se muestra una imagen en la que se marcan los puntos
+  U y V del ROI. Cuando se activa la opción de insertar o actualizar
+  un ROI, las líneas se verán rojas y los puntos amarillos. Cuando se
+  está visualizando la anterior marcación (la que se va a actualizar)
+  las líneas se ven amarillas y los puntos rojos.
+
+\end{enumerate}
+
+Se puede hacer la marcación de dos formas: agregando los puntos en los
+campos de texto (8) y (9) o marcándolos en la imagen con (11). Se debe
+tener en cuenta que si se está actualizando, al presionar (11) por
+primera vez, se deberá empezar a marcar el polígono desde el
+principio.  Si la idea es agregar sólo un punto, es recomendable
+hacerlo con (8) y (9), o marcar sobre los puntos anteriores. Estas dos
+formas no son excluyentes y se pueden combinar a gusto del usuario.
+
+En la figura~\ref{fig:roi3} se muestra un diagrama de flujo que explica 
+los procesos de la interfaz donde para cada proceso se nombra
+la función que utiliza.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/roi3}
+  \caption{Diagrama de flujo interfaz ROI Tool}
+  \label{fig:roi3}
+\end{figure}
+
+\section{Manually rectify images}
+
+La interfaz para la rectificación manual de lotes de imágenes tiene
+como fin proveer al usuario una manera de rectificar un conjunto de
+imágenes dados una estación, una cámara, un tipo de imagen y un rango
+de tiempo. El usuario puede definir un ROI en la imagen para la
+rectificación. Se presupone que ya hay calibraciones almacenadas en la
+base de datos, de lo contrario el usuario debe proceder a generar una
+con la interfaz correspondiente. Por defecto, se escoge la última
+calibración almacenada en la base de datos cuyo tiempo de generación
+sea el más cercano antes del tiempo de cada imagen, sin embargo, es
+posible escoger cualquier otra calibración para rectificar el conjunto
 completo de imágenes. En la figura~\ref{fig:rect} se muestra la
 interfaz.
 
@@ -1238,7 +1130,7 @@ nombra la función que utiliza.
   \label{fig:flow_rectify}
 \end{figure}
 
-\section{Generate Fusion Calibration}
+\section{Configure fusion}
 
 La interfaz de calibración de fusión provee al usuario una manera de
 generar los parámetros del modelo que sirve para fusionar un grupo de
@@ -1280,7 +1172,7 @@ Las componentes numeradas en la figura se explican a continuación:
 \item Selección de las cámaras y el orden entre ellas. En la lista
   desplegable se listan todas las cámaras de la estación escogida, y
   mediante el botón ``$\gg$'' se cargan para la calibración. El botón
-  ``$\ll$'' borra de la lista de cámaras cargadas una en particular.
+  ``$\ll$'' borra de la lista de cámaras la cámara seleccionada.
 \item Botón para cargar las imágenes de las cámaras escogidas. Estas
   imágenes se cargan por pares, por ejemplo, si el usuario seleccionó
   las cámaras \emph{C1}, \emph{C2} y \emph{C3}, primero se cargan las
@@ -1369,21 +1261,19 @@ los recuadros es la función utilizada en ese proceso.
   \end{figure}
 \end{landscape}
 
+\section{Manually merge images}
 
-
-\section{Merge images}
-
-La interfaz para la fusión tiene como fin proveer al usuario una
-manera de configurar los criterios de búsqueda de un grupo de imágenes
-y fusionarlas dados una estación, un tipo de imagen y un rango de
-tiempo. El usuario tiene la opción de fusionar imágenes oblicuas,
-fusionar imágenes ya rectificadas, o de rectificar y luego fusionar
-las imágenes, para un conjunto de cámaras. Por defecto, se escoge la
-última calibración almacenada en la base de datos cuyo tiempo de
-generación sea el más cercano antes del tiempo de cada conjunto de
-imágenes, sin embargo, es posible escoger cualquier otra calibración
-para fusionar el conjunto completo de imágenes. En la
-figura~\ref{fig:fusion} se muestra la interfaz.
+La interfaz para la fusión de un lote de imágenes manualmente tiene
+como fin proveer al usuario una manera de configurar los criterios de
+búsqueda de un grupo de imágenes y fusionarlas dados una estación, un
+tipo de imagen y un rango de tiempo. El usuario tiene la opción de
+fusionar imágenes oblicuas, fusionar imágenes ya rectificadas, o de
+rectificar y luego fusionar las imágenes, para un conjunto de
+cámaras. Por defecto, se escoge la última calibración almacenada en la
+base de datos cuyo tiempo de generación sea el más cercano antes del
+tiempo de cada conjunto de imágenes, sin embargo, es posible escoger
+cualquier otra calibración para fusionar el conjunto completo de
+imágenes. En la figura~\ref{fig:fusion} se muestra la interfaz.
 
 \begin{figure}[htbp!]
   \centering
@@ -1403,11 +1293,9 @@ Las componentes numeradas en la figura se explican a continuación:
 \item Lista desplegable donde se puede escoger alguno de los tipos de
   imágenes disponibles en la base de datos (e.g.\@\textit{Snap, Timex,
     Var}).
-\item Si se escoge la opción ``Rectify \& merge images'' se buscan
-  imágenes oblicuas que se rectifican y luego se fusionan. Si se
-  escoge la opción ``Merge already rectified images'' se buscan
-  imágenes ya rectificadas y se fusionan. Si no se elige ninguna
-  opción, sólo se fusionan las imágenes oblicuas.
+\item Se puede seleccionar una de las siguientes tres opciones:
+  ``Merge oblique images'', ``Rectify and merge oblique images'' y
+  ``Merge rectified images''.
 \item Lista desplegable donde se puede escoger la fecha de una fusión
   almacenada en la base de datos para fusionar todo el conjunto de
   imágenes. Si se deja la opción por defecto, para cada imagen se
@@ -1468,151 +1356,172 @@ función que utiliza.
 \end{landscape}
 
 
-\section{Thumbnails Tool y Upload to Hosting}
 
-En el sistema HORUS se cuenta con la generación de imágenes miniaturas
-para mostrar una vista previa de las imágenes en la página web del
-sistema \emph{www.horusvideo.com}.  Con esta interfaz se podrán
-generar miniaturas dado el tipo de la miniaturización, el tipo de las
-imágenes y un rango de fechas.  En esta interfaz cada vez que se haga
-alguna consulta, se inserte, actualice o elimine información de la
-base de datos se mostrará una ventana indicando esto y se cerrará
-automáticamente cuando haya finalizado.  En las figuras~\ref{fig:min}
-y~\ref{fig:min2} se muestra la interfaz.
+\section{Configure capture automatic}
 
-\begin{figure}[htbp!]
-  \centering
-  \includegraphics[width=0.8\textwidth]{img/min}
-  \caption{Interfaz inicial para generar miniaturas}
-  \label{fig:min}
-\end{figure}
+En esta sección, se muestra la interfaz para configurar la captura de
+imágenes oblicuas. Entre las cosas que se configuran se encuentran las
+horas del día en que se capturan imágenes y \textit{stacks}, así como
+la información para el envío de los datos. La configuración se guarda
+en el archivo XML \texttt{capture\_info.xml} que utiliza el programa
+automático de captura.
 
-
+En la figura~\ref{fig:captureconf} se muestra la interfaz de
+configuración de captura.
 
 \begin{figure}[htbp!]
   \centering
-  \includegraphics[width=0.8\textwidth]{img/min2}
-  \caption{Interfaz con los datos necesarios para generar miniaturas}
-  \label{fig:min2}
+  \includegraphics[width=\textwidth]{img/captureconf}
+  \caption{Interfaz de Configuración de capturas}
+  \label{fig:captureconf}
 \end{figure}
 
 El comando para ejecutar esta interfaz es:
-\texttt{gui\_thumbnails\_tool}.
+\texttt{gui\_configure\_capture}.
 
-Las componentes numeradas en la figura se explican a continuación (los
-campos que tienen * son obligatorios):
-
-\begin{enumerate}
-\item Lista para seleccionar la estación a la que se le quiere generar
-  miniaturas.
-\item Lista para seleccionar el tipo de las miniaturas que puede ser
-  \textit{oblique} para imágenes oblicuas, \textit{rectified} para
-  imágenes rectificadas, \textit{merge\_oblique} para las imágenes
-  oblicuas--rectificadas o \textit{merge\_rectified} para las imágenes
-  rectificadas--fusionadas.
-\item Ruta donde se guardan las imágenes miniaturas, si se ha
-  seleccionado en (7) la opción ``\textit{Insert to Disk}'', se debe
-  seleccionar la ruta donde se van a guardar las imágenes, si se ha
-  seleccionado la opción ``\textit{Insert to Database}'', aparecerá
-  automáticamente la ruta en donde se guardarán las imágenes y no se
-  podrá editar a menos que lo haga usando la interfaz \textit{Path
-    Editor}. Si es el caso, la ruta se puede cambiar ya sea
-  escribiendo la nueva ruta en este campo o dando clic en el botón
-  \textit{\ldots} que abrirá una nueva ventana para que se seleccione
-  la ruta.
-\item Fecha de inicio para generar las miniaturas.
-\item Fecha final para generar las miniaturas.
-
-  Los campos (4) y (5) se mostrarán cuando se haya escogido un tipo en
-  el campo (2) y se cambia la fecha moviendo los controles del
-  calendario.  Se debe tener en cuenta que la fecha final debe ser
-  mayor que la de inicio.
-  
-\item Ancho deseado de las nuevas imágenes, la cual es el número 
-  de pixeles que se desea tenga el ancho de las imágenes. 
-  Éste es un valor entero. Se recomienda que el ancho de 
-  la miniatura sea de 120 píxeles.
-\item Se debe seleccionar si se desea que las imágenes sean subidas a
-  un servidor web o si se desea que se guarde la información en la
-  base de datos de HORUS y en la ruta configurada con anterioridad, o
-  si desea que las imágenes se guarden sólo en el disco. Las opciones
-  ``\textit{Insert to Disk}'' y ``\textit{Insert to Database}'' y
-  también las opciones ``\textit{Insert to Disk}'' y ``\textit{Upload
-    hosting}'' son excluyentes. Solo se podrán escoger en simultáneo
-  las opciones ``\textit{Insert to Database}'' y ``\textit{Upload
-    hosting}''. Al seleccionar ``\textit{Upload hosting}'' esta solo 
-  creará un archivo con la información para subir las imágenes al 
-  servidor web. Para configurar los datos de conexión del 
-  \texttt{hosting} y subir las imágenes como tal se debe usar 
-  la interfaz \texttt{gui\_upload\_hosting}.
-\item Selección de al menos un tipo de imagen para generar las
-  miniaturas, los básicos son: \textit{Snap}, \textit{Timex} y
-  \textit{Var}. Los tipos de imágenes son leídos de la base de datos.
-\item Botón para comenzar la miniaturización. Este botón se habilitará
-  cuando se hayan ingresado los datos correctamente. Se comprueba que
-  la ruta en (3) sea un directorio existente, si es una dirección web
-  se mostrará vacío ya que estas rutas son de sólo lectura y se debe
-  seleccionar una ruta correcta que esté en el disco duro. También se
-  comprueba que se seleccione al menos un tipo de imagen y que se
-  seleccione una de las opciones ``\textit{Insert to Database}'' o
-  ``\textit{Insert to Disk}''. Este botón se deshabilitará mientras se
-  generan las miniaturas y se abrirá una ventana de progreso en la
-  cual se puede dar en cualquier momento clic en ``\textit{Cancel}'',
-  para finalizar la operación.  Al terminar se mostrará una ventana
-  indicando el éxito o el fracaso de la operación.
-
-\end{enumerate}
-
-En la figura~\ref{fig:upload_hosting} se muestra la interfaz que tiene
-como fin subir las miniaturas que se han generado, donde se ingresan
-los datos de conexión del servidor de datos. Las componentes numeradas
-en la figura se explican a continuación (Todos los campos son
-obligatorios):
+Las componentes numeradas en la figura se explican a continuación:
 
 \begin{enumerate}
-\item Lista para seleccionar la estación para la que se quieren subir
-  las imágenes miniaturas.
-\item Host del servidor puede ser una dirección IP o un nombre de dominio.
-\item Se debe ingresar el usuario.
-\item Se debe ingresar la contraseña.
-\item Este botón es usado para guardar los datos de conexión. Solo se
-  habilita cuando se hayan diligenciado todos los campos.
-\item Este botón inicia la subida de las imágenes al hosting. Se
-  habilita después de guardar la configuración o al cargar una
-  configuración existente.
+\item Lista desplegable para seleccionar la estación.
+\item Tiempo inicial de la captura de imágenes.
+\item Tiempo final de la captura de imágenes.
+\item Tiempo de espera entre capturas consecutivas, en minutos.
+\item Tiempo de captura, en segundos.
+\item Tipos de imágenes que se desean capturar.
+\item Lista desplegable donde se puede seleccionar una configuración
+  de captura de \textit{stacks} para actualización o la opción de
+  crear una nueva configuración.
+\item Botón para eliminar la configuración de \textit{stacks}
+  seleccionada (sólo se habilita si hay una configuración
+  seleccionada).
+\item Botón para guardar en memoria la configuración de
+  \textit{stacks} actual. Esta configuración solamente se guarda en el
+  archivo \texttt{capture\_info.xml} al presionar el botón
+  \textit{Save configuration}.
+\item Tiempo inicial de la captura de \textit{stacks}.
+\item Tiempo final de la captura de \textit{stacks}.
+\item Tamaño de paso entre captura y captura, en minutos.
+\item Lista de las cámaras guardadas en la base de datos, se debe
+  seleccionar una para asociarla a la captura.
+\item Número de frames del vídeo. El \textit{framerate} de la captura
+  es el mismo que se eligió al configurar la cámara.
+\item Botón para escoger una región de interés para la captura. La
+  región de interés se define como el conjunto de coordenadas $(u, v)$
+  de un polígono cerrado dentro de la imagen, en sentido horario o
+  antihorario. Para seleccionar un ROI, se debe haber configurado la
+  cámara seleccionada de antemano; al presionar este botón, la cámara
+  captura una imagen y la muestra para seleccionar los puntos
+  correspondientes a los vértices del polígono que conforma el ROI.
+\item Botón para generar el automático de captura de imágenes y
+  \textit{stacks}.
+\item La configuración del envío de datos contiene varios campos. Este
+  campo es la dirección del servidor SSH al que se envían las
+  imágenes.
+\item Nombre de usuario del cliente SSH.
+\item Contraseña del cliente SSH.
+\item Tiempo inicial del envío.
+\item Tiempo final del envío.
+\item Tiempo de espera entre envíos consecutivos, en minutos.
+\item Cuenta de e--mail desde donde se envían mensajes de error sobre
+  el envío de datos.
+\item Contraseña de la cuenta de e--mail.
+\item Lista de e--mails separados por comas que reciben los mensajes
+  de error.
+\item Ruta remota en el servidor en donde se almacenarán los datos
+  enviados.
+\item Botón para generar el automático de transferencia.
+\item Botón para almacenar la configuración en el archivo XML y en la
+  base de datos (si todos los campos son válidos y no hay solapamiento
+  entre tiempos de captura).
+\item Botón que muestra gráficamente los tiempos de captura,
+  transferencia y procesamiento previamente configurados.
 \end{enumerate}
+
+En la figura~\ref{fig:flow_captureconf} se muestra el diagrama de
+flujo para la configuración de capturas, donde para cada proceso se
+nombra la función que utiliza.
 
 \begin{figure}[htbp!]
   \centering
-  \includegraphics[width=0.7\textwidth]{img/upload_hosting}
-  \caption{Interfaz para subir las miniaturas generadas a la web}
-  \label{fig:upload_hosting}
+  \includegraphics[width=\textwidth]{img/flow_captureconf}
+  \caption{Diagrama de flujo del proceso de configuración de captura}
+  \label{fig:flow_captureconf}
 \end{figure}
 
+Toda esta información es utilizada por el algoritmo automático que
+lleva a cabo la captura. En la figura~\ref{fig:flow_autocapture} se
+muestra el diagrama de flujo que describe el proceso de este
+automático. El automático se ejecuta como un servicio o demonio, es
+decir, se ejecuta infinitamente hasta que ocurre un evento que dispara
+una acción, en este caso, ese evento son las horas programadas para
+realizar la captura.
 
-Los datos de conexión son proporcionados por el equipo HORUS.
+\begin{landscape}
+  \begin{figure}[htbp!]
+    \centering
+    \includegraphics[height=0.8\textwidth]{img/flow_autocapture}
+    \caption{Diagrama de flujo del automático de captura}
+    \label{fig:flow_autocapture}
+  \end{figure}
+\end{landscape}
 
-En la figura~\ref{fig:min3} se muestra un diagrama de flujo que
-explica los procesos de la interfaz donde para cada proceso se nombra
-la función que utiliza.
+Para utilizar el automático de captura, es necesario compilar las
+funciones \verb!auto_capture_images.m! y \verb!auto_transfer.m! del
+directorio \texttt{src}, mediante los botones correspondientes en la
+interfaz. Sin embargo, si se quieren compilar manualmente, se ejecutan
+los siguientes comandos en la línea de comandos de MATLAB (suponiendo
+que el directorio de HORUS es \verb!C:\horus!):
 
-\begin{figure}[htbp!]
-  \centering
-  \includegraphics[width=\textwidth]{img/min3}
-  \caption{Diagrama de flujo interfaz Thumbnails Tool}
-  \label{fig:min3}
-\end{figure}
+\begin{flushleft}
+  \verb!cd C:\horus!
+
+  \verb!addpath('src')!
+
+  \verb!mcc -m auto_capture_images -a ./data -I ./tmp!
+
+  \verb!mcc -m auto_transfer -a ./data -I ./tmp!
+
+\end{flushleft}
+
+Si la compilación se realizó mediante la interfaz, se generan los
+archivos ejecutables \texttt{run\_auto\_capture\_images.bat} y
+\texttt{run\_auto\_transfer.bat}.
+
+Si los archivos se compilaron manualmente, en el sistema operativo
+Windows, se generan dos ejecutables \texttt{auto\_capture\_images.exe}
+y \texttt{auto\_transfer.exe}, los cuales reciben unos parámetros de
+entrada. El automático de captura recibe el nombre de la estación, y
+el automático de transferencia recibe el nombre de la estación y la
+dirección IP del servidor al que se enviarán los datos. Para
+ejecutarlos, se debe crear para cada uno, un archivo BAT que recibe
+los parámetros. Un ejemplo de archivo BAT para el automático de
+captura podría contener el siguiente código
+(\texttt{run\_auto\_capture\_images.bat}):
+
+\begin{flushleft}
+  \verb!auto_capture_images.exe CARTAGENA!
+\end{flushleft}
+
+Para el automático de transferencia (\texttt{run\_auto\_transfer.bat}):
+
+\begin{flushleft}
+   \verb!auto_transfer.exe CARTAGENA 168.176.124.165!
+\end{flushleft}
+
+\emph{Nota:} Es posible que al compilar el automático de transferencia
+aparezca un mensaje de advertencia. Esto es normal y se puede hacer
+caso omiso de él.
 
 \section{Configure processing automatic}
 \label{sect:processconf}
 
 En las secciones anteriores se presentaron las interfaces que permiten
-rectificar, fusionar y miniaturizar imágenes manualmente. Sin embargo,
-en general es deseable que estos procesos se hagan automáticamente. En
-esta sección se describe la interfaz para configurar el automático de
-procesamiento para rectificar, fusionar, miniaturizar y enviar a la
-web las imágenes. La información de la configuración se guarda en el
-archivo XML \texttt{processing\_info.xml}.
+rectificar y fusionar imágenes manualmente. Sin embargo, en general es
+deseable que estos procesos se hagan automáticamente. En esta sección
+se describe la interfaz para configurar el automático de procesamiento
+para rectificar, fusionar, miniaturizar y enviar a la web las
+imágenes. La información de la configuración se guarda en el archivo
+XML \texttt{processing\_info.xml}.
 
 En la figura~\ref{fig:processconf} se muestra la interfaz para
 configurar el automático de procesamiento.
@@ -1632,11 +1541,12 @@ Las componentes numeradas en la figura se explican a continuación:
 \item Lista desplegable para seleccionar la estación.
 \item Tiempo inicial de la ejecución.
 \item Tiempo final de la ejecución.
-\item Tamaño de paso entre procesamiento y procesamiento, en minutos.
+\item Tiempo de espera entre procesamientos consevutivos, en minutos.
 \item Tipo de procesamiento a aplicar a las imágenes, las opciones son
-  \textit{Merge only}, para fusionar imágenes oblicuas,
-  \textit{Rectify only} para rectificar sin fusionar, y
-  \textit{Rectify and merge} para rectificar y luego fusionar.
+  \textit{Merge oblique images}, para fusionar imágenes oblicuas,
+  \textit{Rectify and merge oblique images} para rectificar y luego
+  fusionar. \textit{Rectify oblique images} para rectificar sin
+  fusionar.
 \item Tipos de imágenes que se van a procesar.
 \item Esta opción se habilita cuando se quiere enviar las miniaturas
   por Internet a un servidor web.
@@ -1719,7 +1629,8 @@ procesamiento podría contener el siguiente código\\
   \verb!auto_process_images.exe CARTAGENA 30 5!
 \end{flushleft}
 
-\section{Configure Synchronization}
+
+\section{Configure database synchronization automatic}
 \label{sec:confsync}
 
 El sistema HORUS necesita una base de datos para almacenar y consultar
@@ -1821,3 +1732,137 @@ sincronización podría contener el siguiente código\\
 \begin{flushleft}
   \verb!auto_synchronization.exe CARTAGENA!
 \end{flushleft}
+
+
+\section{Configure thumbnail generation and upload}
+
+En el sistema HORUS se cuenta con la generación de imágenes miniaturas
+para mostrar una vista previa de las imágenes en la página web del
+sistema, \emph{www.horusvideo.com}.  Con esta interfaz se podrán
+generar miniaturas dado el tipo de la miniaturización, el tipo de las
+imágenes y un rango de fechas. Con cada acción de modificación de la
+base de datos desde esta interfaz, se muestra una ventana indicando
+esto, la cual se cierra al terminar la operación. En las
+figuras~\ref{fig:min} y~\ref{fig:min2} se muestra la interfaz.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/min}
+  \caption{Interfaz inicial para generar miniaturas}
+  \label{fig:min}
+\end{figure}
+
+
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/min2}
+  \caption{Interfaz con los datos necesarios para generar miniaturas}
+  \label{fig:min2}
+\end{figure}
+
+El comando para ejecutar esta interfaz es:
+\texttt{gui\_thumbnails\_tool}.
+
+Las componentes numeradas en la figura se explican a continuación (los
+campos con * son obligatorios):
+
+\begin{enumerate}
+\item Lista para seleccionar la estación para la cual se quieren generar
+  miniaturas.
+\item Lista para seleccionar el tipo de las miniaturas que puede ser
+  \textit{oblique} para imágenes oblicuas, \textit{rectified} para
+  imágenes rectificadas, \textit{merge\_oblique} para las imágenes
+  oblicuas--rectificadas o \textit{merge\_rectified} para las imágenes
+  rectificadas--fusionadas.
+\item Ruta donde se guardan las imágenes miniaturas, si se ha
+  seleccionado en (7) la opción ``\textit{Insert to Disk}'', se debe
+  seleccionar la ruta donde se van a guardar las imágenes, si se ha
+  seleccionado la opción ``\textit{Insert to Database}'', aparecerá
+  automáticamente la ruta en donde se guardarán las imágenes y no se
+  podrá editar a menos que lo haga usando la interfaz para configurar
+  las rutas. Si es el caso, la ruta se puede cambiar ya sea
+  escribiendo la nueva ruta en este campo o haciendo clic en el botón
+  \textit{\ldots} que abrirá una nueva ventana donde se selecciona la
+  ruta.
+\item Fecha de inicio para generar las miniaturas.
+\item Fecha final para generar las miniaturas.
+
+  Los campos (4) y (5) se mostrarán cuando se haya escogido un tipo en
+  el campo (2) y se cambia la fecha moviendo los controles del
+  calendario.  Se debe tener en cuenta que la fecha final debe ser
+  mayor que la de inicio.
+  
+\item Ancho en pixeles de las miniaturas. Se recomienda que el ancho
+  de la miniatura sea aproximadamente 120 píxeles.
+\item Se debe seleccionar si se desea que las imágenes sean subidas a
+  un servidor web o si se desea que se guarde la información en la
+  base de datos de HORUS y en la ruta configurada con anterioridad, o
+  si desea que las imágenes se guarden sólo en el disco. Las opciones
+  ``\textit{Insert to Disk}'' y ``\textit{Insert to Database}'' y
+  también las opciones ``\textit{Insert to Disk}'' y ``\textit{Upload
+    hosting}'' son excluyentes. Solo se podrán escoger en simultáneo
+  las opciones ``\textit{Insert to Database}'' y ``\textit{Upload
+    hosting}''. Al seleccionar ``\textit{Upload hosting}'' se 
+  creará un archivo con la información para subir las imágenes al 
+  servidor web. Para configurar los datos de conexión del 
+  \texttt{hosting} y subir las imágenes como tal se debe usar 
+  la interfaz \texttt{gui\_upload\_hosting}.
+\item Selección de al menos un tipo de imagen para generar las
+  miniaturas, los básicos son: \textit{Snap}, \textit{Timex} y
+  \textit{Var}. Los tipos de imágenes son leídos de la base de datos.
+\item Botón para comenzar la miniaturización. Este botón se habilitará
+  cuando se hayan ingresado los datos correctamente. Se comprueba que
+  la ruta en (3) sea un directorio existente, si es una dirección web
+  se mostrará vacío ya que estas rutas son de sólo lectura y se debe
+  seleccionar una ruta correcta que esté en el disco duro. También se
+  comprueba que se seleccione al menos un tipo de imagen y que se
+  seleccione una de las opciones ``\textit{Insert to Database}'' o
+  ``\textit{Insert to Disk}''. Este botón se deshabilitará mientras se
+  generan las miniaturas y se abrirá una ventana de progreso en la
+  cual se puede dar en cualquier momento clic en ``\textit{Cancel}'',
+  para finalizar la operación.  Al terminar se mostrará una ventana
+  indicando el éxito o el fracaso de la operación.
+
+\end{enumerate}
+
+En la figura~\ref{fig:upload_hosting} se muestra la interfaz que tiene
+como fin subir las miniaturas que se han generado, donde se ingresan
+los datos de conexión del servidor de datos. Las componentes numeradas
+en la figura se explican a continuación (Todos los campos son
+obligatorios):
+
+\begin{enumerate}
+\item Lista para seleccionar la estación para la que se quieren subir
+  las imágenes miniaturas.
+\item Host del servidor que puede ser una dirección IP o un nombre de
+  dominio.
+\item Se debe ingresar el usuario.
+\item Se debe ingresar la contraseña.
+\item Este botón es usado para guardar los datos de conexión. Sólo se
+  habilita cuando se hayan diligenciado todos los campos.
+\item Este botón inicia la subida de las imágenes al hosting. Se
+  habilita después de guardar la configuración o al cargar una
+  configuración existente.
+\end{enumerate}
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{img/upload_hosting}
+  \caption{Interfaz para subir las miniaturas generadas a la web}
+  \label{fig:upload_hosting}
+\end{figure}
+
+
+Los datos de conexión son proporcionados por el equipo HORUS.
+
+En la figura~\ref{fig:min3} se muestra un diagrama de flujo que
+explica los procesos de la interfaz donde para cada proceso se nombra
+la función que utiliza.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=\textwidth]{img/min3}
+  \caption{Diagrama de flujo interfaz Thumbnails Tool}
+  \label{fig:min3}
+\end{figure}
