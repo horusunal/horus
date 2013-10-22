@@ -241,12 +241,12 @@ procesos que se llevan a cabo en el sistema HORUS.
   En HORUS se cuenta con dos métodos para estimar las matrices de
   transformación, cuando la fusión es para imágenes oblicuas:
   transformación afín y transformación proyectiva. La primera se
-  emplea cuando la diferencia entre las imágenes es un pequeño
-  movimiento de la cámara, mientras que la transformación proyectiva
-  es buena tanto para estos pequeños movimientos como para diferencias
-  más grandes en la posición y la orientación de las cámaras. En
-  ocasiones, la transformación afín puede dar como resultado mejores
-  imágenes fusionadas que la transformación proyectiva.
+  emplea cuando la diferencia entre las imágenes es una traslación o
+  pequeña rotación de la cámara. La transformación proyectiva es buena
+  tanto para estos movimientos como para diferencias más grandes en la
+  orientación de las cámaras. Para la fusión de imágenes rectificadas
+  se debe utilizar la transformación afín, ya que las diferencias en
+  la orientación han sido corregidas.
 
   Para la transformación afín se requieren mínimo tres puntos comunes,
   mientras que para la transformación proyectiva se requieren mínimo
