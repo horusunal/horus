@@ -529,7 +529,8 @@ try
     
     % Enable ROI button
     set(handles.buttonROI, 'Enable', 'on');
-    
+    set(handles.editGCPu, 'Enable', 'on');
+    set(handles.editGCPv, 'Enable', 'on');
     t = handles.image_info{3};
     roi = load_roi(handles.conn, 'rect', camera, station, t, t);
     if isempty(roi)
@@ -1871,6 +1872,103 @@ try
     
     delete(hObject);
     
+catch e
+    disp(e.message)
+end
+
+
+% --- Executes on button press in buttonCalculate.
+function editGCPu_Callback(hObject, eventdata, handles)
+% hObject    handle to buttonCalculate (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+try
+    if ~check_U(handles)
+        warndlg('Please select a valid U!', 'Warning');
+        return
+    end
+    if ~check_V(handles)
+        return
+    end
+    
+    value = get(handles.popupGCP, 'Value');
+    % Mark selected point over the image
+    U = str2double(get(handles.editGCPu, 'String'));
+    V = str2double(get(handles.editGCPv, 'String'));
+    handles.marked(value, 1) = U;
+    handles.marked(value, 2) = V;
+    
+    handles.pickedGCPs(value) = true;
+    set(handles.checkboxPickGCP, 'Value', true);
+    handles = reload_gcp(handles);
+    
+    % Repaint all GCPs
+    plot_picked_gcps(handles);
+    plot_roi(handles)
+    
+    % Update handles structure
+    guidata(hObject, handles);
+    
+    
+catch e
+    disp(e.message)
+end
+
+% --- Executes on button press in buttonCalculate.
+function editGCPv_Callback(hObject, eventdata, handles)
+% hObject    handle to buttonCalculate (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+try
+    if ~check_V(handles)
+        warndlg('Please select a valid V!', 'Warning');
+        return
+    end
+    if ~check_U(handles)
+        return
+    end
+    
+    value = get(handles.popupGCP, 'Value');
+    % Mark selected point over the image
+    U = str2double(get(handles.editGCPu, 'String'));
+    V = str2double(get(handles.editGCPv, 'String'));
+    handles.marked(value, 1) = U;
+    handles.marked(value, 2) = V;
+    
+    handles.pickedGCPs(value) = true;
+    set(handles.checkboxPickGCP, 'Value', true);
+    handles = reload_gcp(handles);
+    
+    % Repaint all GCPs
+    plot_picked_gcps(handles);
+    plot_roi(handles)
+    
+    % Update handles structure
+    guidata(hObject, handles);
+    
+    
+catch e
+    disp(e.message)
+end
+
+% Check if there is a valid resolution
+function ok = check_U(handles)
+try
+    value = get(handles.editGCPu, 'String');
+    num = str2double(value);
+    ok = ~isnan(num);
+catch e
+    disp(e.message)
+end
+
+% Check if there is a valid resolution
+function ok = check_V(handles)
+try
+    value = get(handles.editGCPv, 'String');
+    num = str2double(value);
+    ok = ~isnan(num);
 catch e
     disp(e.message)
 end

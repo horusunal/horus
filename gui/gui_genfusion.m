@@ -1021,6 +1021,8 @@ try
     on = get(hObject, 'Value');
     if on
         set(handles.radioOblique, 'Value', false)
+        set(handles.radioProjective, 'Enable', 'off')
+        set(handles.radioOptimizedProjective, 'Enable', 'off')
     end
 catch e
     disp(e.message)
@@ -1038,6 +1040,8 @@ try
     on = get(hObject, 'Value');
     if on
         set(handles.radioRectified, 'Value', false)
+        set(handles.radioProjective, 'Enable', 'on')
+        set(handles.radioOptimizedProjective, 'Enable', 'on')
     end
 catch e
     disp(e.message)

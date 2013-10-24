@@ -143,6 +143,8 @@ try
     set(handles.popupStackEndMinute, 'String', strEndMinute);
     set(handles.popupTransferEndMinute, 'String', strEndMinute);
     
+    set(handles.editRemotePath, 'String', '.')
+    
     % Update handles structure
     guidata(hObject, handles);
     
@@ -177,7 +179,8 @@ function popupStation_Callback(hObject, eventdata, handles)
 %        contents{get(hObject,'Value')} returns selected item from popupStation
 
 try
-    if check_station(handles)
+    [handles numcam]= reload_camera(handles);
+    if check_station(handles) && numcam > 0
         
         %reboot connection to the database if necessary
         [handles.conn, status] = renew_connection_db(handles.conn);
@@ -192,7 +195,6 @@ try
             warndlg('No image types were found in the database!', 'Warning');
             return;
         end
-        handles = reload_camera(handles);
         handles = reload_types(handles);
         xml = loadXML(handles.xmlfile, 'Configuration', 'station', station);
         
@@ -360,45 +362,49 @@ function popupCaptureID_Callback(hObject, eventdata, handles)
 %        contents{get(hObject,'Value')} returns selected item from popupCaptureID
 
 try
-    value = get(handles.popupCaptureID, 'Value');
     
-    if value == 1
-        set(handles.buttonROI, 'Enable', 'off');
-        set(handles.buttonEnqueueStack, 'Enable', 'off');
-    else
-        set(handles.buttonROI, 'Enable', 'on');
-        set(handles.buttonEnqueueStack, 'Enable', 'on');
-    end
+    [handles numcam]= reload_camera(handles);
+    if check_station(handles) && numcam > 0
     
-    if value <= 2
-        set(handles.buttonDeleteStack, 'Enable', 'off');
-        set(handles.popupStackStartHour, 'Value', 1);
-        set(handles.popupStackStartMinute, 'Value', 1);
-        set(handles.popupStackEndHour, 'Value', 1);
-        set(handles.popupStackEndMinute, 'Value', 1);
-        set(handles.editStackTimeStep, 'String', '');
-        set(handles.editStackFrames, 'String', '');
-        return
-    end
-    
-    id = get_stack_capture(handles);
-    
-    set(handles.buttonDeleteStack, 'Enable', 'on');
-    
-    for i = 1:numel(handles.stackQueue)
-        if handles.stackQueue(i).id == id
-            set(handles.popupStackStartHour, 'Value', handles.stackQueue(i).start_hour + 1)
-            set(handles.popupStackStartMinute, 'Value', handles.stackQueue(i).start_minute + 1)
-            set(handles.popupStackEndHour, 'Value', handles.stackQueue(i).end_hour + 1)
-            set(handles.popupStackEndMinute, 'Value', handles.stackQueue(i).end_minute + 1)
-            set(handles.editStackTimeStep, 'String', handles.stackQueue(i).time_step)
-            set(handles.editStackFrames, 'String', handles.stackQueue(i).num_frames)
-            handles.curroi.xcoords = handles.stackQueue(i).roi_x;
-            handles.curroi.ycoords = handles.stackQueue(i).roi_y;
-            break;
+        value = get(handles.popupCaptureID, 'Value');
+        
+        if value == 1
+            set(handles.buttonROI, 'Enable', 'off');
+            set(handles.buttonEnqueueStack, 'Enable', 'off');
+        else
+            set(handles.buttonROI, 'Enable', 'on');
+            set(handles.buttonEnqueueStack, 'Enable', 'on');
+        end
+        
+        if value <= 2
+            set(handles.buttonDeleteStack, 'Enable', 'off');
+            set(handles.popupStackStartHour, 'Value', 1);
+            set(handles.popupStackStartMinute, 'Value', 1);
+            set(handles.popupStackEndHour, 'Value', 1);
+            set(handles.popupStackEndMinute, 'Value', 1);
+            set(handles.editStackTimeStep, 'String', '');
+            set(handles.editStackFrames, 'String', '');
+            return
+        end
+        
+        id = get_stack_capture(handles);
+        
+        set(handles.buttonDeleteStack, 'Enable', 'on');
+        
+        for i = 1:numel(handles.stackQueue)
+            if handles.stackQueue(i).id == id
+                set(handles.popupStackStartHour, 'Value', handles.stackQueue(i).start_hour + 1)
+                set(handles.popupStackStartMinute, 'Value', handles.stackQueue(i).start_minute + 1)
+                set(handles.popupStackEndHour, 'Value', handles.stackQueue(i).end_hour + 1)
+                set(handles.popupStackEndMinute, 'Value', handles.stackQueue(i).end_minute + 1)
+                set(handles.editStackTimeStep, 'String', handles.stackQueue(i).time_step)
+                set(handles.editStackFrames, 'String', handles.stackQueue(i).num_frames)
+                handles.curroi.xcoords = handles.stackQueue(i).roi_x;
+                handles.curroi.ycoords = handles.stackQueue(i).roi_y;
+                break;
+            end
         end
     end
-
     % Update handles structure
     guidata(hObject, handles);
 catch e
@@ -1502,9 +1508,10 @@ end
 
 %--------------------------------------------------------------------------
 % Reload all cameras from the database
-function handles = reload_camera(handles)
+function [handles numcam]= reload_camera(handles)
 
 try
+    numcam = 0;
     if check_station(handles)
         station = get_station(handles);
         
@@ -1517,9 +1524,9 @@ try
             warndlg('No cameras were found!', 'Warning');
             return
         end
-        
+        numcam = numel(camNodes);
         cameras = cell(numel(camNodes), 1);
-        for i = 1:numel(camNodes)
+        for i = 1:numcam
             cam = getAttributeValue(camNodes{i}, 'id');
             cameras{i} = cam;
         end
@@ -1722,126 +1729,129 @@ function buttonEnqueueStack_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-station = get_station(handles);
-cam = get_stack_camera(handles);
-
-idcapture = -1;
-
-captureval = get(handles.popupCaptureID, 'Value');
-
-if captureval > 1 % Do nothing if captureval == 1
-    if captureval > 2
-        idcapture = get_stack_capture(handles);
-    end
-
-    if idcapture == -1
-        idval = cell2mat(load_max_idautomatic(handles.conn, station));
-        if isnan(idval)
-            idcapture = 1;
-        else
-            idcapture = idval + 1;
-        end
-    end
-
-    start_hour = get_stack_start_hour(handles);
-    start_minute = get_stack_start_minute(handles);
-    end_hour = get_stack_end_hour(handles);
-    end_minute = get_stack_end_minute(handles);
-    step = get_stack_time_step(handles);
-    numframes = get_stack_numframes(handles);
-
-    minInit = (start_hour*60) + start_minute;
-    minEnd = (end_hour*60) + end_minute;
-
-    ok = true;
-    if ok && minInit > minEnd
-        warndlg('The stack initial time is greater than final time!', 'Warning')
-        ok = false;
-    end
-    if ok && isnan(step)
-        warndlg('The stack time step is invalid!', 'Warning')
-        ok = false;
-    end
-    if ok && isnan(numframes)
-        warndlg('The stack number of frames is invalid!', 'Warning')
-        ok = false;
-    end
+try
+    station = get_station(handles);
+    cam = get_stack_camera(handles);
     
-    % If there is no selected ROI, choose the entire image by default.
-    if isempty(handles.curroi.xcoords)
-        im = captureImage(handles);
-        if isempty(im)
-            errordlg('This camera is not configured yet!', 'Error');
+    idcapture = -1;
+    
+    captureval = get(handles.popupCaptureID, 'Value');
+    
+    if captureval > 1 % Do nothing if captureval == 1
+        if captureval > 2
+            idcapture = get_stack_capture(handles);
+        end
+        
+        if idcapture == -1
+            idval = cell2mat(load_max_idautomatic(handles.conn, station));
+            if isnan(idval)
+                idcapture = 1;
+            else
+                idcapture = idval + 1;
+            end
+        end
+        
+        start_hour = get_stack_start_hour(handles);
+        start_minute = get_stack_start_minute(handles);
+        end_hour = get_stack_end_hour(handles);
+        end_minute = get_stack_end_minute(handles);
+        step = get_stack_time_step(handles);
+        numframes = get_stack_numframes(handles);
+        
+        minInit = (start_hour*60) + start_minute;
+        minEnd = (end_hour*60) + end_minute;
+        
+        ok = true;
+        if ok && minInit > minEnd
+            warndlg('The stack initial time is greater than final time!', 'Warning')
+            ok = false;
+        end
+        if ok && isnan(step)
+            warndlg('The stack time step is invalid!', 'Warning')
+            ok = false;
+        end
+        if ok && isnan(numframes)
+            warndlg('The stack number of frames is invalid!', 'Warning')
+            ok = false;
+        end
+        
+        % If there is no selected ROI, choose the entire image by default.
+        if isempty(handles.curroi.xcoords)
+            im = captureImage(handles);
+            if isempty(im)
+                errordlg('This camera is not configured yet!', 'Error');
+                ok = false;
+            end
+            
+            if ok
+                [m, n, o] = size(im);
+                handles.curroi.xcoords(1) = 1;
+                handles.curroi.ycoords(1) = 1;
+                handles.curroi.xcoords(2) = 1;
+                handles.curroi.ycoords(2) = m;
+                handles.curroi.xcoords(3) = n;
+                handles.curroi.ycoords(3) = m;
+                handles.curroi.xcoords(4) = n;
+                handles.curroi.ycoords(4) = 1;
+            end
+        else
+            if ok && isempty(handles.curroi.xcoords) || isempty(handles.curroi.ycoords) ||...
+                    length(handles.curroi.xcoords) ~= length(handles.curroi.ycoords) ||...
+                    length(handles.curroi.xcoords) < 3 || length(handles.curroi.ycoords) < 3
+                warndlg('The stack ROI is invalid!', 'Warning')
+                ok = false;
+            end
+        end
+        
+        xml = loadXML(handles.xmlfile, 'Configuration', 'station', station);
+        xmlPath = strcat('Configuration[station=', station,...
+            ']/CameraConfig/Camera[id=', cam, ']');
+        CameraNode = getNodes(xml, xmlPath);
+        camera = CameraNode{1};
+        fr = getNodeVal(camera, 'FrameRate');
+        fr = eval(fr);
+        if ok && ~check_overlapping(handles, idcapture, start_hour, start_minute, ...
+                end_hour, end_minute, step, numframes / fr)
+            warndlg('Two or more capture configurations overlap!', 'Warning');
             ok = false;
         end
         
         if ok
-            [m, n, o] = size(im);
-            handles.curroi.xcoords(1) = 1;
-            handles.curroi.ycoords(1) = 1;
-            handles.curroi.xcoords(2) = 1;
-            handles.curroi.ycoords(2) = m;
-            handles.curroi.xcoords(3) = n;
-            handles.curroi.ycoords(3) = m;
-            handles.curroi.xcoords(4) = n;
-            handles.curroi.ycoords(4) = 1;
-        end
-    else
-        if ok && isempty(handles.curroi.xcoords) || isempty(handles.curroi.ycoords) ||...
-                 length(handles.curroi.xcoords) ~= length(handles.curroi.ycoords) ||...
-                 length(handles.curroi.xcoords) < 3 || length(handles.curroi.ycoords) < 3
-            warndlg('The stack ROI is invalid!', 'Warning')
-            ok = false;
-        end
-    end
-    
-    xml = loadXML(handles.xmlfile, 'Configuration', 'station', station);
-    xmlPath = strcat('Configuration[station=', station,...
-        ']/CameraConfig/Camera[id=', cam, ']');
-    CameraNode = getNodes(xml, xmlPath);
-    camera = CameraNode{1};
-    fr = getNodeVal(camera, 'FrameRate');
-    fr = eval(fr);
-    if ok && ~check_overlapping(handles, idcapture, start_hour, start_minute, ...
-                end_hour, end_minute, step, numframes / fr)
-        warndlg('Two or more capture configurations overlap!', 'Warning');
-        ok = false;
-    end
-    
-    if ok
-        % Add the new capture configuration
-        pos = NaN;
-        for i = 1:numel(handles.stackQueue)
-            if handles.stackQueue(i).id == idcapture
-                pos = i;
-                break;
+            % Add the new capture configuration
+            pos = NaN;
+            for i = 1:numel(handles.stackQueue)
+                if handles.stackQueue(i).id == idcapture
+                    pos = i;
+                    break;
+                end
             end
+            
+            if isnan(pos)
+                n = numel(handles.stackQueue);
+                pos = n + 1;
+            end
+            
+            handles.stackQueue(pos).id = idcapture;
+            handles.stackQueue(pos).start_hour = start_hour;
+            handles.stackQueue(pos).start_minute = start_minute;
+            handles.stackQueue(pos).end_hour = end_hour;
+            handles.stackQueue(pos).end_minute = end_minute;
+            handles.stackQueue(pos).time_step = step;
+            handles.stackQueue(pos).num_frames = numframes;
+            handles.stackQueue(pos).roi_x = handles.curroi.xcoords;
+            handles.stackQueue(pos).roi_y = handles.curroi.ycoords;
+            handles.stackQueue(pos).cam = cam;
+            
+            handles = reload_stack_ids(handles);
+            
+            warndlg('The stack capture configuration has been saved in memory!', 'Success')
         end
-        
-        if isnan(pos)
-            n = numel(handles.stackQueue);
-            pos = n + 1;
-        end
-        
-        handles.stackQueue(pos).id = idcapture;
-        handles.stackQueue(pos).start_hour = start_hour;
-        handles.stackQueue(pos).start_minute = start_minute;
-        handles.stackQueue(pos).end_hour = end_hour;
-        handles.stackQueue(pos).end_minute = end_minute;
-        handles.stackQueue(pos).time_step = step;
-        handles.stackQueue(pos).num_frames = numframes;
-        handles.stackQueue(pos).roi_x = handles.curroi.xcoords;
-        handles.stackQueue(pos).roi_y = handles.curroi.ycoords;
-        handles.stackQueue(pos).cam = cam;
-
-        handles = reload_stack_ids(handles);
-        
-        warndlg('The stack capture configuration has been saved in memory!', 'Success')
     end
+    % Update handles structure
+    guidata(hObject, handles);
+catch e
+    disp(e.message)
 end
-% Update handles structure
-guidata(hObject, handles);
-
 
 %--------------------------------------------------------------------------
 % Check if there is a valid thumbs type selected
