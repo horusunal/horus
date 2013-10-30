@@ -42,8 +42,10 @@ try
         port = num2str(port);
     end
         
-    jconnection = which('mysql-connector-java-5.1.25-bin.jar');
-    javaaddpath(jconnection)
+    if ~exist('com.mysql.jdbc.Driver', 'class')
+        jconnection = which('mysql-connector-java-5.1.25-bin.jar');
+        javaaddpath(jconnection)
+    end
     
     % Data of the connection
     jdbcString = sprintf('jdbc:mysql://%s:%s', host, port);
@@ -54,6 +56,7 @@ try
     
     % Create database schema and main user
     exec(conn, ['CREATE DATABASE ' dbname]);
+    exec(conn, ['CREATE USER ''' username '''@''' host ''' IDENTIFIED BY ''' userpass '''']);
     exec(conn, ['GRANT ALL PRIVILEGES ON ' dbname '.* TO ''' username ...
         '''@''localhost'' IDENTIFIED BY ''' userpass ''' WITH GRANT OPTION']);
     exec(conn, ['GRANT CREATE USER, RELOAD ON *.* TO ''' username ...
@@ -75,12 +78,10 @@ try
     % Create the HORUS database structure, if available
     if exist(sql, 'file')
         command = ['mysql -h ' host ' -u ' username ' -p' userpass ' ' dbname ' < ' sql];
-        status = dos(command);
+        [status, message] = dos(command);
     end
     if status == 0
         message = 'Successful database configuration!';
-    else
-        message = 'Error: There was an error while configuring the database!';
     end
     
 catch e

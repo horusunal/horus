@@ -28,7 +28,7 @@ function varargout = gui_merging_images(varargin)
 % for the HORUS Project
 % Universidad Nacional de Colombia
 %   Copyright 2011 HORUS
-% Last Modified by GUIDE v2.5 03-Sep-2012 13:45:00
+% Last Modified by GUIDE v2.5 09-Oct-2013 22:05:25
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -127,6 +127,8 @@ try
     set(handles.radioSaveDisk, 'Value', 1)
     set(handles.buttonPath, 'Enable', 'on')
     
+    set(handles.radioMergeOblique, 'Value', 1);
+    
     % Put logo
     logo = imread('LogoHorusMin.png');
     imshow(logo, 'Parent', handles.axesLogo);
@@ -196,8 +198,6 @@ try
     else
         set(handles.popupImageType, 'String', {'Select image type'}, 'Value', 1);
         set(handles.popupFusion, 'String', {'Default (nearest before time)'}, 'Value', 1);
-        set(handles.radioRectify, 'Value', 0)
-        set(handles.radioAlreadyRectified, 'Value', 0)
         set(handles.popupTimeError, 'Value', 1)
         set(handles.editTimeStep, 'String', '')
         set(handles.radioSaveDB, 'Value', 0)
@@ -265,8 +265,8 @@ function buttonStartFusion_Callback(hObject, eventdata, handles)
 
 try
     
-    isrectified = get(handles.radioAlreadyRectified, 'Value');
-    rectify = get(handles.radioRectify, 'Value');
+    isrectified = get(handles.radioMergeRectified, 'Value');
+    rectify = get(handles.radioRectifyMerge, 'Value');
     
     ok = true;
     
@@ -374,21 +374,21 @@ catch e
 end
 
 
-% --- Executes on button press in radioAlreadyRectified.
-function radioAlreadyRectified_Callback(hObject, eventdata, handles)
-% hObject    handle to radioAlreadyRectified (see GCBO)
+% --- Executes on button press in radioRectifyMerge.
+function radioRectifyMerge_Callback(hObject, eventdata, handles)
+% hObject    handle to radioRectifyMerge (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hint: get(hObject,'Value') returns toggle state of radioAlreadyRectified
+% Hint: get(hObject,'Value') returns toggle state of radioRectifyMerge
 
 try
     on = get(hObject, 'Value');
     if on
-        set(handles.radioRectify, 'Value', false)
-        set(handles.radioRectify, 'Enable', 'off')
+        set(handles.radioMergeOblique, 'Value', false)
+        set(handles.radioMergeRectified, 'Value', false)
     else
-        set(handles.radioRectify, 'Enable', 'on')
+        set(handles.radioRectifyMerge, 'Value', true)
     end
     
     if check_station(handles) && check_imgtype(handles)
@@ -401,14 +401,46 @@ catch e
     disp(e.message)
 end
 
-% --- Executes on button press in radioRectify.
-function radioRectify_Callback(hObject, eventdata, handles)
-% hObject    handle to radioRectify (see GCBO)
+% --- Executes on button press in radioMergeOblique.
+function radioMergeOblique_Callback(hObject, eventdata, handles)
+% hObject    handle to radioMergeOblique (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hint: get(hObject,'Value') returns toggle state of radioRectify
+% Hint: get(hObject,'Value') returns toggle state of radioMergeOblique
 try
+    on = get(hObject, 'Value');
+    if on
+        set(handles.radioRectifyMerge, 'Value', false)
+        set(handles.radioMergeRectified, 'Value', false)
+    else
+        set(handles.radioMergeOblique, 'Value', true)
+    end
+    if check_station(handles) && check_imgtype(handles)
+        handles = reload_fusion_time(handles);
+    end
+    % Update handles structure
+    guidata(hObject, handles);
+    
+catch e
+    disp(e.message)
+end
+
+% --- Executes on button press in radioMergeRectified.
+function radioMergeRectified_Callback(hObject, eventdata, handles)
+% hObject    handle to radioMergeRectified (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of radioMergeRectified
+try
+    on = get(hObject, 'Value');
+    if on
+        set(handles.radioRectifyMerge, 'Value', false)
+        set(handles.radioMergeOblique, 'Value', false)
+    else
+        set(handles.radioMergeRectified, 'Value', true)
+    end
     if check_station(handles) && check_imgtype(handles)
         handles = reload_fusion_time(handles);
     end
@@ -650,7 +682,7 @@ try
         handles.dateboxFinal.setShowOKButton(true); % Show the 'OK' button
         handles.dateboxFinal.setShowTodayButton(true) % Show the 'Today' button
         
-        isrectified = get(handles.radioAlreadyRectified, 'Value');
+        isrectified = get(handles.radioMergeRectified, 'Value');
         
         if isrectified
             time_min = handles.time_min_rect;
@@ -689,7 +721,7 @@ try
         
         % JAVA stuff: load calendar for choosing date & time
         
-        isrectified = get(handles.radioAlreadyRectified, 'Value');
+        isrectified = get(handles.radioRectifyMerge, 'Value');
         
         if isrectified
             time_min = handles.time_min_rect;
@@ -724,7 +756,7 @@ try
         
         % JAVA stuff: load calendar for choosing date & time
         
-        isrectified = get(handles.radioAlreadyRectified, 'Value');
+        isrectified = get(handles.radioRectifyMerge, 'Value');
         
         if isrectified
             time_min = handles.time_min_rect;
@@ -766,8 +798,8 @@ try
             return
         end
         
-        isrectified = get(handles.radioAlreadyRectified, 'Value');
-        rectify = get(handles.radioRectify, 'Value');
+        isrectified = get(handles.radioRectifyMerge, 'Value');
+        rectify = get(handles.radioMergeOblique, 'Value');
         
         type = 'oblique';
         if isrectified || rectify
@@ -822,7 +854,7 @@ try
     
     station = get_station(handles);
     tf = get_final_time(handles);
-    isrectified = get(handles.radioAlreadyRectified, 'Value');
+    isrectified = get(handles.radioRectifyMerge, 'Value');
     
     if isrectified
         imgtype2 = 'rectified';

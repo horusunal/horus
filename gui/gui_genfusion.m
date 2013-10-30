@@ -28,7 +28,7 @@ function varargout = gui_genfusion(varargin)
 % for the HORUS Project
 % Universidad Nacional de Colombia
 %   Copyright 2011 HORUS
-% Last Modified by GUIDE v2.5 03-Sep-2012 18:23:16
+% Last Modified by GUIDE v2.5 09-Oct-2013 21:43:52
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -112,7 +112,7 @@ try
     handles.saved = false; % True if the current calibration is saved, false otherwise
     
     handles.max_commonpoint = 0; % Keeps the maximum common point id so far
-    
+        
     % Initialize JIDE's usage within Matlab
     com.mathworks.mwswing.MJUtilities.initJIDE;
     
@@ -144,6 +144,9 @@ try
     end
     
     set(handles.popupStation, 'String', strStation);
+    
+    % Set empty set of image type
+    set(handles.popupImageType, 'String', {'Select image type'});
     
     % Set error between images from different cameras to [0; 10]
     strError = {0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120};
@@ -218,10 +221,22 @@ try
         handles = reload_camera(handles);
         
         set(handles.buttonContinue, 'String', 'Continue');
+        
+        % Initialize image types in popup menu
+        strType = {'Select image type'};
+        types = load_imagetype_name(handles.conn, station);
+        for i = 1:numel(types)
+            strType{i + 1} = types{i};
+        end
+
+        set(handles.popupImageType, 'String', strType);
     else
         set(handles.listboxCameras, 'Value', 1, 'String', '');
         handles = reset_camera(handles);
         handles.uvaffine = cell(0);
+        
+        % Set empty set of image type
+        set(handles.popupImageType, 'String', {'Select image type'});
     end
     
     % Update handles structure
@@ -422,10 +437,11 @@ function buttonLoadImages_Callback(hObject, eventdata, handles)
 try
     
     % Load all images
-    if ~check_station(handles) || ~check_time(handles) || ~check_camera_list(handles)
+    if ~check_station(handles) || ~check_time(handles) || ~check_camera_list(handles)...
+        || ~check_image_type(handles)
         %%%%% ERROR
-        warndlg({'No station, camera or time was loaded',...
-            'Please select a station, a camera and a time'},'Warning');
+        warndlg({'No station, camera, time or image type was loaded',...
+            'Please select a station, a camera, a time and image type'},'Warning');
         return
     end
     
@@ -433,6 +449,7 @@ try
     cameras = get_camera_list(handles);
     error = get_error(handles);
     time = get_time(handles);
+    imageType = get_image_type(handles);
     dorectify = get(handles.radioRectified, 'Value');
     
     error = error / (60 * 60 * 24); % Error as a fraction of the day
@@ -453,7 +470,7 @@ try
     
     % Load images: {filename, path, timestamp, camera}
     h = gui_message('Loading from database, this might take a while!','Loading...');
-    data = load_allimages_per_cam(handles.conn, {'snap'}, station, cameras, time, error);
+    data = load_allimages_per_cam(handles.conn, {imageType}, station, cameras, time, error);
     if ishandle(h)
         delete(h);
     end
@@ -1293,6 +1310,16 @@ catch e
 end
 
 %--------------------------------------------------------------------------
+% Check if there is a valid image type selected
+function ok = check_image_type(handles)
+try
+    value = get(handles.popupImageType, 'Value');
+    ok = value ~= 1;
+catch e
+    disp(e.message)
+end
+
+%--------------------------------------------------------------------------
 % Check if there is a valid camera selected
 function ok = check_camera(handles)
 try
@@ -1377,6 +1404,17 @@ try
     value = get(handles.popupStation, 'Value');
     contents = cellstr(get(handles.popupStation, 'String'));
     station = contents{value};
+catch e
+    disp(e.message)
+end
+
+%--------------------------------------------------------------------------
+% Returns the selected image type
+function type = get_image_type(handles)
+try
+    value = get(handles.popupImageType, 'Value');
+    contents = cellstr(get(handles.popupImageType, 'String'));
+    type = contents{value};
 catch e
     disp(e.message)
 end
