@@ -23,7 +23,7 @@ Para visualizar todas interfaces gráficas apropiadamente, se
 recomienda una resolución de pantalla de mínimo $1200 \times 800$.
 
 \section{Base de Datos}
-
+\label{sec:db}
 El sistema HORUS fue diseñado para trabajar con una base de datos
 relacional en MySQL. Antes de trabajar con HORUS es necesario
 configurar la base de datos ya que en ésta va a estar almacenada toda
@@ -33,7 +33,60 @@ se pueda acceder, bien sea mediante una red local o por
 Internet. También es posible configurar una nueva base de datos desde
 cero.
 
-\subsection{Configuración del cliente de MySQL}
+Este paso se puede realizar utilizando la interfaz gráfica \emph{Setup
+  database} de la interfaz principal (ver Capítulo~\ref{chap:gui}), o
+realizando los pasos manualmente. Se recomienda utilizar la interfaz
+gráfica mientras sea posible, se deja la configuración manual para
+usuarios avanzados.
+
+\subsection{Configuración mediante la interfaz gráfica \emph{Setup
+    database}}
+
+La interfaz \emph{Setup database} se puede ejecutar presionando el
+botón correspondiente en la interfaz principal de HORUS o escribiendo
+el comando \verb!gui_configure_database! en la línea de comandos de
+Matlab. En la figura~\ref{fig:setupdb} se muestra la interfaz.
+
+\begin{figure}[htbp!]
+  \centering
+%  \includegraphics[width=0.4\textwidth]{img/setupdb}
+  \caption{Interfaz para configuración inicial de la base de datos}
+  \label{fig:setupdb}
+\end{figure}
+
+Las componentes numeradas en la interfaz se explican a continuación (los
+campos con * son obligatorios):
+
+\begin{enumerate}
+\item Database host: Es la dirección IP o nombre del host donde se
+  encuentra el servidor MySQL.
+\item Database name: Todas las bases de datos deben tener un
+  nombre. En este campo se especifica este nombre, el cual es
+  diferente para las bases de datos presentes en el servidor.
+\item Database port: Es el puerto del servidor MySQL, a menos que el
+  administrador del servidor haya decidido seleccionar uno diferente,
+  el puerto por defecto es 3306.
+\item Admin username: Es el nombre de usuario del administrador de la
+  base de datos de HORUS. Este usuario es el encargado de realizar las
+  modificaciones principales en la base de datos y de crear nuevos
+  usuarios con privilegios limitados.
+\item Admin password: Es la contraseña del usuario administrador de la
+  base de datos.
+\item Database SQL file: Se debe seleccionar el archivo en formato SQL
+  con la especificación del esquema relacional de HORUS. Este archivo
+  se provee junto con el software en \verb!examples/horus.sql!. Sin
+  embargo, es posible definir otro esquema siempre y cuando cumpla con
+  las especificaciones de la base de datos, con datos insertados en
+  las tablas de la base de datos.
+\item Apply configuration: Este botón ejecuta la configuración creando
+  el esquema de la base de datos en el servidor MySQL y el usuario
+  administrador. Desde aquí es posible insertar información en la base
+  de datos utilizando el usuario administrador.
+\end{enumerate}
+
+\subsection{Configuración manual}
+
+\subsubsection{Configuración del cliente de MySQL}
 
 Para establecer la conexión a una base de datos MySQL existente, es
 necesario configurar MATLAB para trabajar como cliente. En MATLAB
@@ -70,7 +123,7 @@ Ahora, es posible que las funciones de MATLAB hagan conexión con una
 base de datos existente. Se debe establecer la dirección de conexión
 del servidor de la base de datos.
 
-\subsection{Configuración de una nueva base de datos}
+\subsubsection{Configuración de una nueva base de datos}
 
 Las funciones de HORUS utilizan una base de datos cuya estructura se
 detalla en el capítulo~\ref{sec:dbdesign}. Para crear una nueva base
@@ -169,21 +222,6 @@ ejecuta el siguiente comando desde la línea de comandos del sistema
   \begin{flushleft}
     \verb!mysql -h <dirección> -u horususer -p horus < insert.sql!
   \end{flushleft}
-
-Si se quiere crear un nuevo usuario con permisos limitados (e.g. un
-usuario de sólo lectura), se ejecuta la interfaz gráfica
-\texttt{gui\_create\_user} (ver figura~\ref{fig:guiuser}) donde
-se especifica el nombre de usuario, la contraseña, la base de datos a
-la que tiene permiso de conectarse y si tiene permiso de consultar
-(\textit{query}), insertar (\textit{insert}), borrar (\textit{delete})
-o actualizar (\textit{update}) la información en la base de datos.
-
-\begin{figure}[htbp!]
-  \centering
-  \includegraphics[width=0.4\textwidth]{img/guiuser}
-  \caption{Interfaz para crear un nuevo usuario con permisos limitados}
-  \label{fig:guiuser}
-\end{figure}
 
 Cuando se quiere utilizar manualmente alguna de las funciones que se
 comunican con la base de datos, del directorio \texttt{io}, es

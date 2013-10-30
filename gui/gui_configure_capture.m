@@ -470,9 +470,9 @@ end
 
 % --- Executes on button press in buttonROI.
 function buttonROI_Callback(hObject, eventdata, handles)
-% hObject handle to buttonROI (see GCBO)
-% eventdata reserved - to be defined in a future version of MATLAB
-% handles structure with handles and user data (see GUIDATA)
+% hObject    handle to buttonROI (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
 try
     im = captureImage(handles);

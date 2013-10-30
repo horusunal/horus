@@ -1,8 +1,8 @@
 \chapter{Introducción}
 \label{chap:intro}
 
-HORUS es un sistema de monitorización ambiental que consiste en varias 
-estaciones ubicadas en lugares específicos, donde hay cámaras
+HORUS es un sistema de monitorización ambiental que consiste en una o
+varias estaciones ubicadas en lugares específicos, donde hay cámaras
 que toman fotos periódicamente desde distintos ángulos a una región de
 la zona de estudio. Las imágenes tomadas por las cámaras son
 procesadas mediante algoritmos avanzados con el fin de extraer
@@ -13,9 +13,9 @@ información útil de ellas.
 El sistema HORUS está compuesto por los módulos de captura,
 procesamiento y visualización en la web, como se muestra en la
 figura~\ref{fig:scheme}. Cada una de estas componentes tiene asociado
-un conjunto de funciones escritas en el lenguaje de MATLAB para las
+un conjunto de funciones escritas en lenguaje MATLAB para las
 tareas de procesamiento, almacenamiento y extracción de
-información. Estas funciones están ligadas con una base de datos
+información. Estas funciones están ligadas a una base de datos
 satélite que almacena toda la información necesaria para procesar las
 imágenes y proveer información útil tanto para gestores, y científicos
 como para investigadores. En la figura ~\ref{fig:scheme_db} se explica
@@ -43,72 +43,79 @@ de las imágenes, estos procesos son independientes entre sí.
 \end{figure}
 
 En el proceso de transferencia de información se envían las imágenes a
-un servidor de archivos, y se envía la información de la imagen tal 
-como su nombre, la ruta relativa donde será guardada, la fecha de captura, 
-entre otra información a una base de datos satélite. El servidor de archivos 
-y la base de datos satélite pueden o no estar en el mismo equipo.  Para 
-calcular los KB (Kilobytes) que se envían al servidor de archivos se debe 
-sumar el peso de todas las imágenes tomadas en una captura, y para 
-calcular los KB enviados a la base de datos se debe multiplicar la cantidad 
-de imágenes tomadas en una captura por 0.5 KB (de acuerdo a los tamaños de los campos
-definidos en la base de datos). En la etapa de procesamiento lo que se haga 
-va a depender de las opciones que haya seleccionado el administrador de la 
-estación pero en forma general se fusionan las imágenes oblicuas y se fusionan 
-las imágenes rectificadas de tipo snap y timex y se generan miniaturas de estas 
-fusiones y de las imágenes oblicuas de tipo snap y timex, a medida que se van 
-generando las nuevas imágenes estas son insertadas en la base de datos satélite, 
-por último en este proceso se envían las imágenes miniaturas al \textit{hosting}. 
+un servidor de archivos, y se envía la información de la imagen tal
+como su nombre, la ruta relativa donde será guardada, la fecha de
+captura, entre otros a una base de datos satélite. El servidor de
+archivos y la base de datos satélite pueden o no estar en el mismo
+computador.  Para calcular los KB (Kilobytes) que se envían al
+servidor de archivos se debe sumar el peso de todas las imágenes
+tomadas en una captura, y para calcular los KB enviados a la base de
+datos se debe multiplicar la cantidad de imágenes tomadas en una
+captura por 0.5 KB (de acuerdo a los tamaños de los campos definidos
+en la base de datos). En la etapa de procesamiento lo que se haga va a
+depender de las opciones que haya seleccionado el administrador de la
+estación, pero en forma general, se fusionan las imágenes oblicuas y
+se fusionan las imágenes rectificadas de tipo \textit{snap} y
+\textit{timex} y se generan miniaturas de estas imágenes. A medida que
+se van generando las nuevas imágenes, éstas son insertadas en la base
+de datos satélite, para luego ser enviadas al \textit{hosting}.
 \\
 
-Las bases de datos satélites envían información cada $t$ (puede ser
-una vez al día en horas de la noche) a la base de datos central en donde se 
-concentrará toda la información de las bases de datos satélites. La base de 
-datos central enviará su información también cada $t$ a la base de datos 
-del \textit{hosting} que hará las veces de respaldo de los datos.
- Entre el \textit{hosting} y las bases de datos satélites habrá una comunicación 
- permanente ya que el \textit{hosting} consulta estas bases de datos para poder
-mostrar las imágenes en la página web. En caso de que haya problemas
-de conexión entre éstos, el \textit{hosting} utilizaría la base de datos que
-está almacenando para mostrar la información aunque no sea la última
-generada, por esta razón en la figura la conexión entre estos es
-punteada. 
+Las bases de datos satélites envían información cada cierto tiempo $t$
+(puede ser una vez al día en horas de la noche) a la base de datos
+central en donde se concentrará toda la información de las bases de
+datos satélites. La base de datos central enviará su información
+también cada tiempo $t$ a la base de datos del \textit{hosting} que
+hará las veces de respaldo de los datos.  Entre el \textit{hosting} y
+las bases de datos satélites habrá una comunicación permanente ya que
+el \textit{hosting} consulta estas bases de datos para poder mostrar
+las imágenes en la página web. En caso de que haya problemas de
+conexión entre estos, el \textit{hosting} utilizaría la base de datos
+que está almacenando para mostrar la información aunque no sea la
+última generada, por esta razón en la figura la conexión entre estos
+es punteada.
 \\
 
-A continuación se plantea un ejemplo de un caso hipotético para que se entienda 
-mejor el funcionamiento del sistema HORUS. Para empezar se supone que se tiene un 
-sistemas de captura que llamaremos CARTAGENA que cuenta con tres cámaras, 
-este se comunica con el sistema de archivos A1 y con la base de datos satélite S1. 
-Se debe comenzar definiendo la hora de inicio y fin de la captura de imágenes para 
-este caso serán 6:30 y 18:30 respectivamente. Ahora se definirá el $\Delta$t para 
-saber cada cuanto se ejecutará la captura el cual va a ser de 30 minutos. Luego se 
-definen los tipos de imágenes a capturar en este caso serán snap, timex y var. Ahora 
-se debe definir de cuanto es el tiempo de captura de las imágenes timex y var el 
-cual será de 120 segundos. 
+A continuación se plantea un ejemplo de un caso hipotético para que se
+entienda mejor el funcionamiento del sistema HORUS. Para empezar se
+supone que se tiene un sistema de captura que llamaremos CARTAGENA que
+cuenta con tres cámaras. Éste se comunica con el sistema de archivos
+A1 y con la base de datos satélite S1.  Inicialmente, se define la
+hora de inicio y fin de la captura de imágenes. Para este ejemplo,
+serán 6:30 y 18:30, respectivamente. Se define un tiempo $\Delta$t
+para saber cada cuánto se ejecuta la captura, en este caso, 30 minutos
+y los tipos de imágenes a capturar, en este caso serán \textit{snap},
+\textit{timex} y \textit{var}. Para las imágenes \textit{timex} y
+\textit{var} se debe definir el tiempo de captura, en este ejemplo,
+120 segundos.
 \\
 
-Ahora se configurará la captura de timestack, se empieza escogiendo la hora de inicio 
-y fin que será 10:10 y 16:10 respectivamente, el $\Delta$t es de 120 minutos y 
-el número de frames es de 1200.
+Se configura la captura de \textit{timestacks}, escogiendo la hora de
+inicio y fin que será 10:10 y 16:10 respectivamente, el $\Delta$t es
+de 120 minutos y el número de frames es de 1200.
 \\
 
-Después de esto se configura la transferencia de las imágenes capturadas, se comienza 
-escogiendo la hora de inicio y fin que será 6:40 y 18:40 respectivamente y el $\Delta$t 
-que será de 30 minutos. Al ejecutarse enviara las imágenes capturadas a A1 e insertara 
-la información de las imágenes en S1.
+Después de esto, se configura la transferencia de las imágenes
+capturadas, se comienza escogiendo la hora de inicio y fin que será
+6:40 y 18:40 respectivamente y el $\Delta$t que será de 30 minutos. Al
+ejecutarse enviará las imágenes capturadas a A1 e insertará la
+información de las imágenes en S1.
 \\
 
-Por último se debe configurar el proceso de procesamiento en el sistema de archivos A1, 
-en el cual se pondrá la hora de inicio y fin con 6:50 y 18:50 respectivamente y el 
-$\Delta$t que será de 30 minutos, en este también se configuran las opciones que se 
-quieren procesar que serán fusionar imágenes oblicuas y fusionar imágenes rectificadas 
-de tipo snap y timex, generar miniaturas de estas fusiones y de imágenes oblicuas de tipo 
-snap y timex, y se configuran los datos para transferir las miniaturas al \textit{hosting}. 
-Este cada que se ejecuta genera las imágenes que se configuraron e inserta la información de 
-estas en S1, por ultimo sube las imágenes miniaturas al \textit{hosting}.
+Por último, se debe configurar el procesamiento en el sistema de
+archivos A1, en el cual se pondrá la hora de inicio y fin como 6:50 y
+18:50, respectivamente, y el $\Delta$t que será de 30 minutos. También
+se configuran las opciones que se quieren procesar, en este caso:
+fusionar imágenes oblicuas, fusionar imágenes rectificadas de tipo
+\textit{snap} y \textit{timex}, generar miniaturas de estas imágenes,
+y se configuran los datos para transferir las miniaturas al
+\textit{hosting}. Las imágenes generadas son insertadas en S1 y las miniaturas son enviadas al \textit{hosting}.
 
-Para mayor información de cómo hacer estas configuraciones vaya al apartado de automáticos ~\ref{sect:processconf}.
+Para mayor información de cómo hacer estas configuraciones ver el
+apartado de automáticos ~\ref{sect:processconf}.
 
-En la tabla~\ref{table:intro_conf} se puede ver el resumen de la información suministrada para configurar la captura.
+En la tabla~\ref{table:intro_conf} se puede ver el resumen de la
+información suministrada para configurar la captura.
 
 \begin{table}[!hbt]
   \label{table:intro_conf}
@@ -138,33 +145,39 @@ En la tabla~\ref{table:intro_conf} se puede ver el resumen de la información sum
   \end{center}
 \end{table}
 
-En la figura~\ref{fig:time_line} se muestra una línea de tiempo de los procesos antes configurados, 
-para poder evaluar si los tiempos si son los adecuados y que no se estén solapando 
-cuando no lo deben hacer. Estos tiempos se calculan con las siguientes formulas:
+En la figura~\ref{fig:time_line} se muestra una línea de tiempo de los
+procesos antes configurados, con el fin de evaluar si los tiempos son
+los adecuados y que no haya solapes. Estos tiempos se calculan con las
+siguientes fórmulas:
 
 \begin{itemize}
 \item \emph{Captura}: \\
-3*duracion [seg]
-\\
-Para hacer este cálculo se está poniendo una holgura de dos veces la duración de la 
-captura para que el sistema procese las imágenes capturadas y obtener las imágenes de tipo timex y var.
+  3*duracion [seg]
+  \\
+  Para hacer este cálculo se está poniendo una holgura de dos veces la
+  duración de la captura para que el sistema procese las imágenes
+  capturadas y obtener las imágenes de tipo \textit{timex} y
+  \textit{var}.
 \item \emph{Timestack}: \\
-1.4*duracion2 [seg]
-\\
-Para este cálculo se está poniendo una holgura del 40\% del tiempo de captura de los timestack 
-para que se procesen las imágenes  y se guarde el video.
+  1.4*duracion2 [seg]
+  \\
+  Para este cálculo se está poniendo una holgura del 40\% del tiempo
+  de captura de los timestack para que se procesen las imágenes y se
+  guarde el video.
 \item \emph{Transferencia}: \\
-25*imagenes [seg]
-\\
-Para el cálculo de este se asume una velocidad de 20 KB/s y un peso por imagen de 500 KB  
-ya que la velocidad se asume baja en esta se tiene en cuenta la holgura.
+  25*imagenes [seg]
+  \\
+  Se supone una velocidad de 20 KB/s y un tamaño por imagen de 500 KB ya
+  que la velocidad se asume baja, en ésta se tiene en cuenta la
+  holgura.
 \item \emph{Procesamiento}: \\
-1.4*((29*imagenes)+210) [seg]
-\\
-Para el cálculo de este se hicieron pruebas y se llego a que se demora 29 
-segundos procesando cada imagen y se demora en total 210 segundos en pasar entre 
-los diferentes procesos y por último se está asumiendo una holgura del 40\% para 
-hacer el procesamiento de todas las imágenes.
+  1.4*((29*imagenes)+210) [seg]
+  \\
+  Para el cálculo de este tiempo se hicieron pruebas y se llegó a que
+  el procesamiento dura aproximadamente 29 segundos por cada
+  imagen. El tiempo entre los diferentes procesos es aproximadamente
+  210 segundos. Se supone una holgura del 40\% para hacer el
+  procesamiento de todas las imágenes.
 \end{itemize}
 Donde:
 \\
@@ -185,6 +198,6 @@ imagenes: Cantidad de imágenes capturadas.
 En este manual se describen las interfaces gráficas que acompañan a
 las funciones que componen el Toolbox, las cuales son una ayuda para
 el usuario que desea realizar tareas de administración, manipulación y
-procesamiento de la información de manera asistida, aunque también es
+procesamiento de la información de manera asistida, siendo también
 posible utilizar las rutinas independientemente.
 

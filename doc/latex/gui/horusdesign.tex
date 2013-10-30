@@ -10,8 +10,8 @@ la figura~\ref{fig:dir}.
   \label{fig:dir}
 \end{figure}
 
-En el esquema se presentan todos los módulos del paquete que
-contiene el sistema HORUS, los cuales se detallan a continuación:
+En el esquema se presentan todos los módulos del paquete que contiene
+el sistema HORUS, los cuales se detallan a continuación:
 
 \begin{itemize}
 \item Módulo \emph{src}: Este módulo contiene las rutinas en MATLAB
@@ -25,13 +25,14 @@ contiene el sistema HORUS, los cuales se detallan a continuación:
 
 \item Módulo \emph{data}: Contiene los datos de configuración del
   sistema y del usuario, tales como las rutas de las imágenes,
-  configuraciones, entre otros. Los datos contenidos en este módulo sirven
-  como insumo para la funcionalidad de algunas rutinas y deben estar
-  muy bien estructurados para facilidad de lectura y manipulación.
+  configuraciones, entre otros. Los datos contenidos en este módulo
+  sirven como insumo para la funcionalidad de algunas rutinas y deben
+  estar muy bien estructurados para facilidad de lectura y
+  manipulación.
 
-\item Módulo \emph{doc}: Básicamente contiene los manuales técnicos y
-  de usuario, así como archivos en diferentes formatos (html, pdf,
-  entre otros) que explican la funcionalidad de submódulos o rutinas.
+\item Módulo \emph{doc}: Contiene los manuales técnicos y de usuario,
+  así como archivos en diferentes formatos (html, pdf, entre otros)
+  que explican la funcionalidad de submódulos o rutinas.
 
 \item Módulo \emph{tmp}: Algunas rutinas requieren generar variables o
   archivos temporales, en este módulo se almacenan datos que pueden
@@ -43,11 +44,11 @@ contiene el sistema HORUS, los cuales se detallan a continuación:
   rutina, y datos de prueba.
 
 \item Módulo \emph{ext data}: Este módulo representa la base de datos
-  de imágenes instantáneas, time exposure, variance o timestacks, de
-  las zonas de estudio, así como las series de tiempo, e información
-  sobre la estación. La línea punteada del recuadro indica que no se
-  encuentra dentro del paquete de HORUS, pero hay comunicación con
-  este módulo.
+  de imágenes \textit{snap}, \textit{timex}, \textit{var} o
+  \textit{timestacks}, de las zonas de estudio, así como las series de
+  tiempo, e información sobre la estación. La línea punteada del
+  recuadro indica que no se encuentra dentro del paquete de HORUS,
+  pero hay comunicación con este módulo.
 
 \item Módulo \emph{io}: Este módulo contiene rutinas específicas para
   la comunicación con una base de datos. Es el puente entre el módulo
