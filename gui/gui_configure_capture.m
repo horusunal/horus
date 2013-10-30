@@ -1,43 +1,43 @@
 function varargout = gui_configure_capture(varargin)
 % GUI_CONFIGURE_CAPTURE M-file for gui_configure_capture.fig
-%      GUI_CONFIGURE_CAPTURE, by itself, creates a new GUI_CONFIGURE_CAPTURE or raises the existing
-%      singleton*.
+% GUI_CONFIGURE_CAPTURE, by itself, creates a new GUI_CONFIGURE_CAPTURE or raises the existing
+% singleton*.
 %
-%      H = GUI_CONFIGURE_CAPTURE returns the handle to a new GUI_CONFIGURE_CAPTURE or the handle to
-%      the existing singleton*.
+% H = GUI_CONFIGURE_CAPTURE returns the handle to a new GUI_CONFIGURE_CAPTURE or the handle to
+% the existing singleton*.
 %
-%      GUI_CONFIGURE_CAPTURE('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in GUI_CONFIGURE_CAPTURE.M with the given input arguments.
+% GUI_CONFIGURE_CAPTURE('CALLBACK',hObject,eventData,handles,...) calls the local
+% function named CALLBACK in GUI_CONFIGURE_CAPTURE.M with the given input arguments.
 %
-%      GUI_CONFIGURE_CAPTURE('Property','Value',...) creates a new GUI_CONFIGURE_CAPTURE or raises the
-%      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before gui_configure_capture_OpeningFcn gets called.  An
-%      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to gui_configure_capture_OpeningFcn via varargin.
+% GUI_CONFIGURE_CAPTURE('Property','Value',...) creates a new GUI_CONFIGURE_CAPTURE or raises the
+% existing singleton*. Starting from the left, property value pairs are
+% applied to the GUI before gui_configure_capture_OpeningFcn gets called. An
+% unrecognized property name or invalid value makes property application
+% stop. All inputs are passed to gui_configure_capture_OpeningFcn via varargin.
 %
-%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
-%      instance to run (singleton)".
+% *See GUI Options on GUIDE's Tools menu. Choose "GUI allows only one
+% instance to run (singleton)".
 %
 % See also: GUIDE, GUIDATA, GUIHANDLES
 
 % Edit the above text to modify the response to help gui_configure_capture
 
-% Written by 
-% Sebastian Munera Alvarez and 
-% Cesar Augusto Cartagena Ocampo 
+% Written by
+% Sebastian Munera Alvarez and
+% Cesar Augusto Cartagena Ocampo
 % for the HORUS Project
 % Universidad Nacional de Colombia
-%   Copyright 2011 HORUS
+% Copyright 2011 HORUS
 % Last Modified by GUIDE v2.5 09-Nov-2012 22:48:46
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
-gui_State = struct('gui_Name',       mfilename, ...
-    'gui_Singleton',  gui_Singleton, ...
+gui_State = struct('gui_Name', mfilename, ...
+    'gui_Singleton', gui_Singleton, ...
     'gui_OpeningFcn', @gui_configure_capture_OpeningFcn, ...
-    'gui_OutputFcn',  @gui_configure_capture_OutputFcn, ...
-    'gui_LayoutFcn',  [] , ...
-    'gui_Callback',   []);
+    'gui_OutputFcn', @gui_configure_capture_OutputFcn, ...
+    'gui_LayoutFcn', [] , ...
+    'gui_Callback', []);
 if nargin && ischar(varargin{1})
     gui_State.gui_Callback = str2func(varargin{1});
 end
@@ -53,10 +53,10 @@ end
 % --- Executes just before gui_configure_capture is made visible.
 function gui_configure_capture_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-% varargin   command line arguments to gui_configure_capture (see VARARGIN)
+% hObject handle to figure
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
+% varargin command line arguments to gui_configure_capture (see VARARGIN)
 
 % Choose default command line output for gui_configure_capture
 
@@ -144,7 +144,7 @@ try
     set(handles.popupTransferEndMinute, 'String', strEndMinute);
     
     set(handles.editRemotePath, 'String', '.')
-    
+   
     % Update handles structure
     guidata(hObject, handles);
     
@@ -160,10 +160,10 @@ end
 
 % --- Outputs from this function are returned to the command line.
 function varargout = gui_configure_capture_OutputFcn(hObject, eventdata, handles)
-% varargout  cell array for returning output args (see VARARGOUT);
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% varargout cell array for returning output args (see VARARGOUT);
+% hObject handle to figure
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
@@ -171,15 +171,15 @@ varargout{1} = handles.output;
 
 % --- Executes on selection change in popupStation.
 function popupStation_Callback(hObject, eventdata, handles)
-% hObject    handle to popupStation (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% hObject handle to popupStation (see GCBO)
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns popupStation contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from popupStation
+% contents{get(hObject,'Value')} returns selected item from popupStation
 
 try
-    [handles numcam]= reload_camera(handles);
+	[handles numcam]= reload_camera(handles);
     if check_station(handles) && numcam > 0
         
         %reboot connection to the database if necessary
@@ -195,6 +195,7 @@ try
             warndlg('No image types were found in the database!', 'Warning');
             return;
         end
+        
         handles = reload_types(handles);
         xml = loadXML(handles.xmlfile, 'Configuration', 'station', station);
         
@@ -354,12 +355,12 @@ end
 
 % --- Executes on selection change in popupCaptureID.
 function popupCaptureID_Callback(hObject, eventdata, handles)
-% hObject    handle to popupCaptureID (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% hObject handle to popupCaptureID (see GCBO)
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns popupCaptureID contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from popupCaptureID
+% contents{get(hObject,'Value')} returns selected item from popupCaptureID
 
 try
     
@@ -430,7 +431,7 @@ try
     
     cameraNode = cameraNode{1};
     fr = getNodeVal(cameraNode, 'FrameRate');
-%     fr = eval(fr);
+% fr = eval(fr);
     gm = getNodeVal(cameraNode, 'GainMode');
     sm = getNodeVal(cameraNode, 'ShutterMode');
     wb = getNodeVal(cameraNode, 'WhiteBalanceMode');
@@ -476,9 +477,9 @@ end
 
 % --- Executes on button press in buttonROI.
 function buttonROI_Callback(hObject, eventdata, handles)
-% hObject    handle to buttonROI (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% hObject handle to buttonROI (see GCBO)
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 
 try
     im = captureImage(handles);
@@ -548,111 +549,111 @@ try
         errordlg('Invalid ROI!', 'Error');
     end
     
-%     % Select an image for marking points
-%     [file path] = uigetfile({'*.jpg'; '*.png'}, 'Select an image');
-%     if file
-%         im = imread(fullfile(path, file));
-%         figure;
-%         imshow(im);
-%         
-%         xcoords = [];
-%         ycoords = [];
-%         done = false;
-%         while ~done
-%             [x y button] = ginput(1);
-%             if button == 3 || button == 1 % Right click: Quit, Left click: Mark point
-%                 xcoords = [xcoords, x];
-%                 ycoords = [ycoords, y];
-%                 if button == 3
-%                     done = true;
-%                 end
-%             end
-%             if button == 'x' || button == 'X' % Erase
-%                 xcoords = xcoords(1:end-1);
-%                 ycoords = ycoords(1:end-1);
-%             end
-%             imshow(im);
-%             n = length(xcoords);
-%             for i = 1:n
-%                 hold on
-%                 plot(xcoords(i), ycoords(i), 'r*');
-%                 if i > 1
-%                     hold on
-%                     plot([xcoords(i - 1) xcoords(i)], ...
-%                         [ycoords(i - 1) ycoords(i)], 'y')
-%                 end
-%             end
-%         end
-%         n = length(xcoords);
-%         if n > 1
-%             hold on
-%             plot([xcoords(1) xcoords(end)], ...
-%                 [ycoords(1) ycoords(end)], 'y')
-%         end
-%         
-%         if length(xcoords) == length(ycoords) && length(xcoords) > 3
-%             handles.curroi.xcoords = xcoords;
-%             handles.curroi.ycoords = ycoords;
-%         else
-%             errordlg('Invalid ROI!', 'Error');
-%         end
-%         
-%     else % If there are no images, input coordinates directly
-%         prompt = {'X Coordinates:', 'Y Coordinates:'};
-%         title = 'ROI Parameters';
-%         num_lines = 1;
-%         
-%         if isempty(handles.curroi.xcoords)
-%             default = {'0', '0'};
-%         else
-%             xcoords = '';
-%             ycoords = '';
-%             first = true;
-%             
-%             for i = 1:numel(handles.curroi.xcoords)
-%                 if first
-%                     first = false;
-%                 else
-%                     xcoords = [xcoords, ' '];
-%                     ycoords = [ycoords, ' '];
-%                 end
-%                 xcoords = [xcoords, num2str(handles.curroi.xcoords(i))];
-%                 ycoords = [ycoords, num2str(handles.curroi.ycoords(i))];
-%             end
-%             
-%             default = {xcoords, ycoords};
-%         end
-%         
-%         answer = inputdlg(prompt, title, num_lines, default);
-%         
-%         if isempty(answer)
-%             return
-%         end
-%         
-%         if isempty(answer{1}) || isempty(answer{2})
-%             errordlg('The ROI you have selected is not valid!','Error');
-%             return
-%         end
-%         
-%         parts = regexp(answer{1}, '[ \t]+', 'split');
-%         xcoords = NaN(numel(parts), 1);
-%         for i = 1:numel(parts)
-%             xcoords(i) = str2double(parts{i});
-%         end
-%         
-%         parts = regexp(answer{2}, '[ \t]+', 'split');
-%         ycoords = NaN(numel(parts), 1);
-%         for i = 1:numel(parts)
-%             ycoords(i) = str2double(parts{i});
-%         end
-%         
-%         if length(xcoords) == length(ycoords) && length(xcoords) > 3
-%             handles.curroi.xcoords = xcoords;
-%             handles.curroi.ycoords = ycoords;
-%         else
-%             errordlg('Invalid ROI!', 'Error');
-%         end
-%     end
+% % Select an image for marking points
+% [file path] = uigetfile({'*.jpg'; '*.png'}, 'Select an image');
+% if file
+% im = imread(fullfile(path, file));
+% figure;
+% imshow(im);
+%
+% xcoords = [];
+% ycoords = [];
+% done = false;
+% while ~done
+% [x y button] = ginput(1);
+% if button == 3 || button == 1 % Right click: Quit, Left click: Mark point
+% xcoords = [xcoords, x];
+% ycoords = [ycoords, y];
+% if button == 3
+% done = true;
+% end
+% end
+% if button == 'x' || button == 'X' % Erase
+% xcoords = xcoords(1:end-1);
+% ycoords = ycoords(1:end-1);
+% end
+% imshow(im);
+% n = length(xcoords);
+% for i = 1:n
+% hold on
+% plot(xcoords(i), ycoords(i), 'r*');
+% if i > 1
+% hold on
+% plot([xcoords(i - 1) xcoords(i)], ...
+% [ycoords(i - 1) ycoords(i)], 'y')
+% end
+% end
+% end
+% n = length(xcoords);
+% if n > 1
+% hold on
+% plot([xcoords(1) xcoords(end)], ...
+% [ycoords(1) ycoords(end)], 'y')
+% end
+%
+% if length(xcoords) == length(ycoords) && length(xcoords) > 3
+% handles.curroi.xcoords = xcoords;
+% handles.curroi.ycoords = ycoords;
+% else
+% errordlg('Invalid ROI!', 'Error');
+% end
+%
+% else % If there are no images, input coordinates directly
+% prompt = {'X Coordinates:', 'Y Coordinates:'};
+% title = 'ROI Parameters';
+% num_lines = 1;
+%
+% if isempty(handles.curroi.xcoords)
+% default = {'0', '0'};
+% else
+% xcoords = '';
+% ycoords = '';
+% first = true;
+%
+% for i = 1:numel(handles.curroi.xcoords)
+% if first
+% first = false;
+% else
+% xcoords = [xcoords, ' '];
+% ycoords = [ycoords, ' '];
+% end
+% xcoords = [xcoords, num2str(handles.curroi.xcoords(i))];
+% ycoords = [ycoords, num2str(handles.curroi.ycoords(i))];
+% end
+%
+% default = {xcoords, ycoords};
+% end
+%
+% answer = inputdlg(prompt, title, num_lines, default);
+%
+% if isempty(answer)
+% return
+% end
+%
+% if isempty(answer{1}) || isempty(answer{2})
+% errordlg('The ROI you have selected is not valid!','Error');
+% return
+% end
+%
+% parts = regexp(answer{1}, '[ \t]+', 'split');
+% xcoords = NaN(numel(parts), 1);
+% for i = 1:numel(parts)
+% xcoords(i) = str2double(parts{i});
+% end
+%
+% parts = regexp(answer{2}, '[ \t]+', 'split');
+% ycoords = NaN(numel(parts), 1);
+% for i = 1:numel(parts)
+% ycoords(i) = str2double(parts{i});
+% end
+%
+% if length(xcoords) == length(ycoords) && length(xcoords) > 3
+% handles.curroi.xcoords = xcoords;
+% handles.curroi.ycoords = ycoords;
+% else
+% errordlg('Invalid ROI!', 'Error');
+% end
+% end
     
     % Update handles structure
     guidata(hObject, handles);
@@ -663,9 +664,9 @@ end
 
 % --- Executes on button press in buttonSave.
 function buttonSave_Callback(hObject, eventdata, handles)
-% hObject    handle to buttonSave (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% hObject handle to buttonSave (see GCBO)
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 
 try
     
@@ -761,7 +762,7 @@ try
         %%% Save in database and then update
                 
         idtransfer = load_idautomatic(handles.conn, station, type);
-        idtransfer =  cell2mat(idtransfer);
+        idtransfer = cell2mat(idtransfer);
         if ~isempty(idtransfer)
             status = update_automatic_params(handles.conn, station, idtransfer, ...
                 'type', type, 'start_hour', start_hour, 'start_minute', start_minute, ...
@@ -1057,9 +1058,9 @@ end
 
 % --- Executes on button press in buttonBuildCaptureAuto.
 function buttonBuildCaptureAuto_Callback(hObject, eventdata, handles)
-% hObject    handle to buttonBuildCaptureAuto (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% hObject handle to buttonBuildCaptureAuto (see GCBO)
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 
 if check_station(handles)
     station = get_station(handles);
@@ -1084,9 +1085,9 @@ end
 
 % --- Executes on button press in buttonBuildTransferAuto.
 function buttonBuildTransferAuto_Callback(hObject, eventdata, handles)
-% hObject    handle to buttonBuildTransferAuto (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% hObject handle to buttonBuildTransferAuto (see GCBO)
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 
 if check_station(handles)
     station = get_station(handles);
@@ -1113,15 +1114,15 @@ end
 
 % --- Executes on button press in buttonDeleteStack.
 function buttonDeleteStack_Callback(hObject, eventdata, handles)
-% hObject    handle to buttonDeleteStack (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% hObject handle to buttonDeleteStack (see GCBO)
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 
 try
     if check_station(handles)
-%         station = get_station(handles);
-%         xml = loadXML(handles.xmlfile, 'Configuration', 'station', station);
-%         type = 'stack';
+% station = get_station(handles);
+% xml = loadXML(handles.xmlfile, 'Configuration', 'station', station);
+% type = 'stack';
         
         captureval = get(handles.popupCaptureID, 'Value');
         
@@ -1139,39 +1140,39 @@ try
             end
             
             idcapture = get_stack_capture(handles);
-%             xmlPath = strcat('Configuration[station=', station,...
-%                 ']/CaptureConfig/Capture[type=', type, ',id=', num2str(idcapture), ']');
-%             existingChild = removeNode(xml, xmlPath);
-%             
-%             if ~isempty(existingChild)
-%                 idcapture = str2double(getAttributeValue(existingChild, 'id'));
-%             end
-%             
-%             xmlPath = strcat('Configuration[station=', station,...
-%                 ']/CameraPerCaptureConfig/CameraPerCapture[capture=', num2str(idcapture), ']');
-%             removeNode(xml, xmlPath);
-%             
-%             %reboot connection to the database if necessary
-%             [handles.conn status] = renew_connection_db(handles.conn);
-%             
-%             if status == 1
-%                 return
-%             end
-%             
-%             data = load_automatic_params(handles.conn, station, idcapture);
-%             
-%             if ~isempty(data)
-%                 status = delete_automatic_params(handles.conn, idcapture, station);
-%                 if status == 0
-%                     
-%                     xmlPath = strcat('Configuration[station=', station,...
-%                         ']/CaptureConfig/Capture[type=stack]');
-%                     captureStackNodes = getNodes(xml, xmlPath);
-%                     if ~isempty(captureStackNodes)
-%                         set(handles.popupCaptureID, 'Value', 1)
-%                     end
-%                     
-%                     xmlsave(handles.xmlfile, xml);
+% xmlPath = strcat('Configuration[station=', station,...
+% ']/CaptureConfig/Capture[type=', type, ',id=', num2str(idcapture), ']');
+% existingChild = removeNode(xml, xmlPath);
+%
+% if ~isempty(existingChild)
+% idcapture = str2double(getAttributeValue(existingChild, 'id'));
+% end
+%
+% xmlPath = strcat('Configuration[station=', station,...
+% ']/CameraPerCaptureConfig/CameraPerCapture[capture=', num2str(idcapture), ']');
+% removeNode(xml, xmlPath);
+%
+% %reboot connection to the database if necessary
+% [handles.conn status] = renew_connection_db(handles.conn);
+%
+% if status == 1
+% return
+% end
+%
+% data = load_automatic_params(handles.conn, station, idcapture);
+%
+% if ~isempty(data)
+% status = delete_automatic_params(handles.conn, idcapture, station);
+% if status == 0
+%
+% xmlPath = strcat('Configuration[station=', station,...
+% ']/CaptureConfig/Capture[type=stack]');
+% captureStackNodes = getNodes(xml, xmlPath);
+% if ~isempty(captureStackNodes)
+% set(handles.popupCaptureID, 'Value', 1)
+% end
+%
+% xmlsave(handles.xmlfile, xml);
 
                     for i = 1:numel(handles.stackQueue)
                         if idcapture == handles.stackQueue(i).id
@@ -1181,11 +1182,11 @@ try
                     end
 
                     handles = reload_stack_ids(handles);
-%                     warndlg('The stack capture configuration has been deleted!', 'Success')
-%                 else
-%                     warndlg('The stack capture configuration has not been deleted!', 'Failure')
-%                 end
-%             end
+% warndlg('The stack capture configuration has been deleted!', 'Success')
+% else
+% warndlg('The stack capture configuration has not been deleted!', 'Failure')
+% end
+% end
         end
         % Update handles structure
         guidata(hObject, handles);
@@ -1197,9 +1198,9 @@ end
 
 % --- Executes on button press in buttonRemotePath.
 function buttonRemotePath_Callback(hObject, eventdata, handles)
-% hObject    handle to buttonRemotePath (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% hObject handle to buttonRemotePath (see GCBO)
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 
 try
     rpath = uigetdir('.');
@@ -1555,10 +1556,10 @@ if isempty(handles.stackQueue)
         
         id = str2double(getAttributeValue(captureStack, 'id'));
         start_hour = str2double(getNodeVal(captureStack, 'StartHour'));
-        start_minute = str2double(getNodeVal(captureStack, 'StartMinute'));        
-        end_hour = str2double(getNodeVal(captureStack, 'EndHour'));        
-        end_minute = str2double(getNodeVal(captureStack, 'EndMinute'));        
-        time_step = str2double(getNodeVal(captureStack, 'TimeStep'));        
+        start_minute = str2double(getNodeVal(captureStack, 'StartMinute'));
+        end_hour = str2double(getNodeVal(captureStack, 'EndHour'));
+        end_minute = str2double(getNodeVal(captureStack, 'EndMinute'));
+        time_step = str2double(getNodeVal(captureStack, 'TimeStep'));
         num_frames = str2double(getNodeVal(captureStack, 'NumberOfFrames'));
         
         xmlPath = strcat('Configuration[station=', station, ...
@@ -1629,9 +1630,9 @@ set(handles.editStackFrames, 'String', '');
 
 % --- Executes on button press in buttonAddImageType.
 function buttonAddImageType_Callback(hObject, eventdata, handles)
-% hObject    handle to buttonAddImageType (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% hObject handle to buttonAddImageType (see GCBO)
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 
 try
     if check_ImageType(handles)
@@ -1678,9 +1679,9 @@ end
 
 % --- Executes on button press in buttonRemoveImageType.
 function buttonRemoveImageType_Callback(hObject, eventdata, handles)
-% hObject    handle to buttonRemoveImageType (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% hObject handle to buttonRemoveImageType (see GCBO)
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 
 try
     % List of selected image type
@@ -1725,9 +1726,9 @@ end
 
 % --- Executes on button press in buttonEnqueueStack.
 function buttonEnqueueStack_Callback(hObject, eventdata, handles)
-% hObject    handle to buttonEnqueueStack (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% hObject handle to buttonEnqueueStack (see GCBO)
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 
 try
     station = get_station(handles);
@@ -2033,9 +2034,9 @@ end
 
 % --- Executes on button press in show_time.
 function show_time_Callback(hObject, eventdata, handles)
-% hObject    handle to show_time (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% hObject handle to show_time (see GCBO)
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 try
     if check_station(handles)
         station = get_station(handles);
@@ -2047,9 +2048,9 @@ end
 
 % --- Executes when user attempts to close figure1.
 function figure1_CloseRequestFcn(hObject, eventdata, handles)
-% hObject    handle to figure1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% hObject handle to figure1 (see GCBO)
+% eventdata reserved - to be defined in a future version of MATLAB
+% handles structure with handles and user data (see GUIDATA)
 % Hint: delete(hObject) closes the figure
 
 try
