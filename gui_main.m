@@ -102,7 +102,7 @@ try
     % Set HORUS paths
     if ~isdeployed
         root = fileparts(mfilename('fullpath'));
-        handles.root = fileparts(root);
+        handles.root = root;
         addpath(genpath(handles.root));
     end
 

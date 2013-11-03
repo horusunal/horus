@@ -66,7 +66,7 @@ try
         calibration = get(cursor, 'Data');
         
         data = cell(0);
-        [ids pos1 pos2 ] = unique(cell2mat(calibration(:, 2)), 'rows');
+        [ids pos1 pos2 ] = unique(cell2mat(calibration(:, 2)), 'rows','first');
         valuematrix=cell2mat(calibration(:,9:11));
         data{1} = cell2mat(calibration(1,1));
         data{2} = cell2mat(calibration(1,3));
