@@ -230,7 +230,7 @@ try
         ok = false;
     end
     if ok && merge + rectify + rectMerge == 0
-        warndlg('You must select at least one option: Merge only, Rectify only, Rectify and Merge!', 'Warning')
+        warndlg('You must select at least one option: Merge oblique images, Rectify oblique images, Rectify and merge oblique images!', 'Warning')
         ok = false;
     end
     if ok && isempty(selectedTypes)

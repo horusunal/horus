@@ -2013,8 +2013,7 @@ try
     end
     stations = cell(0);
     stations{1, 1}= 'Select the station';
-    stations{2, 1} = 'New station';
-    j=3;
+    j=2;
     for k = 1:length(station)
         stations{j, 1}=char(station(k));
         j=j+1;
