@@ -21,7 +21,9 @@ function [mergedimg in jn] = merge_images(img1, img2, H)
 %   $Date: 2011/10/28 17:31 $
 
 try
-    
+    mergedimg = [];
+    in = [];
+    jn = [];
     [h1 w1 o] = size(img1);
     [h2 w2 o] = size(img2);
     

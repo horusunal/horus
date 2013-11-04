@@ -70,7 +70,7 @@ try
         end
         fusion = get(cursor, 'Data'); % Organizar los datos
         data = cell(0);
-        [ids pos1 pos2 ] = unique(cell2mat(fusion(:, 2)), 'rows');
+        [ids pos1 pos2 ] = unique(cell2mat(fusion(:, 2)), 'rows','first');
         valuematrix=cell2mat(fusion(:,5:7));
         data{1} = cell2mat(fusion(1,1));
         data{2} = cell2mat(fusion(1,3));
