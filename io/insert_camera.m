@@ -51,7 +51,7 @@ try
         colnames = {'id', 'station', 'reference','sizeX', 'sizeY'};
         extdata = {id, station, reference, sizeX, sizeY};
         
-        fastinsert(conn, ['camera_' station], colnames, extdata);
+        fastinsert(conn, ['camera_' lower(station)], colnames, extdata);
         if nargout==1
             varargout(1)={0};
         end

@@ -69,11 +69,11 @@ try
     end
     
     try
-        fastinsert(conn, ['image_' station_db],colnames_ima,data_ima);
+        fastinsert(conn, ['image_' lower(station_db)],colnames_ima,data_ima);
         %       data to insert
         data_obli = {filename, camera, station};
         try
-            fastinsert(conn, ['obliqueimage_' station_db],colnames_obli,data_obli);
+            fastinsert(conn, ['obliqueimage_' lower(station_db)],colnames_obli,data_obli);
             if nargout==1
                 varargout(1)={0}; % Success
             end

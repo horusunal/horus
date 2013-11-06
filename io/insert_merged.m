@@ -59,11 +59,11 @@ try
     %   data to insert
     data_ima = {type,timestamp,ismini,filename,path};
     try
-        fastinsert(conn, ['image_' station],colnames_ima,data_ima);
+        fastinsert(conn, ['image_' lower(station)],colnames_ima,data_ima);
         %       data to insert
         data_merged = {filename, idfusion};
         try
-            fastinsert(conn, ['mergedimage_' station],colnames_merged,data_merged);
+            fastinsert(conn, ['mergedimage_' lower(station)],colnames_merged,data_merged);
             if nargout==1
                 varargout(1)={0};
             end

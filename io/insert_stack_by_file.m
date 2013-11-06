@@ -59,7 +59,7 @@ try
     %   data to insert
     data = {filename,camera,station,inittime,path, fps, numFrames};
     try
-        fastinsert(conn, ['timestack_' station_db],colnames,data);
+        fastinsert(conn, ['timestack_' lower(station_db)],colnames,data);
         if nargout==1
             varargout(1)={0}; % Success
         end

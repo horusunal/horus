@@ -55,7 +55,7 @@ try
     end
     
     try
-        newid  = generate_autoinc(conn, ['calibration_' station], ...
+        newid  = generate_autoinc(conn, ['calibration_' lower(station)], ...
             'idcalibration', station);
         % Data for insertion in calibration
         colnames = {'idcalibration', 'camera', 'station', 'timestamp', 'resolution'};
@@ -84,7 +84,7 @@ try
             extdata{end+1} = value;
         end
         
-        fastinsert(conn, ['calibration_' station], colnames, extdata);
+        fastinsert(conn, ['calibration_' lower(station)], colnames, extdata);
         if nargout >= 1
             varargout(1)={0};
         end

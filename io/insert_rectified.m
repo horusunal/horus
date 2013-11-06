@@ -59,12 +59,12 @@ try
     %   data to insert
     data_ima = {type,timestamp,ismini,filename,path};
     try
-        fastinsert(conn, ['image_' station],colnames_ima,data_ima);
+        fastinsert(conn, ['image_' lower(station)],colnames_ima,data_ima);
         
         %       data to insert
         data_rect = {filename, idcalibration};
         try
-            fastinsert(conn, ['rectifiedimage_' station],colnames_rect,data_rect);
+            fastinsert(conn, ['rectifiedimage_' lower(station)],colnames_rect,data_rect);
             if nargout==1
                 varargout(1)={0};
             end

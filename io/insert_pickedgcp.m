@@ -50,7 +50,7 @@ try
         colnames = {'calibration', 'gcp', 'station', 'u', 'v'};
         extdata = {idcalibration, idgcp, station, u, v};
         
-        fastinsert(conn, ['pickedgcp_' station], colnames, extdata);
+        fastinsert(conn, ['pickedgcp_' lower(station)], colnames, extdata);
         if nargout==1
             varargout(1)={0};
         end

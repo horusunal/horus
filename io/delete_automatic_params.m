@@ -25,7 +25,6 @@ function [varargout] = delete_automatic_params(conn, idauto, station)
 %   $Date: 2012/07/27 11:44 $
 
 try
-    station = upper(station);
     if nargout==1
         varargout(1)={1};
     end
@@ -38,8 +37,8 @@ try
     end
     
     try
-        query = ['DELETE FROM automaticparams_' station ' '...
-            'WHERE station LIKE "' station '" AND idauto = ' num2str(idauto)];
+        query = ['DELETE FROM automaticparams_' lower(station) ' '...
+            'WHERE station LIKE "' upper(station) '" AND idauto = ' num2str(idauto)];
         cursor = exec(conn, query);
         if nargout==1
             if isfloat(cursor.Message)

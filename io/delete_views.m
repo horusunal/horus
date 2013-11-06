@@ -26,7 +26,7 @@ function [varargout] = delete_views(conn, station)
 %   $Date: 2012/09/3 7:45 $
 
 try
-    station = upper(station);
+    station = lower(station);
     if nargout==1
         varargout(1)={1};
     end

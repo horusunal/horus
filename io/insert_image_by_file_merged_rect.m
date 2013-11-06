@@ -64,7 +64,7 @@ try
         return
     end
     
-    query=['SELECT id, timestamp FROM fusion_' station ' WHERE type LIKE "rectified" '...
+    query=['SELECT id, timestamp FROM fusion_' lower(station) ' WHERE type LIKE "rectified" '...
         'AND timestamp <= ' mat2str(timestamp)];
     try
         result = get(fetch(exec(conn, query)), 'Data');
@@ -77,12 +77,12 @@ try
     %   data to insert
     data_ima = {type,timestamp,ismini,filename,path};
     try
-        fastinsert(conn, ['image_' station],colnames_ima,data_ima);
+        fastinsert(conn, ['image_' lower(station)],colnames_ima,data_ima);
         
         %       data to insert
         data_pan = {filename, idfusion};
         try
-            fastinsert(conn, ['mergedimage_' station],colnames_pan,data_pan);
+            fastinsert(conn, ['mergedimage_' lower(station)],colnames_pan,data_pan);
             if nargout==1
                 varargout(1)={0}; % Success
             end

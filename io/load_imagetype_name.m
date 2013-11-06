@@ -38,7 +38,7 @@ try
     
     try
         alias = load_station_alias(conn, station);
-        query = ['SELECT DISTINCT(name) FROM imagetype_' station ' ' ...
+        query = ['SELECT DISTINCT(name) FROM imagetype_' lower(station) ' ' ...
             'WHERE idtype LIKE "' alias '%"'];
         cursor = exec(conn, query);
         cursor = fetch(cursor);

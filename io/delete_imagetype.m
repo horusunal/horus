@@ -28,7 +28,7 @@ function  [varargout] = delete_imagetype(conn, station)
 
 
 try
-    station = upper(station);
+    station = lower(station);
     if nargout==1
         varargout(1)={1};
     end

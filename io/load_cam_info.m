@@ -41,7 +41,7 @@ try
     
     try
         query = ['SELECT id, station, reference, sizeX, sizeY ' ...
-            'FROM camera_' station ' WHERE station LIKE "' station '" AND id LIKE "' cam '"'];
+            'FROM camera_' lower(station) ' WHERE station LIKE "' station '" AND id LIKE "' cam '"'];
         cursor = exec(conn, query);
         cursor = fetch(cursor);
         if strcmpi(cursor.Data{1,1}, 'No Data') || isfloat(cursor.Data)

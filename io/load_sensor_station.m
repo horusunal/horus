@@ -38,7 +38,7 @@ try
     end
     
     try
-        query = ['SELECT name FROM sensor_' station ' WHERE station LIKE "' station '"'];
+        query = ['SELECT name FROM sensor_' lower(station) ' WHERE station LIKE "' station '"'];
         cursor = exec(conn, query);
         cursor = fetch(cursor);
         if strcmpi(cursor.Data{1,1}, 'No Data') || isfloat(cursor.Data)

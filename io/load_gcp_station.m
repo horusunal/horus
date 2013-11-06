@@ -38,7 +38,7 @@ try
     end
     
     try
-        query = ['SELECT name FROM gcp_' station ' WHERE station LIKE "' station '" ORDER BY name'];
+        query = ['SELECT name FROM gcp_' lower(station) ' WHERE station LIKE "' station '" ORDER BY name'];
         cursor = exec(conn, query);
         cursor = fetch(cursor);
         if strcmpi(cursor.Data{1,1}, 'No Data') || isfloat(cursor.Data)

@@ -60,12 +60,12 @@ try
     %   data to insert
     data_ima = {filename,type,timestamp,ismini,path};
     try
-        fastinsert(conn, ['image_' station],colnames_ima,data_ima);
+        fastinsert(conn, ['image_' lower(station)],colnames_ima,data_ima);
         
         %       data to insert
         data_obli = {filename, camera, station};
         try
-            fastinsert(conn, ['obliqueimage_' station],colnames_obli,data_obli);
+            fastinsert(conn, ['obliqueimage_' lower(station)],colnames_obli,data_obli);
             if nargout==1
                 varargout(1)={0};
             end

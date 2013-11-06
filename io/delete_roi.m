@@ -27,7 +27,7 @@ function  [varargout] = delete_roi(conn, station, idroi)
 %   $Date: 2011/07/22 11:00 $
 
 try
-    station = upper(station);
+    station = lower(station);
     if nargout==1
         varargout(1)={1};
     end

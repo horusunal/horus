@@ -74,7 +74,7 @@ try
         for i=1:size(matrix,1)
             exdatameasurement ={type,matrix(i,1),station};
             try
-                fastinsert(conn, ['measurement_' station],colnamesmeasurement,exdatameasurement);
+                fastinsert(conn, ['measurement_' lower(station)],colnamesmeasurement,exdatameasurement);
                 if nargout==1
                     varargout(1)={0};
                 end
@@ -92,7 +92,7 @@ try
             exdatameasurementvalue ={idmeasurement,station,1,1,1,matrix(i,2)};
             
             try
-                fastinsert(conn, ['measurementvalue_' station],colnamesmeasurementvalue,exdatameasurementvalue);
+                fastinsert(conn, ['measurementvalue_' lower(station)],colnamesmeasurementvalue,exdatameasurementvalue);
                 if nargout==1
                     varargout(1)={0};
                 end
@@ -121,7 +121,7 @@ try
         
         exdatameasurement ={type,timestamp,station};
         try
-            fastinsert(conn, ['measurement_' station],colnamesmeasurement,exdatameasurement);
+            fastinsert(conn, ['measurement_' lower(station)],colnamesmeasurement,exdatameasurement);
             if nargout==1
                 varargout(1)={0};
             end
@@ -142,7 +142,7 @@ try
                 exdatameasurementvalue ={idmeasurement,station,j,i,1,matrix(i,j)};
                 
                 try
-                    fastinsert(conn, ['measurementvalue_' station],colnamesmeasurementvalue,exdatameasurementvalue);
+                    fastinsert(conn, ['measurementvalue_' lower(station)],colnamesmeasurementvalue,exdatameasurementvalue);
                     if nargout==1
                         varargout(1)={0};
                     end

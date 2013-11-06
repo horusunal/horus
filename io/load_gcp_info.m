@@ -41,7 +41,7 @@ try
     end
     
     try
-        query = ['SELECT idgcp, station, name, x, y, z FROM gcp_' station ' WHERE station LIKE "'...
+        query = ['SELECT idgcp, station, name, x, y, z FROM gcp_' lower(station) ' WHERE station LIKE "'...
             station '" AND name LIKE "' gcp '"'];
         cursor = exec(conn, query);
         cursor = fetch(cursor);

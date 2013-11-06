@@ -66,7 +66,7 @@ try
         if size(extdata,2)>1
             if size(cell2mat(extdata(1)),1)==size(cell2mat(extdata(2)),1)
                 query = ['SELECT u, v '...
-                    'FROM roicoordinate_' station ' '...
+                    'FROM roicoordinate_' lower(station) ' '...
                     'WHERE idroi LIKE "' idroi '"'];
                 cursor = exec(conn, query);
                 cursor = fetch(cursor);
@@ -84,14 +84,14 @@ try
                         whereclause = ['WHERE idroi LIKE "' idroi '" AND idcoord = ' num2str(idcoord(i))];
                         extdata2{1}=extdata{1}(i);
                         extdata2{2}=extdata{2}(i);
-                        update(conn, ['roicoordinate_' station], colnames, extdata2, whereclause);
+                        update(conn, ['roicoordinate_' lower(station)], colnames, extdata2, whereclause);
                         if nargout==1
                             varargout(1)={0};
                         end
                     end
                     for i=size_new_u+1:size_old_u
                         
-                        query = ['DELETE FROM roicoordinate_' station ' WHERE idroi LIKE "' idroi '" AND idcoord = ' num2str(i)];
+                        query = ['DELETE FROM roicoordinate_' lower(station) ' WHERE idroi LIKE "' idroi '" AND idcoord = ' num2str(i)];
                         exec(conn, query);
                     end
                 elseif size_new_u > size_old_u
@@ -100,7 +100,7 @@ try
                         whereclause = ['WHERE idroi LIKE "' idroi '" AND idcoord = ' num2str(idcoord(i))];
                         extdata2{1}=extdata{1}(i);
                         extdata2{2}=extdata{2}(i);
-                        update(conn, ['roicoordinate_' station], colnames, extdata2, whereclause);
+                        update(conn, ['roicoordinate_' lower(station)], colnames, extdata2, whereclause);
                         if nargout==1
                             varargout(1)={0};
                         end
@@ -109,7 +109,7 @@ try
                     for i=size_old_u+1:size_new_u
                         
                         data_roicoor = {idroi, i, extdata{1}(i),extdata{2}(i)};
-                        fastinsert(conn, ['roicoordinate_' station],colnames_roicoor,data_roicoor);
+                        fastinsert(conn, ['roicoordinate_' lower(station)],colnames_roicoor,data_roicoor);
                     end
                 else
                     for i = 1:size_new_u
@@ -117,7 +117,7 @@ try
                         whereclause = ['WHERE idroi LIKE "' idroi '" AND idcoord = ' num2str(idcoord(i))];
                         extdata2{1}=extdata{1}(i);
                         extdata2{2}=extdata{2}(i);
-                        update(conn, ['roicoordinate_' station], colnames, extdata2, whereclause);
+                        update(conn, ['roicoordinate_' lower(station)], colnames, extdata2, whereclause);
                         if nargout==1
                             varargout(1)={0};
                         end
@@ -131,7 +131,7 @@ try
                 whereclause = ['WHERE idroi LIKE "' idroi '" AND idcoord = ' num2str(idcoord(i))];
                 extdata2{1}=extdata{1}(i);
                 extdata2{2}=extdata{2}(i);
-                update(conn, ['roicoordinate_' station], colnames, extdata2, whereclause);
+                update(conn, ['roicoordinate_' lower(station)], colnames, extdata2, whereclause);
                 if nargout==1
                     varargout(1)={0};
                 end

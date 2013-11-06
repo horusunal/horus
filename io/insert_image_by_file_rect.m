@@ -58,7 +58,7 @@ try
     colnames_ima={'type','timestamp','ismini','filename','path'};
     colnames_rect = {'filename', 'calibration'};
     
-    query=['SELECT idcalibration, timestamp FROM calibration_' station ' WHERE '...
+    query=['SELECT idcalibration, timestamp FROM calibration_' lower(station) ' WHERE '...
         'station LIKE "' station '" AND camera LIKE "' camera '" AND timestamp <= '...
         mat2str(timestamp)];
     
@@ -81,11 +81,11 @@ try
     %   data to insert
     data_ima = {type,timestamp,ismini,filename,path};
     try
-        fastinsert(conn, ['image_' station],colnames_ima,data_ima);
+        fastinsert(conn, ['image_' lower(station)],colnames_ima,data_ima);
         %       data to insert
         data_rect = {filename, idcalibration};
         try
-            fastinsert(conn, ['rectifiedimage_' station],colnames_rect,data_rect);
+            fastinsert(conn, ['rectifiedimage_' lower(station)],colnames_rect,data_rect);
             if nargout==1
                 varargout(1)={0}; % Success
             end

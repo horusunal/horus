@@ -48,7 +48,7 @@ try
     
     try
         % Query for retrieving all the gcps in a station
-        query = ['SELECT idgcp, name, x, y, z FROM gcp_' station ' WHERE station LIKE "' station '"'];
+        query = ['SELECT idgcp, name, x, y, z FROM gcp_' lower(station) ' WHERE station LIKE "' station '"'];
         cursor = exec(conn, query);
         cursor = fetch(cursor);
         

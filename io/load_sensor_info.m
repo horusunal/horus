@@ -40,7 +40,7 @@ try
     
     try
         query = ['SELECT name, station, x, y , z, isvirtual, description ' ...
-            'FROM sensor_' station ' WHERE station LIKE "' station '" AND name LIKE "' sensor '"'];
+            'FROM sensor_' lower(station) ' WHERE station LIKE "' station '" AND name LIKE "' sensor '"'];
         cursor = exec(conn, query);
         cursor = fetch(cursor);
         if strcmpi(cursor.Data{1,1}, 'No Data') || isfloat(cursor.Data)
