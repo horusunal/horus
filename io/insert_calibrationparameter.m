@@ -46,13 +46,13 @@ try
     
     try
         % Data for insertion in calibrationparameter
-        newid  = generate_autoinc(conn, ['calibrationparameter_' station], ...
+        newid  = generate_autoinc(conn, ['calibrationparameter_' lower(station)], ...
             'id', station);
         
         colnames = {'id', 'calibration', 'name'};
         extdata = {newid, idcalibration, name};
         
-        fastinsert(conn, ['calibrationparameter_' station], colnames, extdata);
+        fastinsert(conn, ['calibrationparameter_' lower(station)], colnames, extdata);
         
         % Insertion in calibrationvalue
         
@@ -63,7 +63,7 @@ try
                 colnames = {'idparam', 'idcol', 'idrow', 'value'};
                 extdata = {newid, c, r, value(r, c)};
                 
-                fastinsert(conn, ['calibrationvalue_' station], colnames, extdata);
+                fastinsert(conn, ['calibrationvalue_' lower(station)], colnames, extdata);
             end
         end
         if nargout==1

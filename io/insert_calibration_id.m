@@ -83,7 +83,7 @@ try
             extdata{end+1} = value;
         end
         
-        fastinsert(conn, ['calibration_' station], colnames, extdata);
+        fastinsert(conn, ['calibration_' lower(station)], colnames, extdata);
         if nargout >= 1
             varargout(1)={0};
         end

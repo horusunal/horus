@@ -45,7 +45,7 @@ try
         return
     end
     
-    newid  = generate_autoinc(conn, ['roi_' station], 'idroi', station);
+    newid  = generate_autoinc(conn, ['roi_' lower(station)], 'idroi', station);
     %   name of the parameter of te table
     colnames_roi = {'idroi', 'type','idcalibration','timestamp'};
     colnames_roicoor = {'idroi','idcoord','u','v'};
@@ -65,7 +65,7 @@ try
     end
     
     try
-        fastinsert(conn, ['roi_' station],colnames_roi,data_roi);
+        fastinsert(conn, ['roi_' lower(station)],colnames_roi,data_roi);
         %     id=lastid(conn);
         %     if id ==-1
         %         return
@@ -76,7 +76,7 @@ try
             data_roicoor = {newid, i, u(i),v(i)};
             
             try
-                fastinsert(conn, ['roicoordinate_' station],colnames_roicoor,data_roicoor);
+                fastinsert(conn, ['roicoordinate_' lower(station)],colnames_roicoor,data_roicoor);
                 if nargout==1
                     varargout(1)={0};
                 end

@@ -139,16 +139,16 @@
 
 \chapter{Instalar HORUS}
 El sistema HORUS fue diseñado para trabajar con la versión de
-\textregistered MATLAB R2011b o superior y requiere el Toolbox de
+MATLAB\textregistered\ R2011b o superior y requiere el Toolbox de
 Procesamiento de Imágenes, el de Bases de datos y el de Adquisición de
-Imágenes. Si su instalación de \textregistered MATLAB cumple los
+Imágenes. Si su instalación de MATLAB\textregistered\ cumple los
 requisitos básicos puede poner los archivos del sistema HORUS en
 cualquier directorio, para el ejemplo se ubicará en el directorio
 \verb$C:\horus$. El computador donde se ejecute el sistema HORUS debe
 contar mínimo con 2GB de memoria RAM.
 
-Para visualizar todas interfaces gráficas apropiadamente, se
-recomienda una resolución de pantalla de mínimo $1200 \times 800$.
+Para visualizar todas las interfaces gráficas apropiadamente, se
+recomienda una resolución de pantalla mínima de $1200 \times 800$.
 
 Para instalar HORUS, basta con descomprimir el paquete
 \texttt{horus.zip}, que contiene los códigos en MATLAB, y los scripts
@@ -189,7 +189,7 @@ HORUS (ver figura~\ref{fig:guimain}).
 
 \begin{figure}[htbp!]
   \centering
-  % \includegraphics[width=\textwidth]{img/guimain}
+  \includegraphics[width=\textwidth]{img/tutorial_guimain}
   \caption{Interfaz principal de HORUS}
   \label{fig:guimain}
 \end{figure}
@@ -209,13 +209,13 @@ en la instalación. En la figura~\ref{fig:login} se muestra la interfaz
 de \textit{login} diligenciada. Esta información sólo se ingresa una
 vez y permanece mientras dure la sesión. Cuando se cierra una
 interfaz, se le pregunta al usuario si desea cerrar la sesión o no.
-Si se está trabajando con una base de datos remota y sé presentan
-fallos en la red o el internet es decir se pierde la conexión con la
-base de datos se mostrara de nuevo la interfaz de \textit{login}.
+Si se está trabajando con una base de datos remota y se presentan
+fallos en la red o Internet, es decir, se pierde la conexión con la
+base de datos se mostrará de nuevo la interfaz de \textit{login}.
 
 \begin{figure}[htbp!]
   \centering
-  \includegraphics[width=0.4\textwidth]{img/tutorial_login}
+  \includegraphics[width=0.2\textwidth]{img/tutorial_login}
   \caption{Interfaz de login diligenciada}
   \label{fig:login}
 \end{figure}
@@ -236,7 +236,7 @@ desea cerrar la sesión, en caso afirmativo, el archivo
 En conclusión, mientras el archivo \texttt{userinfo.dat} exista, hay
 una sesión de HORUS abierta, y se cierra cuando el archivo es borrado.
 
-\chapter{Instalar y configurar base de datos}
+\chapter{Instalar y configurar la base de datos}
 \label{chap:bd}
 
 El sistema HORUS fue diseñado para trabajar con una base de datos
@@ -245,11 +245,13 @@ configurar la base de datos ya que en ésta va a estar almacenada toda
 la información necesaria para el funcionamiento de HORUS. Es posible
 trabajar con el sistema HORUS a partir de una base de datos existente
 a la que se pueda acceder, bien sea mediante una red local o por
-Internet. Si no hay una base de datos, hay que configurar una nueva
-desde cero.
+Internet. Si no hay una base de datos, es necesario configurar una
+nueva desde cero.
 
 Para crear una nueva base de datos con la estructura de HORUS se debe
-disponer del servidor de bases de datos MySQL. Para esto se deben
+disponer del servidor de bases de datos MySQL.
+
+Para la instalación y configuración básica del servidor MySQL se deben
 seguir los siguientes pasos:
 
 \begin{enumerate}
@@ -266,8 +268,8 @@ seguir los siguientes pasos:
   \item Seleccionar la opción ``Incluir la ruta de la instalación en
     el \verb!PATH! del sistema''.
   \item Reiniciar PC.
-  \item Por defecto, existe un usuario administrador del servidor. Se
-    debe especificar la contraseña de este usuario (\verb!root!). Esta
+  \item Por defecto, existe un usuario administrador del servidor (\verb!root!). Se
+    debe especificar la contraseña de este usuario. Esta
     contraseña se necesitará más adelante para crear la base de datos
     de HORUS.
   \end{itemize}
@@ -297,32 +299,24 @@ figura~\ref{fig:tutorial_setupdb}.
 
 \begin{figure}[htbp!]
   \centering
-  % \includegraphics[width=0.4\textwidth]{img/tutorial_setupdb}
+  \includegraphics[width=0.4\textwidth]{img/tutorial_setupdb}
   \caption{Datos diligenciados en la interfaz de configuración de la
     base de datos}
   \label{fig:tutorial_setupdb}
 \end{figure}
 
-Si se quiere crear un nuevo usuario con permisos limitados (e.g. un
-usuario de sólo lectura), se ejecuta la interfaz gráfica
-\texttt{gui\_create\_user} (ver figura~\ref{fig:guiuser}) donde se
-especifica el nombre de usuario, la contraseña, la base de datos a la
-que tiene permiso de conectarse y si tiene permiso de consultar
-(\textit{query}), insertar (\textit{insert}), borrar (\textit{delete})
-o actualizar (\textit{update}) la información en la base de datos.
+Por último, presionar el botón \textit{Apply configuration} para
+generar la nueva base de datos. Para generar la nueva base de datos se
+debe ingresar la contraseña del usuario \verb!root! previamente
+configurada.
 
-\begin{figure}[htbp!]
-  \centering
-  \includegraphics[width=0.4\textwidth]{img/tutorial_guiuser}
-  \caption{Interfaz para crear un nuevo usuario con permisos
-    limitados}
-  \label{fig:guiuser}
-\end{figure}
+Después de realizar la operación, el sistema responde con un mensaje
+de confirmación.
 
 
 \chapter{Creación de una estación, cámaras, GCPs y rutas de imágenes}
 
-A medida que se desarrolla el tutorial pueden salir diferentes avisos
+A medida que se desarrolla el tutorial pueden aparecer diferentes avisos
 emergentes que indican que la interfaz está haciendo algún
 procesamiento, estos avisos no deben ser cerrados ya que puede
 interferir en el desarrollo del tutorial.
@@ -340,13 +334,12 @@ Después de haber configurado la base de datos e instalado HORUS se
 realizan las primeras inserciones en la base de datos. Para el
 desarrollo de este tutorial se asume que la base de datos está vacía,
 sin ningún tipo de información. Lo primero que se insertará será la
-estación, para ello se presiona el botón \textbf{Edit database}. Se
-mostrará una ventana solicitando la información de la estación o si ha
-cambiado de opción en la interfaz con el menú superior se puede
-regresar a ésta haciendo clic en el menú superior \emph{Edit Station},
-luego seleccionando de la lista desplegable \emph{New station} y se
-ingresa la información solicitada con los datos de la estación como se
-muestra en el ejemplo:
+estación, para ello se presiona el botón \textbf{Edit database} en la
+interfaz principal. Se mostrará una ventana donde se puede ingresar la
+información de la estación haciendo clic en el menú superior
+\emph{Edit Station}, luego seleccionando de la lista desplegable
+\emph{New station}. Se ingresa la información solicitada con los
+datos de la estación como se muestra en el ejemplo:
 
 \begin{enumerate}
 \item \emph{Name}: CARTAGENA
@@ -380,12 +373,11 @@ de diligenciar la información.
   el fracaso de la operación.
 \end{itemize}
 
-Si en el proceso anterior se presionó el botón \emph{Insert} y hay
-algún error con la información ingresada o ha cambiado la información
-insertada, se puede actualizar yendo de nuevo al menú superior
-\emph{Edit Station} en la lista desplegable que aparece, seleccionando
-la estación a cambiar, renovando la información necesaria y
-presionando el botón \emph{Update}.
+Si en el proceso anterior se presionó el botón \emph{Insert} y se
+requiere cambiar la información insertada, se puede actualizar yendo
+de nuevo al menú superior \emph{Edit Station}, seleccionando la
+estación a cambiar, seleccionando la estación a cambiar, renovando la
+información necesaria y presionando el botón \emph{Update}.
 
 Si tiene alguna duda sobre el tipo de dato o cuál es el significado de
 alguna opción de esta interfaz diríjase al manual de HORUS en la
@@ -456,9 +448,9 @@ Ahora se insertarán los GCPs. Para esto se hace lo siguiente:
   CARTAGENA.
 \item En la lista desplegable \emph{GCP} se selecciona \emph{Import
     GCPs}.
-\item Se abrirá una nueva ventana en la cual se debe de seleccionar el
+\item Se abrirá una nueva ventana en la cual se debe seleccionar el
   archivo a importar, que en este caso es \emph{GCPs.xls} ubicado en
-  la carpeta \emph{examples} de HORUS. Éste debe ser un archivo de
+  el directorio \emph{examples} de HORUS. Éste debe ser un archivo de
   Excel y debe tener cinco columnas: Id del GCP, el cual es un número
   entero; el nombre del GCP, por lo general es GCPXXX donde XXX es un
   numero asociado a éste; la coordenada \textit{X}, la coordenada
@@ -509,6 +501,8 @@ Si tiene alguna duda sobre el tipo de dato o cuál es el significado de
 alguna opción de esta interfaz diríjase al manual de HORUS en la
 sección GUI en el apartado de \emph{Edit database} - GCP.
 
+
+
 \section{Generar las rutas de las imágenes}
 
 Finalmente, se crearán los directorios en el disco duro local donde
@@ -550,7 +544,7 @@ interfaz con esta información diligenciada.
 
 \begin{figure}[htbp!]
   \centering
-  % \includegraphics[width=0.6\textwidth]{img/tutorial_pathdb}
+  \includegraphics[width=0.6\textwidth]{img/tutorial_pathdb}
   \caption{Interfaz diligenciada con las rutas de las imágenes}
   \label{fig:tutorial_pathdb}
 \end{figure}
@@ -558,6 +552,26 @@ interfaz con esta información diligenciada.
 Si tiene alguna duda al respecto diríjase al manual de HORUS en la
 sección GUI, en el apartado de \emph{Edit database} - Generar rutas de
 imágenes.
+
+\chapter{Create new user}
+
+Si se quiere crear un nuevo usuario con permisos limitados (e.g. un
+usuario de sólo lectura), se ejecuta la interfaz gráfica
+\textbf{Create new user} desde la interfaz principal (ver
+figura~\ref{fig:guiuser}), donde se especifica el nombre de usuario, la
+contraseña, la base de datos a la que tiene permiso de conectarse y si
+tiene permiso de consultar (\textit{query}), insertar
+(\textit{insert}), borrar (\textit{delete}) o actualizar
+(\textit{update}) la información en la base de datos.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{img/tutorial_guiuser}
+  \caption{Interfaz para crear un nuevo usuario con permisos
+    limitados}
+  \label{fig:guiuser}
+\end{figure}
+
 
 \chapter{Configurar Cámaras}
 
@@ -671,23 +685,22 @@ estación, y la base de datos no contiene imágenes en la estación
 CARTAGENA. Si es la primera vez que instala HORUS y no existe ninguna
 imagen, este paso no es necesario ya que las imágenes se insertarán en
 la base de datos al momento de la captura y la transmisión. Sin
-embargo, para efectos del tutorial, este paso es necesario.
+embargo, para efectos del tutorial, se requiere realizar este paso.
 
 Como ejemplo, se insertarán las imágenes de prueba de la estación
-CARTAGENA ubicadas en el directorio \emph{examples} del paquete
-HORUS. Sabiendo esto, desde la línea de comandos se llamará a la
-función \emph{insert\_images\_recursively} del directorio \emph{io},
-que tiene como datos de entrada la ruta donde se encuentran las
-imágenes y la estación asociada a ellas.
+CARTAGENA ubicadas en el directorio \emph{examples} del paquete HORUS
+(disponible también en
+\url{http://www.horusvideo.com/dbimage.zip}). Sabiendo esto, desde la
+línea de comandos se llamará a la función
+\texttt{insert\_images\_recursively} del directorio \emph{io}, que tiene
+como datos de entrada la ruta donde se encuentran las imágenes y la
+estación asociada a ellas.
 
-Para usar esta función se debe tener la estructura de carpetas para
+Para usar esta función se debe tener la estructura de directorios para
 almacenar las imágenes oblicuas y la estructura de nombres de las
-imágenes de HORUS. La estructura de carpetas se muestra en la
+imágenes de HORUS. La estructura de directorios se muestra en la
 figura~\ref{fig:tutorial_insert_obli} y debe contener lo siguiente, en
 forma anidada:
-
-Un directorio que tendrá las estaciones, en este caso tiene el nombre
-\texttt{dbimage}, pero no hay restricciones con el nombre.
 
 \begin{itemize}
 \item Directorio con el nombre de la estación en mayúsculas.
@@ -698,6 +711,9 @@ Un directorio que tendrá las estaciones, en este caso tiene el nombre
   \texttt{C<numero de cámara>} (si las imágenes son oblicuas).
 \end{itemize}
 
+El directorio que contendrá las imágenes de las estaciones, en este
+caso tiene el nombre \texttt{dbimage}, no tiene restricciones con el
+nombre.
 
 \begin{figure}[htbp!]
   \centering
@@ -709,11 +725,17 @@ Un directorio que tendrá las estaciones, en este caso tiene el nombre
 
 La estructura del nombre de la imagen se muestra en la
 figura~\ref{fig:tutorial_insert_obli2},
-y debe ser de la forma:\\
-<año(aa)>.<mes(mm)>.<dia(dd)>.<hora(HH)>.<minutos(MM)>.<segundos(SS)>.\\
-<zonahoraria>.<estación>.C<número de cámara>.<tipo de fotografía>.\\
-<ancho>X<largo>.<sistema>.jpg, la hora debe estar en formato 24 horas.
-\\
+y debe ser de la forma:
+
+\begin{verbatim}
+<año(aa)>.<mes(mm)>.<dia(dd)>.<hora(HH)>.<minutos(MM)>.<segundos(SS)>.
+<zonahoraria>.<estación>.C<número de cámara>.<tipo de fotografía>.
+<ancho>X<largo>.<sistema>.jpg
+\end{verbatim}
+
+
+La hora debe estar en formato 24 horas.
+
 \begin{figure}[htbp!]
   \centering
   \includegraphics[scale=0.5]{img/tutorial_insert_obli2}
@@ -733,16 +755,18 @@ Esta función insertará todas las imágenes que están en la ruta
 \verb$C:\horus\examples\dbimage$ dentro de la estación,
 \texttt{CARTAGENA}. Cada vez que se inserte una imagen se mostrará un
 mensaje en la línea de comandos de MATLAB, indicando
-el éxito o el fracaso de la operación. Así: \\
-\emph{Image
-  10.05.01.16.00.00.GMT.CARTAGENA.C3.Timex.1024X768.HORUS.jpg \\
-  successfully inserted!}.
+el éxito o el fracaso de la operación. Así:
 
-Para cada estación en la que se desee hacer la inserción hay que
-repetir el proceso.
+\begin{verbatim}
+Image 10.05.01.16.00.00.GMT.CARTAGENA.C3.Timex.1024X768.HORUS.jpg successfully 
+inserted!.
+\end{verbatim}
+
+
+Se repite el proceso para cada estación en la que se desee hacer la inserción.
 
 Para comprobar que las imágenes hayan sido insertadas exitosamente, se
-puede usar la función \emph{load\_allimage} del directorio \emph{io}
+puede usar la función \texttt{load\_allimage} del directorio \emph{io}
 que tiene como datos de entrada la conexión a la base de datos (la
 cual se crea escribiendo en la línea de comandos:
 \verb!conn = connection_db();!), los tipos de imágenes, la cámara, la
@@ -763,9 +787,7 @@ La función retorna todas las imágenes tipo \textit{snap} y
 04/05/2010 00:00 ($734262$).
 
 Ya que esta función sólo permite una cámara a la vez, se debe repetir
-el proceso para las demás cámaras, así\footnote{Es posible que al
-  copiar y pegar este comando, las \texttt{'} no sean las mismas que
-  MATLAB utiliza}:
+el proceso para las demás cámaras, así:
 
 \begin{verbatim}
 > imagenesC2=load_allimage(conn, {'snap','timex'},'C2','CARTAGENA',734259,734262);
@@ -811,17 +833,16 @@ En el cuadro \emph{Choose ROI \& GCPs for calibration}:
 \begin{itemize}
 \item En la lista desplegable de GCPs se escogerán los
   correspondientes a la cámara C1 que se usarán para la calibración.
-\item Se escogen cada uno de los GCPs, y se presiona el botón
-  \emph{Mark} para marcar las coordenadas $(u, v)$ sobre la
-  imagen. Alternativamente, si se tiene un archivo de EXCEL o MAT con
-  la información de los GCPs escogidos (nombre del GCP, e.g.\@ GCP001,
-  coordenada en U y coordenada en V), se puede cargar presionando el
-  botón \emph{Import picked GCPs}. Para este tutorial, se dispone de
-  los archivos \texttt{picked\_GCPs\_C1.xls},
-  \texttt{picked\_GCPs\_C2.xls} y \texttt{picked\_GCPs\_C3.xls} que
-  contienen la información de los GCPs escogidos. Es recomendable
-  cargar estos archivos en vez de marcar manualmente los puntos para
-  evitar diferencias con los resultados de este tutorial.
+\item Es posible marcar manualmente los GCPs escogiendo uno por uno de
+  la lista de GCPs y presionando el botón \emph{Mark} para marcar las
+  coordenadas $(u, v)$ sobre la imagen. Sin embargo, para este
+  tutorial se tiene un archivo de EXCEL o MAT con la información de
+  los GCPs escogidos (nombre del GCP, e.g.\@ GCP001, coordenada en U y
+  coordenada en V), que se puede cargar presionando el botón
+  \emph{Import picked GCPs}. Se dispone de los archivos
+  \texttt{picked\_GCPs\_C1.xls}, \texttt{picked\_GCPs\_C2.xls} y
+  \texttt{picked\_GCPs\_C3.xls} que contienen la información de los
+  GCPs escogidos.
 \item Al marcar un GCP aparecerá un (*) al lado derecho del nombre que
   indica que está marcado en la imagen.
 \item Al hacer las marcaciones se pueden usar las opciones de
@@ -846,6 +867,12 @@ figuras~\ref{fig:tutorial_gcpC1},~\ref{fig:tutorial_gcpC2},
 y~\ref{fig:tutorial_gcpC3}.
 
 \begin{figure}[htbp!]  \centering
+  \includegraphics[scale=0.5]{img/tutorial_calibration2}
+  \caption{Cuadro \emph{Choose ROI \& GCPs for calibration}}
+  \label{fig:tutorial_calibration2}
+\end{figure}
+
+\begin{figure}[htbp!]  \centering
   \includegraphics[width=0.5\textwidth]{img/tutorial_gcpC1}
   \caption{GCPs para la cámara C1}
   \label{fig:tutorial_gcpC1}
@@ -864,13 +891,6 @@ y~\ref{fig:tutorial_gcpC3}.
 \end{figure}
 
 
-
-\begin{figure}[htbp!]  \centering
-  \includegraphics[scale=0.5]{img/tutorial_calibration2}
-  \caption{Cuadro \emph{Choose ROI \& GCPs for calibration}}
-  \label{fig:tutorial_calibration2}
-\end{figure}
-
 Después de marcar los puntos en la imagen, es posible exportarlos a un
 archivo de EXCEL o MAT, con el botón \textit{Export picked GCPs...},
 para ser utilizados posteriormente.
@@ -881,20 +901,21 @@ asociado a una calibración. Esta interfaz puede ser usada de dos
 formas. La primera es como se hará a continuación, llamándola desde
 otra interfaz y parte de la información es transferida en el
 llamado. La segunda forma es presionando el botón \textbf{Create new
-  ROI} donde se debe diligenciar toda la información manualmente, como
-se describe en el apéndice~\ref{app:roi}.
+  ROI} en la interfaz principal donde se debe diligenciar toda la
+información manualmente, como se describe en el
+apéndice~\ref{app:roi}.
 
-En la interfaz de creación ROI, parte de la información está completa,
-por lo tanto se procede a presionar el botón \emph{Mark Points} para
-marcar la región de interés en la imagen, haciendo clic sobre la
-imagen en los puntos correspondientes a los vértices del polígono del
-ROI. Se debe tener en cuenta que el último punto a marcar se marca con
-clic derecho para cerrar el polígono del ROI. En la parte superior
-izquierda de la interfaz se cuenta con las opciones de \textit{zoom},
-desplazamiento sobre la imagen y borrado de los puntos marcados si es
-necesario.  Por último, para agregar el ROI a la interfaz de
-calibración, se debe cerrar esta interfaz haciendo clic en la
-\textbf{X} en la parte superior derecha. En la
+En la interfaz de creación de ROI, parte de la información está
+completa, por lo tanto se procede a presionar el botón \emph{Mark
+  Points} para marcar la región de interés en la imagen, haciendo clic
+sobre la imagen en los puntos correspondientes a los vértices del
+polígono del ROI. Se debe tener en cuenta que el último punto a marcar
+se marca con clic derecho para cerrar el polígono del ROI. En la parte
+superior izquierda de la interfaz se cuenta con las opciones de
+\textit{zoom}, desplazamiento sobre la imagen y borrado de los puntos
+marcados si es necesario.  Por último, para agregar el ROI a la
+interfaz de calibración, se debe cerrar esta interfaz haciendo clic en
+la \textbf{X} en la parte superior derecha. En la
 figura~\ref{fig:tutorial_roi} se muestra la interfaz diligenciada para
 la cámara C1.
 
@@ -905,32 +926,41 @@ la cámara C1.
   \label{fig:tutorial_roi}
 \end{figure}
 
-Las coordenadas $u$ y $v$ del ROI para la cámara C1 son:\\
-\\
-$u: $ \emph{60.17 457.98 979.56 1020.82 1020.82 391.68} \\
-$v: $ \emph{293.89 762.42 765.37 727.06 248.21 74.35}\\
+Las coordenadas $u$ y $v$ del ROI para la cámara C1 son:
 
-Para la cámara C2 son:\\
-\\
-$u: $ \emph{4.18 231.08 986.93 1022.29 1023.76 521.34 309.17 4.18}\\
-$v: $ \emph{690.23 766.84 766.84 625.40 149.50 2.16 2.16 180.44}\\
+\begin{verbatim}
+U Points: 60.17 457.98 979.56 1020.82 1020.82 391.68
+V Points: 293.89 762.42 765.37 727.06 248.21 74.35
+\end{verbatim}
 
-Para la cámara C3 son:\\
-\\
-$u: $ \emph{2.71 4.18 236.98 1022.29 534.60 69.01}\\
-$v: $ \emph{453.01 766.84 766.84 626.87 273.26 279.15}\\
+
+Para la cámara C2 son:
+
+\begin{verbatim}
+U Points: 4.18 231.08 986.93 1022.29 1023.76 521.34 309.17 4.18
+V Points: 690.23 766.84 766.84 625.40 149.50 2.16 2.16 180.44
+\end{verbatim}
+
+
+Para la cámara C3 son:
+
+\begin{verbatim}
+U Points: 2.71 4.18 236.98 1022.29 534.60 69.01
+V Points: 453.01 766.84 766.84 626.87 273.26 279.15
+\end{verbatim}
+
 
 Estas coordenadas pueden ser escritas directamente en la interfaz de
-ROI en el área de texto \emph{Points U} y \emph{Points V}, y al
+ROI en el área de texto \emph{U Points} y \emph{V Points}, y al
 presionar \textit{Enter}, después de haber escrito todas las
-coordenadas, éstas se graficarán sobre la imagen. Se sugiere que
-cuando a la hora de realizar la calibración de cada cámara, se ingrese
-esta información de coordenadas para obtener resultados similares a
-los presentados en este tutorial.
+coordenadas, éstas se graficarán sobre la imagen. Se sugiere que a la
+hora de realizar la calibración de cada cámara, se ingrese esta
+información de coordenadas para obtener resultados similares a los
+presentados en este tutorial.
 
 En el cuadro \emph{Select calibration method}, en la lista desplegable
 \emph{Calibration method} se debe escoger el método con el que se hará
-la calibración, es recomendado escoger el método \emph{Pinhole} y es
+la calibración, es recomendable escoger el método \emph{Pinhole} y es
 el que se usará para el ejemplo. Después de seleccionarlo y si se
 tienen estimados iniciales de una calibración anterior se mostrarán
 sus valores, de los cuales se seleccionarán cuáles se tendrán en
@@ -978,48 +1008,56 @@ calibración o se pueden cambiar los estimados iniciales y los GCPs
 seleccionados para obtener mejores resultados.
 
 Para la cámara C1, después de haber ingresado la información antes
-mencionada aparecen los siguientes errores de calibración:\\
+mencionada aparecen los siguientes errores de calibración:
 
-\emph{The camera transformation matrix is:\\
-  1.0e+005 *\\
-  0.0011    0.0044   -0.0061   -2.2626\\
-  0.0002   -0.0011   -0.0059    0.8416\\
-  -0.0000    0.0000   -0.0000    0.0011\\
-  \\
-  The distortion parameters are: k1 = 0.000000e+000, k2 = 0.000000e+000\\
-  The image projection error is 1.132297e+000 pixels\\
-  The space back projection error is 3.223257e-001 meters\\
-  The normalized calibration error is 6.538403e-004}
-\\
-\\
-Para la cámara C2, se debe mostrar:\\
+\begin{verbatim}
+The camera transformation matrix is:
+  1.0e+005 *
+  0.0011    0.0044   -0.0061   -2.2626
+  0.0002   -0.0011   -0.0059    0.8416
+  -0.0000    0.0000   -0.0000    0.0011
 
-\emph{The camera transformation matrix is:\\
-  1.0e+005 *\\
-  0.0054    0.0051    0.0035   -4.4830\\
-  0.0007   -0.0012    0.0032    0.8345\\
-  -0.0000    0.0000    0.0000   -0.0014\\
-  \\
-  The distortion parameters are: k1 = 0.000000e+00, k2 = 0.000000e+00\\
-  The image projection error is 2.929746e+00 pixels\\
-  The space back projection error is 6.374538e-01 meters\\
-  The normalized calibration error is 1.835119e-03}
-\\
-\\
-y para la cámara C3, se debe mostrar:\\
+  The distortion parameters are: k1 = 0.000000e+000, k2 = 0.000000e+000
+  The image projection error is 1.132297e+000 pixels
+  The space back projection error is 3.223257e-001 meters
+  The normalized calibration error is 6.538403e-004
+\end{verbatim}
 
-\emph{The camera transformation matrix is:\\
-  1.0e+05 *\\
-  -0.0024   -0.0000   -0.0027    1.0283\\
-  -0.0004    0.0003   -0.0049   -0.2108\\
-  -0.0000   -0.0000   -0.0000    0.0009\\
-  \\
-  The distortion parameters are: k1 = 0.000000e+00, k2 = 0.000000e+00\\
-  The image projection error is 1.236531e+00 pixels\\
-  The space back projection error is 3.082079e-01 meters\\
-  The normalized calibration error is 3.158604e-03}
-\\
-\\
+
+Para la cámara C2, se debe mostrar:
+
+\begin{verbatim}
+The camera transformation matrix is:
+  1.0e+005 *
+  0.0054    0.0051    0.0035   -4.4830
+  0.0007   -0.0012    0.0032    0.8345
+  -0.0000    0.0000    0.0000   -0.0014
+
+  The distortion parameters are: k1 = 0.000000e+00, k2 = 0.000000e+00
+  The image projection error is 2.929746e+00 pixels
+  The space back projection error is 6.374538e-01 meters
+  The normalized calibration error is 1.835119e-03
+\end{verbatim}
+
+
+
+y para la cámara C3, se debe mostrar:
+
+\begin{verbatim}
+The camera transformation matrix is:
+  1.0e+05 *
+  -0.0024   -0.0000   -0.0027    1.0283
+  -0.0004    0.0003   -0.0049   -0.2108
+  -0.0000   -0.0000   -0.0000    0.0009
+
+  The distortion parameters are: k1 = 0.000000e+00, k2 = 0.000000e+00
+  The image projection error is 1.236531e+00 pixels
+  The space back projection error is 3.082079e-01 meters
+  The normalized calibration error is 3.158604e-03
+\end{verbatim}
+
+
+
 Si se considera que la calibración es adecuada, se procede a guardarla
 (los valores de error obtenidos deben ser muy parecidos a los
 mostrados), para esto se va al menú superior \emph{Options} y se
@@ -1061,21 +1099,21 @@ las cámaras C1, C2 y C3 con calibraciones no adecuadas.
 
 \begin{figure}[htbp!]
   \centering
-  \includegraphics[width=0.5\textwidth]{img/tutorial_rectbadC2}
+  \includegraphics[width=0.3\textwidth]{img/tutorial_rectbadC2}
   \caption{Imagen rectificada, calibración no adecuada C2}
   \label{fig:tutorial_rectbadC2}
 \end{figure}
 
 \begin{figure}[htbp!]
   \centering
-  \includegraphics[width=0.5\textwidth]{img/tutorial_rectgoodC3}
+  \includegraphics[width=0.3\textwidth]{img/tutorial_rectgoodC3}
   \caption{Imagen rectificada, calibración adecuada C3}
   \label{fig:tutorial_rectgoodC3}
 \end{figure}
 
 \begin{figure}[htbp!]
   \centering
-  \includegraphics[width=0.5\textwidth]{img/tutorial_rectbadC3}
+  \includegraphics[width=0.3\textwidth]{img/tutorial_rectbadC3}
   \caption{Imagen rectificada, calibración no adecuada C3}
   \label{fig:tutorial_rectbadC3}
 \end{figure}
@@ -1174,23 +1212,28 @@ información:
 \end{enumerate}
 
 En el cuadro \emph{Select camera order} se selecciona el orden en que
-se fusionarán las cámaras. Para el ejemplo se hará en el orden
-C1-C2-C3, para ello se selecciona de la lista desplegable la cámara C1
-y se presiona el botón $>>$ para agregarlo a la lista del cuadro del
+se fusionarán las imágenes. Para el ejemplo se hará en el orden
+C1--C2--C3, para ello se selecciona de la lista desplegable la cámara C1
+y se presiona el botón $\gg$ para agregarlo a la lista del cuadro del
 lado derecho.  Luego, se repite el proceso para C2 y por último para
-C3. Luego de esto, se presiona el botón \emph{Load images}, el cual
-cargará las imágenes en pares con el orden que se indicó, en este caso
-primero C1-C2 y luego
-C2-C3.\\
+C3. 
+
+Se escoge el tipo de imágenes usadas para la configurar la fusión, en
+este caso \textit{snap}.
+
+Luego de esto, se presiona el botón \emph{Load images}, el cual
+cargará las imágenes en pares con el orden que se indicó, primero
+C1--C2 y luego
+C2--C3.\\
 
 En el cuadro \emph{Select affine points}:
 
 \begin{itemize}
-\item Se seleccionan los puntos en común entre las imágenes, por
+\item Se seleccionan los puntos en común entre las imágenes. Por
   defecto, si existen fusiones anteriores en la base de datos, se
   cargan los puntos comunes asociados a esta fusión, si no existen
   fusiones anteriores se cargan los GCPs que sean comunes en ambas
-  cámaras, en este caso en C1-C2 se cargan los GCPs con nombre GCP007,
+  cámaras, en este caso en C1--C2 se cargan los GCPs con nombre GCP007,
   GCP008 y GCP009 si se siguieron las indicaciones de la
   sección~\ref{seccion:calibration} de calibración.
 \item Para que la fusión de las imágenes sea mejor se agregará otro
@@ -1204,11 +1247,9 @@ En el cuadro \emph{Select affine points}:
 \item La marcación en la cámara C1 tiene las coordenadas $u: 807$ y
   $v: 642$. La marcación en la cámara C2 tiene las coordenadas $u:
   196$ y $v: 604$.
-\item Se debe tener en cuenta que al hacer la marcación se pueden
-  poner números decimales que para el ejemplo no se tienen en cuenta,
-  entonces no importa el decimal que se muestre al marcar, siempre que
-  la parte entera sea igual a los números anteriores, esto con el fin
-  de que se obtengan resultados similares.
+\item Las cifras decimales en los puntos marcados pueden ser
+  diferentes a los mostrados en el ejemplo, pero la parte entera debe
+  coincidir.
 \item Si se desean cambiar las coordenadas de un punto, se selecciona
   éste en la lista desplegable \emph{Common GCPs}. Luego se presiona
   el botón \emph{Mark} y se marca el punto, primero sobre la imagen de
@@ -1230,7 +1271,7 @@ En el cuadro \emph{Select affine points}:
 En la figura~\ref{fig:tutorial_genfusion} se muestra la interfaz
 después de diligenciada.  Habiendo seleccionado los puntos comunes, se
 presiona el botón \emph{Continue} el cual mostrará el otro par de
-cámaras, en este caso C2-C3.
+cámaras, en este caso C2--C3.
 
 \begin{figure}[htbp!]
   \centering
@@ -1240,7 +1281,7 @@ cámaras, en este caso C2-C3.
   \label{fig:tutorial_genfusion}
 \end{figure}
 
-Al cargar las imágenes de las cámaras C2-C3 se muestran los GCPs con
+Al cargar las imágenes de las cámaras C2--C3 se muestran los GCPs con
 nombre GCP014, GCP015 y GCP016 estos puntos son suficientes para hacer
 la fusión, pero igual que el ejemplo anterior, se pueden agregar o
 quitar puntos como se desee.  Habiendo seleccionado los puntos en
@@ -1258,7 +1299,7 @@ mejorar la fusión.
   \label{fig:tutorial_genfusion3}
 \end{figure}
 
-Si se desea usar el método \textit{Projective} para las cámaras C2-C3
+Si se desea usar el método \textit{Projective} para las cámaras C2--C3
 se debe tener cuidado al seleccionar los puntos comunes entre las
 cámaras ya que este método es muy sensible y puede arrojar fusiones
 erróneas, en la figura~\ref{fig:tutorial_genfusion_projective} se
@@ -1318,24 +1359,29 @@ siguientes datos de ejemplo:
 \end{enumerate}
 
 En el cuadro \emph{Select camera order} se selecciona el orden en que
-se fusionarán. Las cámaras para el ejemplo son C1-C2-C3. Para ello se
-procede selecciona de la lista desplegable la cámara C1 y se presiona
-el botón $>>$ para agregarlo a la lista del cuadro del lado
-derecho. Luego, se repite el proceso para C2 y por último para
-C3. Luego de esto, se presiona el botón \emph{Load images}, el cual
+se fusionarán las imágenes. Las cámaras para el ejemplo son
+C1--C2--C3. Para ello se selecciona de la lista desplegable la
+cámara C1 y se presiona el botón $\gg$ para agregarlo a la lista del
+cuadro del lado derecho. Luego, se repite el proceso para C2 y por
+último para C3. 
+
+Se escoge el tipo de imágenes usadas para la configurar la fusión, en
+este caso \textit{snap}.
+
+Luego de esto, se presiona el botón \emph{Load images}, el cual
 cargará las imágenes en pares con el orden que se indicó, en este caso
-primero C1-C2 y luego C2-C3.  Esto puede tardar unos segundos ya que
+primero C1--C2 y luego C2--C3.  Esto puede tardar unos segundos ya que
 se deben rectificar las
 imágenes antes de mostrarlas.\\
 
 En el cuadro \emph{Select affine points}:
 
 \begin{itemize}
-\item Se seleccionan los puntos en común de las imágenes, por defecto,
+\item Se seleccionan los puntos en común de las imágenes. Por defecto,
   si existen fusiones anteriores en la base de datos, se cargan los
   puntos comunes asociados a esta fusión, si no existen fusiones
   anteriores se cargan los GCPs que sean comunes en ambas cámaras, en
-  este caso en C1-C2 carga los GCPs con nombre GCP007, GCP008 y GCP009
+  este caso en C1--C2 carga los GCPs con nombre GCP007, GCP008 y GCP009
   si se siguieron las indicaciones de la
   sección~\ref{seccion:calibration} de calibración.
 \item Se agregará un nuevo punto como se indicó anteriormente. En la
@@ -1353,7 +1399,7 @@ En el cuadro \emph{Select affine points}:
 \item Para el caso de la fusión de imágenes rectificadas, se debe
   utilizar el método \textit{Affine}. Habiendo seleccionado los puntos
   comunes se presiona el botón \emph{Continue} el cual mostrará el
-  otro par de cámaras, en este caso C2-C3.
+  otro par de cámaras, en este caso C2--C3.
 \end{itemize}
 
 \begin{figure}[htbp!]
@@ -1363,7 +1409,7 @@ En el cuadro \emph{Select affine points}:
   \label{fig:tutorial_genfusion5}
 \end{figure}
 
-Al cargar las imágenes de las cámaras C2-C3 se muestran los GCPs con
+Al cargar las imágenes de las cámaras C2--C3 se muestran los GCPs con
 nombres GCP014, GCP015 y GCP016, los cuales son suficientes para hacer
 la fusión, pero al igual que el caso anterior, se pueden agregar o
 quitar puntos como se desee.  En la
@@ -1413,10 +1459,7 @@ apartado de \emph{Configure fusion}.
 \chapter{Fusionar imágenes en lote}
 
 Luego de configurar las fusiones, es posible fusionar imágenes en
-lote. Para fusionar un grupo de imágenes, se presiona el botón
-\textbf{Manually merge images} en la interfaz principal.
-
-El proceso de fusión de imágenes en lote es muy similar al de
+lote. El proceso de fusión de imágenes en lote es muy similar al de
 rectificación de imágenes en lote. Para ejecutar la interfaz se debe
 presionar el botón \textbf{Manually merge images} en la interfaz
 principal.
@@ -1481,7 +1524,7 @@ el ejemplo, se ingresa la siguiente información:
 \item \emph{Station}: CARTAGENA
 \item \emph{Image type}: snap
 \item \emph{Select a fusion}: Default
-\item Seleccionar la opción: \emph{Rectify \& merge images}
+\item Seleccionar la opción: \emph{Rectify and merge oblique images}
 \item \emph{Initial time}: 01/05/2010 10:45:00
 \item \emph{Final time}: 01/05/2010 22:45:00
 \item \emph{Time error}: 3
@@ -1537,11 +1580,11 @@ apartado de \emph{Manually merge images}.
 
 \chapter{Configuración de Automáticos}
 
-Los automáticos son programas que funcionan como servicios o demonios,
-en el sentido que se ejecutan continuamente esperando un evento para
+Los automáticos son programas que funcionan como servicios, en el
+sentido que se ejecutan continuamente esperando un evento para
 activarse y realizar una acción. En el sistema HORUS hay cuatro tipos
-de automáticos: el de captura, transferencia, procesamiento y
-sincronización entre bases de datos.
+de automáticos: captura, transferencia, procesamiento y sincronización
+entre bases de datos.
 
 \section{Configuración del Automático de Captura y Transferencia}
 
@@ -1576,7 +1619,9 @@ cada uno de estos campos es:
 \item \emph{Start time}: 06:30
 \item \emph{End time}: 18:30
 \item \emph{Time step}: 30
-\item \emph{Capture time}: 120
+\item \emph{Capture time}: 120 (este campo se activa después de
+  seleccionar un tipo de imagen \textit{timex} o \textit{variance} en
+  el recuadro \textit{Image type})
 \end{itemize}
 
 En el ejemplo, se capturan imágenes tipo \textit{snap}, \textit{timex}
@@ -1586,12 +1631,17 @@ configuración de captura de imágenes.
 \subsection{Configuración de la Captura de \textit{Stacks}}
 
 Es posible tener varias configuraciones de \textit{stacks}, los cuales
-son vídeos de una región determinada de la imagen. La información de
-la captura es casi igual que en el caso de la captura de imágenes,
-excepto que el tipo de las imágenes es instantánea, y el número de
-frames son parámetros para la generación del vídeo. Además, se debe
-escoger una región de interés (ROI). Para el ejemplo, los valores
-de cada uno de estos campos para la captura de \textit{stacks} son:
+son vídeos de una región determinada de la imagen. 
+
+Seleccionar en la lista desplegable \textit{Capture} la opción
+\textit{New capture}.
+
+La información de la captura es casi igual que en el caso de la
+captura de imágenes, excepto que el tipo de las imágenes es
+instantánea, y el número de frames es un parámetro para la generación
+del vídeo. Además, se debe escoger una región de interés (ROI). Para
+el ejemplo, los valores de cada uno de estos campos para la captura de
+\textit{stacks} son:
 
 \begin{itemize}
 \item \emph{Start time}: 10:15
@@ -1607,14 +1657,14 @@ configurado previamente la cámara y almacenado esta configuración en
 el archivo XML \texttt{capture\_info.xml}; esto es debido a que para
 seleccionar un ROI, el sistema captura una imagen con la cámara y la
 muestra, para que así, el usuario pueda seleccionar los puntos
-correspondientes a los vértices del polígono que conforma el ROI. Para
+correspondientes a los vértices del polígono que conforman el ROI. Para
 seleccionar los puntos del ROI, se hace clic izquierdo sobre la imagen
 y el último punto se marca con clic derecho para cerrar el polígono.
 
 Para que la configuración del \textit{stack} pueda ser almacenada, se
 debe presionar el botón \textit{Save stack in memory} que guarda la
 configuración en memoria hasta que el usuario decida almacenar la
-configuración con el botón \textit{Save configuration}.
+configuración en disco con el botón \textit{Save configuration}.
 
 \subsection{Configuración de la Transferencia de Datos}
 
@@ -1803,8 +1853,9 @@ el ejemplo, los valores de cada uno de estos campos son:
 \end{itemize}
 
 Los tipos de imágenes que se deben generar en este caso son imágenes
-oblicuas--fusionadas (\textit{Merge only}) y rectificadas--fusionadas
-(\textit{Rectify and merge}), para imágenes \textit{snap}.
+oblicuas--fusionadas (\textit{Merge oblique images}) y
+rectificadas--fusionadas (\textit{Rectify and merge oblique images}),
+para imágenes \textit{snap}.
 
 Opcionalmente, es posible definir la información de transferencia de
 las miniaturas a la web. Esto es una muestra de configuración ya que
@@ -1827,7 +1878,7 @@ procesadas que se quieren miniaturizar, en este caso, oblicuas
 (\textit{Oblique}), oblicuas--fusionadas (\textit{Merge--oblique}) y
 rectificadas--fusionadas (\textit{Merged--rectified}) para imágenes
 \textit{snap}, y el ancho deseado de la miniatura (el alto de la
-imagen se calcula para que quede proporcional con el ancho), en este
+imagen se calcula proporcional al ancho seleccionado), en este
 caso es 120.
 
 Para guardar los cambios presione el botón \textit{Save
@@ -1922,7 +1973,7 @@ Para continuar, se debe ingresar la información solicitada:
 \item \emph{Thumbnail type}: oblique
 \item \emph{Initial time}: 01/05/2010 10:45:00
 \item \emph{Final time}: 03/05/2010 20:45:00
-\item \emph{Image type}: Se selecciona timex y snap
+\item \emph{Image type}: Se selecciona \textit{timex} y \textit{snap}
 \item \emph{Desired width}: 120
 \end{enumerate}
 
@@ -1961,22 +2012,21 @@ En este punto, no se han subido las miniaturas al \textit{hosting},
 sólo se ha creado un archivo temporal con la lista de imágenes a
 subir.
 
-Acá se explicará cómo subir imágenes miniaturas al
+A continuación se explicará cómo subir imágenes miniaturas al
 \texttt{hosting}. Para ejecutar la interfaz para la configuración de
 los parámetros de subida se debe presionar el botón \textbf{Configure
   thumbnail upload} en la interfaz principal.
 
-Para continuar, se debe ingresar la información solicitada que debe
-ser solicitada al equipo HORUS al correo electrónico:
-\href{mailto:horus.unal@gmail.com}{horus.unal@gmail.com}.
-
 En la figura~\ref{fig:tutorial_upload_hosting} se muestra la interfaz
-diligenciada con datos de ejemplo (estos datos no son reales). Después
-de ingresar la información se debe presionar el botón \textit{Save
+diligenciada con datos de ejemplo (estos datos no son reales, para
+establecer una conexión real los datos deben ser solicitados al equipo
+HORUS al correo electrónico:
+\href{mailto:horus.unal@gmail.com}{horus.unal@gmail.com}). Después de
+ingresar la información se debe presionar el botón \textit{Save
   configuration} el cual guardará la información ingresada en el
 archivo XML \texttt{processing\_info.xml}. Después de esto, se
 presiona el botón \textit{Upload to hosting} que iniciará el proceso
-de subida. Luego de esto, se mostrará una barra de progreso con la
+de subida. Durante el proceso se mostrará una barra de progreso con la
 cual se puede cancelar la operación en cualquier momento.
 
 \begin{figure}[htbp!]
@@ -2046,17 +2096,17 @@ Esta interfaz también cuenta con la opción de actualizar un sensor
 seleccionándolo de la lista desplegable \emph{Sensor}, cambiando la
 información necesaria y presionando el botón \emph{Update}.
 
-Si tiene alguna duda sobre el tipo de dato o cual es el significado de
+Si tiene alguna duda sobre el tipo de dato o cuál es el significado de
 alguna opción de esta interfaz diríjase al manual de HORUS en la
 sección GUI en el apartado de \emph{Edit database} - Sensor.
 
 \section{Mediciones}
 
 El tipo de medición es lo que mide el sensor, por ejemplo, marea,
-altura de ola, dirección de oleaje entre otros. Esta configuración
-se realiza desde la interfaz \textbf{Edit database}, presionando el
-botón correspondiente en la interfaz principal. Los pasos son los
-siguientes:
+altura de ola, dirección de oleaje entre otros. Esta configuración se
+realiza desde la interfaz \textbf{Edit database} (para ejecutar la
+interfaz se presiona el botón correspondiente en la interfaz
+principal). Los pasos son los siguientes:
 
 \begin{itemize}
 \item Ir a \emph{Edit Measurement Type}.
@@ -2090,8 +2140,8 @@ el archivo \emph{marea.mat} que se encuentra en el directorio
 visualizar archivos MAT o todos los archivos, ya que por defecto se
 visualizan archivos XLS).  La estructura de este archivo depende del
 tipo de datos, si es una serie de tiempo el archivo en Excel debe
-contener dos columnas la primera con la fecha en formato
-\texttt{datenum} de Matlab y en la segunda columna el valor. Si es un
+contener dos columnas: la primera, con la fecha en formato
+\texttt{datenum} de Matlab, y la segunda con el valor. Si es un
 archivo MAT, se debe de tener en cuenta que éste sólo puede tener una
 matriz que tendrá igualmente dos columnas, en la primera la fecha en
 formato \texttt{datenum} y en la segunda, el valor para esa fecha. Si
@@ -2129,10 +2179,10 @@ sección GUI en el apartado de \emph{Edit database} - Tipo de medición.
 \chapter{Creación de un ROI desde cero}
 \label{app:roi}
 
-Ahora se explicará la segunda manera de utilizar la interfaz para
-crear un ROI, es decir, presionando el botón \textbf{Create new ROI}
-en la interfaz principal. Como ejemplo se ingresa la siguiente
-información en la interfaz:
+En esta sección se explicará la segunda manera de utilizar la interfaz
+para crear un ROI para la calibración, es decir, presionando el botón
+\textbf{Create new ROI} en la interfaz principal. Como ejemplo se
+ingresa la siguiente información en la interfaz:
 
 \begin{enumerate}
 \item \emph{Station}: CARTAGENA
@@ -2155,13 +2205,16 @@ derecho para cerrarlo. Si es necesario, en la parte superior izquierda
 se encuentran las opciones de \textit{zoom}, desplazamiento en la
 imagen y borrado de un punto marcado. Al marcar los puntos, se
 muestran las coordenadas $(u, v)$ en la parte derecha de la interfaz
-en \emph{Points U} y en \emph{Points V}:\\
-\\
-$u: $ \emph{60.17  457.98  979.56 1020.82 1020.82  391.68} \\
-$v: $ \emph{293.89 762.42 765.37 727.06 248.21  74.35}\\
+en \emph{U Points} y en \emph{V Points}:
+
+\begin{verbatim}
+U Points: 60.17  457.98  979.56 1020.82 1020.82  391.68
+V Points: 293.89 762.42 765.37 727.06 248.21  74.35
+\end{verbatim}
+
 
 Estas coordenadas pueden ser escritas directamente en los campos de
-texto \emph{Points U} y \emph{Points V} y al presionar \textit{Enter}
+texto \emph{U Points} y \emph{V Points} y al presionar \textit{Enter}
 después de haber escrito todas las coordenadas, éstas se graficarán
 sobre la imagen. En la figura~\ref{fig:tutorial_roi2} se muestra la
 interfaz después de diligenciada.  Por último, si se está satisfecho

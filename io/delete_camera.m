@@ -28,7 +28,6 @@ function [varargout] = delete_camera(conn, idcam,station)
 
 
 try
-    station = upper(station);
     if nargout==1
         varargout(1)={1};
     end
@@ -42,8 +41,8 @@ try
     end
     
     try
-        query = ['DELETE FROM camera_' station ' '...
-            'WHERE station LIKE "' station '" AND id LIKE "' idcam '"' ];
+        query = ['DELETE FROM camera_' lower(station) ' '...
+            'WHERE station LIKE "' upper(station) '" AND id LIKE "' idcam '"' ];
         cursor = exec(conn, query);
         if nargout==1
             if isfloat(cursor.Message)

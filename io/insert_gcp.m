@@ -44,7 +44,7 @@ try
     end
     
     try
-        query = ['SELECT name FROM gcp_' station ' WHERE station LIKE "' station '"'];
+        query = ['SELECT name FROM gcp_' lower(station) ' WHERE station LIKE "' station '"'];
         cursor = exec(conn, query);
         cursor = fetch(cursor);
         
@@ -65,7 +65,7 @@ try
         colnames = {'idgcp', 'station', 'name', 'x', 'y', 'z'};
         extdata = {idgcp, station, name, x, y, z};
         
-        fastinsert(conn, ['gcp_' station], colnames, extdata);
+        fastinsert(conn, ['gcp_' lower(station)], colnames, extdata);
         if nargout==1
             varargout(1)={0};
         end

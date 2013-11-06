@@ -70,7 +70,7 @@ try
         return;
     end
     
-    query = ['SELECT paramname, sensor FROM measurementtype_' station ' WHERE station LIKE "' station '"'];
+    query = ['SELECT paramname, sensor FROM measurementtype_' lower(station) ' WHERE station LIKE "' station '"'];
     cursor = exec(conn, query);
     cursor = fetch(cursor);
     flag = true;
@@ -103,7 +103,7 @@ try
     end
     
     try
-        fastinsert(conn, ['measurementtype_' station],colnames_measurementtype,data_measurementtype);
+        fastinsert(conn, ['measurementtype_' lower(station)],colnames_measurementtype,data_measurementtype);
         idmeasurementtype = lastid(conn);
         if idmeasurementtype==-1
             return

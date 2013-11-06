@@ -39,7 +39,7 @@ try
     end
     
     try
-        query = ['SELECT DISTINCT(timestamp) FROM calibration_' station ' WHERE station LIKE "' station '" AND camera LIKE "' camera '" ORDER BY timestamp'];
+        query = ['SELECT DISTINCT(timestamp) FROM calibration_' lower(station) ' WHERE station LIKE "' station '" AND camera LIKE "' camera '" ORDER BY timestamp'];
         cursor = exec(conn, query);
         cursor = fetch(cursor);
         if strcmpi(cursor.Data{1,1}, 'No Data') || isfloat(cursor.Data)

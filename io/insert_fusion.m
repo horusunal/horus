@@ -52,12 +52,12 @@ try
     end
     
     try
-        newid  = generate_autoinc(conn, ['fusion_' station], 'id', station);
+        newid  = generate_autoinc(conn, ['fusion_' lower(station)], 'id', station);
         % Data for insertion in fusion
         colnames = {'id', 'timestamp', 'type'};
         extdata = {newid, timestamp, type};
         
-        fastinsert(conn, ['fusion_' station], colnames, extdata);
+        fastinsert(conn, ['fusion_' lower(station)], colnames, extdata);
         
     catch e
         disp([dberror('insert') e.message]);

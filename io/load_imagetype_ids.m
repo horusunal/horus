@@ -38,7 +38,7 @@ try
     end
     
     try
-        query = ['SELECT idtype FROM imagetype_' station ' WHERE name LIKE ''' type ''''];
+        query = ['SELECT idtype FROM imagetype_' lower(station) ' WHERE name LIKE ''' type ''''];
         cursor = exec(conn, query);
         cursor = fetch(cursor);
         if strcmpi(cursor.Data{1,1}, 'No Data') || isfloat(cursor.Data)

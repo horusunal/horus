@@ -49,21 +49,21 @@ try
     
     if nargin == 3
         %     name of the parameter of te table
-        newid  = generate_autoinc(conn, ['imagetype_' station], 'idtype', station);
+        newid  = generate_autoinc(conn, ['imagetype_' lower(station)], 'idtype', station);
         colnames_imagetype = {'idtype', 'name'};
         %       data to insert
         data_imagetype = {newid, name};
         
     else
         
-        newid  = generate_autoinc(conn, ['imagetype_' station], 'idtype', station);
+        newid  = generate_autoinc(conn, ['imagetype_' lower(station)], 'idtype', station);
         colnames_imagetype = {'idtype', 'name', 'description'};
         data_imagetype = {newid, name, char(varargin{1})};
         
     end
     try
         %       insert data to the table
-        fastinsert(conn, ['imagetype_' station],colnames_imagetype,data_imagetype);
+        fastinsert(conn, ['imagetype_' lower(station)],colnames_imagetype,data_imagetype);
         if nargout==1
             varargout(1)={0};
         end

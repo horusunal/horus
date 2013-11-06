@@ -27,7 +27,6 @@ function  [varargout] = delete_all_image_station(conn, station)
 %   $Date: 2011/10/31 15:45 $
 
 try
-    station = upper(station);
     if nargout==1
         varargout(1)={1};
     end
@@ -41,8 +40,8 @@ try
     end
 
     try
-        query = ['DELETE FROM image_' station ' '...
-            'WHERE filename LIKE "%' station '%"'];
+        query = ['DELETE FROM image_' lower(station) ' '...
+            'WHERE filename LIKE "%' upper(station) '%"'];
         cursor = exec(conn, query);
         if nargout==1
             if isfloat(cursor.Message)

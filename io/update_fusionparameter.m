@@ -62,7 +62,7 @@ try
             extdata{end+1} = value;
         end
         
-        update(conn, ['fusionparameter_' station], colnames, extdata, whereclause);
+        update(conn, ['fusionparameter_' lower(station)], colnames, extdata, whereclause);
         if nargout==1
             varargout(1)={0};
         end

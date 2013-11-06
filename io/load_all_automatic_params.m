@@ -39,7 +39,7 @@ try
     try
         query = ['SELECT station, type, start_hour, start_minute, '...
             'end_hour, end_minute, step, duration, num_images, idauto '...
-            'FROM automaticparams_' station ];
+            'FROM automaticparams_' lower(station) ];
         cursor = exec(conn, query);
         cursor = fetch(cursor);
         if strcmpi(cursor.Data{1,1}, 'No Data') || isfloat(cursor.Data)

@@ -74,7 +74,7 @@ try
             extdata{end+1} = value;
         end
         
-        fastinsert(conn, ['automaticparams_' station], colnames, extdata);
+        fastinsert(conn, ['automaticparams_' lower(station)], colnames, extdata);
         if nargout >= 1
             varargout(1)={0};
         end

@@ -45,12 +45,12 @@ try
     
     try
         % Data for insertion in fusionparameter
-        newid  = generate_autoinc(conn, ['fusionparameter_' station], 'id', station);
+        newid  = generate_autoinc(conn, ['fusionparameter_' lower(station)], 'id', station);
         
         colnames = {'id', 'idfusion', 'name'};
         extdata = {newid, idfusion, name};
         
-        fastinsert(conn, ['fusionparameter_' station], colnames, extdata);
+        fastinsert(conn, ['fusionparameter_' lower(station)], colnames, extdata);
         
         % Insertion in fusionvalue
         [m, n] = size(value);
@@ -60,7 +60,7 @@ try
                 colnames = {'idmatrix', 'idcol', 'idrow', 'value'};
                 extdata = {newid, c, r, value(r, c)};
                 
-                fastinsert(conn, ['fusionvalue_' station], colnames, extdata);
+                fastinsert(conn, ['fusionvalue_' lower(station)], colnames, extdata);
                 if nargout==1
                     varargout(1)={0};
                 end

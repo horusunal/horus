@@ -32,7 +32,7 @@ function  [varargout] = delete_image(conn, station,camera,type,ismin,inittime,fi
 %   $Date: 2011/11/1 7:45 $
 
 try
-    station = upper(station);
+    station = lower(station);
     if nargout==1
         varargout(1)={1};
     end
@@ -49,7 +49,7 @@ try
         for i=1:length(camera)
             for j=1:length(type)
                 query = ['DELETE image_' station ', obliqueimage_' station ' FROM image_' station ' NATURAL JOIN obliqueimage_' station ' '...
-                    'WHERE station LIKE "' station '" AND type IN ( '...
+                    'WHERE station LIKE "' upper(station) '" AND type IN ( '...
                     'SELECT idtype FROM imagetype_' station ' WHERE name LIKE ("' char(type(j)) '") )' ...
                     ' AND camera LIKE "' char(camera(i)) '" AND ismini =' num2str(ismin) ' AND timestamp BETWEEN ' ...
                     num2str(inittime+ 1/(24*60*60),17) ' AND ' num2str(finaltime+ 1/(24*60*60),17)];

@@ -13,13 +13,14 @@ figura~\ref{fig:guimain}.
 
 \begin{figure}[htbp!]
   \centering
-%  \includegraphics[width=\textwidth]{img/guimain}
+  \includegraphics[width=\textwidth]{img/guimain}
   \caption{Interfaz principal de HORUS}
   \label{fig:guimain}
 \end{figure}
 
 Para ejecutar la interfaz principal desde Matlab, ubicarse en el
-directorio principal de HORUS y ejecutar el siguiente comando:
+directorio principal de HORUS y ejecutar el siguiente comando desde la
+línea de comandos de Matlab:
 
 \begin{verbatim}
 > gui_main
@@ -54,9 +55,9 @@ Las componentes numeradas de la interfaz son:
 \end{enumerate}
 
 \emph{NOTA}: Es posible que cuando se esté utilizando una interfaz
-gráfica, la conexión con la base de datos caduque, por lo que en ese
-caso, hay que cerrar y abrir nuevamente la interfaz con el fin de
-renovar la conexión.
+gráfica, la conexión con la base de datos caduque, en ese caso, es
+necesario cerrar y abrir nuevamente la interfaz con el fin de renovar
+la conexión.
 
 El manejo de sesiones en HORUS no tiene que ver con la conexión a la
 base de datos y la vigencia de ésta, sino con la información del
@@ -70,9 +71,10 @@ información mencionada para la conexión a la base de datos, y se crea
 el archivo \texttt{userinfo.dat}. Cuando, por ejemplo, el usuario
 cierra una interfaz gráfica, el sistema le pregunta al usuario si
 desea cerrar la sesión, en caso afirmativo, el archivo
-\texttt{userinfo.dat} es borrado, y en caso negativo no se hace nada.
-En conclusión, mientras el archivo \texttt{userinfo.dat} exista, hay
-una sesión de HORUS abierta, y se cierra cuando el archivo es borrado.
+\texttt{userinfo.dat} es borrado, y en caso negativo el archivo
+permanece.  En conclusión, mientras el archivo \texttt{userinfo.dat}
+exista, hay una sesión de HORUS abierta, y se cierra cuando el archivo
+es borrado.
 
 \section{Setup database}
 
@@ -526,7 +528,7 @@ las rutas de las imágenes automáticamente.
 
 \begin{figure}[htbp!]
   \centering
-%  \includegraphics[width=0.6\textwidth]{img/genpaths}
+  \includegraphics[width=0.6\textwidth]{img/genpaths}
   \caption{Interfaz para generar las rutas automáticamente}
   \label{fig:genpaths}
 \end{figure}
@@ -547,11 +549,12 @@ Las componentes numeradas en la figura se explican a continuación:
 
 Si se quiere crear un nuevo usuario con permisos limitados (e.g. un
 usuario de sólo lectura), se ejecuta la interfaz gráfica
-\texttt{gui\_create\_user} (ver figura~\ref{fig:guiuser}) donde
-se especifica el nombre de usuario, la contraseña, la base de datos a
-la que tiene permiso de conectarse y si tiene permiso de consultar
-(\textit{query}), insertar (\textit{insert}), borrar (\textit{delete})
-o actualizar (\textit{update}) la información en la base de datos.
+\textbf{Create new user} desde la interfaz principal (ver
+figura~\ref{fig:guiuser}), donde se especifica el nombre de usuario,
+la contraseña, la base de datos a la que tiene permiso de conectarse y
+si tiene permiso de consultar (\textit{query}), insertar
+(\textit{insert}), borrar (\textit{delete}) o actualizar
+(\textit{update}) la información en la base de datos.
 
 \begin{figure}[htbp!]
   \centering
@@ -827,7 +830,8 @@ Las componentes numeradas en la figura se explican a continuación:
 \item Coordenadas $(x, y, z)$ del GCP seleccionado. Esta coordenada se
   carga desde la base de datos y cada GCP tiene asociada una.
 \item Coordenadas $(u, v)$ del GCP actual, si el usuario ya marcó
-  estas coordenadas en la imagen.
+  estas coordenadas en la imagen. Es posible escribir las coordenadas
+  directamente en los campos de texto.
 \item Botón para seleccionar una ROI en la imagen.  Este botón
   despliega la interfaz para seleccionar un ROI.
 \item Botón para seleccionar un archivo donde está la información de
@@ -1173,6 +1177,10 @@ Las componentes numeradas en la figura se explican a continuación:
   desplegable se listan todas las cámaras de la estación escogida, y
   mediante el botón ``$\gg$'' se cargan para la calibración. El botón
   ``$\ll$'' borra de la lista de cámaras la cámara seleccionada.
+\item Lista desplegable para seleccionar el tipo de imagen que se
+  utilizará para realizar la calibración. Se recomienda usar imágenes
+  \textit{timex} para minimizar los cambios en la rotura del oleaje
+  entre cámaras.
 \item Botón para cargar las imágenes de las cámaras escogidas. Estas
   imágenes se cargan por pares, por ejemplo, si el usuario seleccionó
   las cámaras \emph{C1}, \emph{C2} y \emph{C3}, primero se cargan las
@@ -1203,7 +1211,8 @@ Las componentes numeradas en la figura se explican a continuación:
   la fusión es para imágenes oblicuas. Se puede seleccionar uno de los
   siguientes cuatro tipos de fusión: \textit{Affine},
   \textit{Projective}, \textit{Optimized Affine} y \textit{Optimized
-    Projective}.
+    Projective}. Para la fusión de imágenes rectificadas se desactivan
+  los métodos de fusión proyectiva.
 \item Botón para previsualizar la imagen fusionada con las dos
   imágenes seleccionadas, utilizando el método seleccionado en el paso
   anterior. Esto tiene la finalidad de que el usuario pueda

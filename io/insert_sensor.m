@@ -53,7 +53,7 @@ try
     %   data to insert
     data_sensor = {name,station,x,y,z, isvirtual};
     
-    query = ['SELECT name FROM sensor_' station ' WHERE station LIKE "' station '"'];
+    query = ['SELECT name FROM sensor_' lower(station) ' WHERE station LIKE "' station '"'];
     cursor = exec(conn, query);
     cursor = fetch(cursor);
     if ~strcmpi(cursor.Data{1,1}, 'No Data') && ~isfloat(cursor.Data)
@@ -84,7 +84,7 @@ try
     end
     
     try
-        fastinsert(conn, ['sensor_' station],colnames_sensor,data_sensor);
+        fastinsert(conn, ['sensor_' lower(station)],colnames_sensor,data_sensor);
         if nargout==1
             varargout(1)={0};
         end

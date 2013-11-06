@@ -27,7 +27,6 @@ function  [varargout] = delete_gcp(conn, idgcp, station)
 %   $Date: 2011/07/22 11:00 $
 
 try
-    station = upper(station);
     if nargout==1
         varargout(1)={1};
     end
@@ -42,8 +41,8 @@ try
     end
     
     try
-        query = ['DELETE FROM gcp_' station ' '...
-            'WHERE station LIKE "' station '" AND idgcp LIKE "' mat2str(idgcp) '"' ];
+        query = ['DELETE FROM gcp_' lower(station) ' '...
+            'WHERE station LIKE "' upper(station) '" AND idgcp LIKE "' mat2str(idgcp) '"' ];
         cursor = exec(conn, query);
         if nargout==1
             if isfloat(cursor.Message)

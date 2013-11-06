@@ -26,7 +26,6 @@ function  [varargout] = delete_calibration_id(conn, station, idcalibration)
 %   $Date: 2011/10/31 15:45 $
 
 try
-    station = upper(station);
     if nargout==1
         varargout(1)={1};
     end
@@ -41,7 +40,7 @@ try
     
     try
                 
-        query = ['DELETE FROM calibration_' station ' '...
+        query = ['DELETE FROM calibration_' lower(station) ' '...
             'WHERE idcalibration LIKE "' idcalibration '"'];
         cursor = exec(conn, query);
         if nargout==1

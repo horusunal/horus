@@ -27,7 +27,6 @@ function [varargout] = delete_sensor(conn,name,station)
 %   $Date: 2011/07/22 11:00 $
 
 try
-    station = upper(station);
     if nargout==1
         varargout(1)={1};
     end
@@ -41,8 +40,8 @@ try
     end
     
     try
-        query = ['DELETE FROM sensor_' station ' '...
-            'WHERE station LIKE "' station '" AND name LIKE "' name '"' ];
+        query = ['DELETE FROM sensor_' lower(station) ' '...
+            'WHERE station LIKE "' upper(station) '" AND name LIKE "' name '"' ];
         cursor = exec(conn, query);
         if nargout==1
             if isfloat(cursor.Message)

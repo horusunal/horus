@@ -18,7 +18,7 @@ function createViews(conn, station)
 %   $Date: 2012/08/04 12:41 $
 
 try
-    station = upper(station);
+    station = lower(station);
     alias = load_station_alias(conn, station);
     
     viewimagetype = strcat('CREATE VIEW imagetype_', station, ' AS SELECT * FROM imagetype WHERE idtype LIKE "', alias, '%" WITH CHECK OPTION');

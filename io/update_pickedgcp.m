@@ -65,7 +65,7 @@ try
             extdata{end+1} = value;
         end
         
-        update(conn, ['pickedgcp_' station], colnames, extdata, whereclause);
+        update(conn, ['pickedgcp_' lower(station)], colnames, extdata, whereclause);
         if nargout==1
             varargout(1)={0};
         end

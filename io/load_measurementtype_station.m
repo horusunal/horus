@@ -38,7 +38,7 @@ try
     end
     
     try
-        query = ['SELECT paramname, sensor FROM measurementtype_' station ' ot JOIN sensor_' station ' WHERE ' ...
+        query = ['SELECT paramname, sensor FROM measurementtype_' lower(station) ' ot JOIN sensor_' lower(station) ' WHERE ' ...
             'name = sensor AND ot.station LIKE "' station '"'];
         cursor = exec(conn, query);
         cursor = fetch(cursor);

@@ -48,7 +48,7 @@ try
         colnames = {'idfusion', 'camera', 'station', 'name', 'u', 'v'};
         extdata = {idfusion, camera, station, name, u, v};
         
-        fastinsert(conn, ['commonpoint_' station], colnames, extdata);
+        fastinsert(conn, ['commonpoint_' lower(station)], colnames, extdata);
         
     catch e
         disp([dberror('insert') e.message]);

@@ -30,14 +30,13 @@ try
     
     %reboot connection to the database if necessary
     [conn status] = renew_connection_db(conn);
-    station = upper(station);
     if status == 1
         return
     end
     check = 0;
     try
             query = ['SELECT filename '...
-                'FROM image_' station ' '...
+                'FROM image_' lower(station) ' '...
                 'WHERE filename LIKE "' image_name '"'];
             cursor = exec(conn, query);
             cursor = fetch(cursor);
