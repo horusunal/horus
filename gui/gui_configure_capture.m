@@ -866,8 +866,8 @@ try
                     xcoords = [xcoords, ' '];
                     ycoords = [ycoords, ' '];
                 end
-                xcoords = [xcoords, num2str(roi_x(j))];
-                ycoords = [ycoords, num2str(roi_y(j))];
+                xcoords = [xcoords, num2str(floor(roi_x(j)))];
+                ycoords = [ycoords, num2str(floor(roi_y(j)))];
             end
 
 
