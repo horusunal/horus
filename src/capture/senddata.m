@@ -35,7 +35,12 @@ try
         pathinfo = what('tmp');
         tmppath = pathinfo.path;
     end
-
+    
+    if ~exist('ch.ethz.ssh2.SCPClient', 'class')
+        sshclient = which('ganymed-ssh2-build251beta1.jar');
+        javaaddpath(sshclient)
+    end
+    
     xmlfile = 'capture_info.xml';
     
     if ~exist(xmlfile, 'file')
@@ -242,9 +247,8 @@ function [channel scp1] = connection_ssh(hostName, userName, password)
 try
     
     scp1 = [];
-    import ch.ethz.ssh2.SCPClient;
-    import ch.ethz.ssh2.Connection;
-    import ch.ethz.ssh2.Session;
+    import ch.ethz.ssh2.*;
+
     
     %Set up the connection with the remote server
     
@@ -339,14 +343,13 @@ function status_dir = isdir_ssh(channel,pathImageRemote)
 %   patImageRemote: directory to be checked.
 
 try
+    
     status_dir = 'false';
     import java.io.BufferedReader;
     import java.io.IOException;
     import java.io.InputStream;
     import java.io.InputStreamReader;
-    import ch.ethz.ssh2.Connection;
-    import ch.ethz.ssh2.Session;
-    import ch.ethz.ssh2.StreamGobbler;
+    import ch.ethz.ssh2.*;
     
     command = ['if [ -d "' pathImageRemote '" ]; then '...
         'echo true; ' ...
