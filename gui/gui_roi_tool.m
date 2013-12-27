@@ -797,6 +797,8 @@ try
                     hold(handles.image, 'on')
                     % Display ROI
                     plot(u,v,'-*r','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','y', 'Parent', handles.image)
+                    set(handles.saveButton,'Enable','on');
+                    
                 end
             end
             % Update handles structure
@@ -838,6 +840,7 @@ try
                     end
                     % Display new ROI
                     plot(u,v,'-*r','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','y', 'Parent', handles.image)
+                    
                 end
             end
             % Update handles structure
@@ -888,6 +891,7 @@ try
                     hold(handles.image, 'on')
                     % Display ROI
                     plot(u,v,'-*r','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','y', 'Parent', handles.image)
+                    set(handles.saveButton,'Enable','on');
                 end
             end
             % Update handles structure
@@ -928,6 +932,7 @@ try
                     end
                     % Display new ROI
                     plot(u,v,'-*r','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','y', 'Parent', handles.image)
+                    
                 end
             end
             % Update handles structure
