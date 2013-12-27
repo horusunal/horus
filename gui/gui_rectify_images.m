@@ -229,7 +229,7 @@ try
         set(handles.buttonStartRectification, 'Enable', 'off')
         set(handles.radioSaveDB, 'Enable', 'off')
     end
-    
+    handles.roi = [];
     % Update handles structure
     guidata(hObject, handles);
 catch e
@@ -252,7 +252,7 @@ try
         % Set time sliders
         handles = reload_time(handles);
         handles = reload_calibration_time(handles);
-        
+        handles.roi = [];
         % Update handles structure
         guidata(hObject, handles);
     else
@@ -280,7 +280,7 @@ try
         % Set time sliders
         handles = reload_time(handles);
         handles = reload_calibration_time(handles);
-        
+        handles.roi = [];
         % Update handles structure
         guidata(hObject, handles);
     else
@@ -802,6 +802,9 @@ try
     else
         set(handles.buttonSeemore, 'Enable', 'off')
     end
+    handles.roi = [];
+    % Update handles structure
+    guidata(hObject, handles);
 catch e
     disp(e.message)
 end
