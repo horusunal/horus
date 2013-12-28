@@ -16,10 +16,11 @@ y el procesamiento de las imágenes se hacen en máquinas diferentes, es
 necesario tener un servidor SSH en el computador donde funcione la
 captura para enviar la información al computador de procesamiento. Si
 se tiene un sitio web para enviar información (e.g.\
-\url{www.horusvideo.com}), el sitio debe tener servicio de FTP para
-recibir la información desde el computador de procesamiento.
+\url{www.horusvideo.com}), éste debe tener servicio de SSH en el
+computador donde funcione el procesamiento para enviar la información
+del computador de captura.
 
-Para visualizar todas interfaces gráficas apropiadamente, se
+Para visualizar todas las interfaces gráficas apropiadamente, se
 recomienda una resolución de pantalla de mínimo $1200 \times 800$.
 
 \section{Base de Datos}
@@ -39,91 +40,50 @@ realizando los pasos manualmente. Se recomienda utilizar la interfaz
 gráfica mientras sea posible, se deja la configuración manual para
 usuarios avanzados.
 
-\subsection{Configuración mediante la interfaz gráfica \emph{Setup
-    database}}
+Para trabajar con la base de datos, es necesario asegurarse de tener
+el \emph{Database Toolbox} de MATLAB.
 
-La interfaz \emph{Setup database} se puede ejecutar presionando el
-botón correspondiente en la interfaz principal de HORUS o escribiendo
-el comando \verb!gui_configure_database! en la línea de comandos de
-Matlab. En la figura~\ref{fig:setupdb} se muestra la interfaz.
-
-\begin{figure}[htbp!]
-  \centering
-  \includegraphics[width=0.4\textwidth]{img/setupdb}
-  \caption{Interfaz para configuración inicial de la base de datos}
-  \label{fig:setupdb}
-\end{figure}
-
-Las componentes numeradas en la interfaz se explican a continuación (los
-campos con * son obligatorios):
-
-\begin{enumerate}
-\item Database host: Es la dirección IP o nombre del host donde se
-  encuentra el servidor MySQL.
-\item Database name: Todas las bases de datos deben tener un
-  nombre. En este campo se especifica este nombre, el cual es
-  diferente para las bases de datos presentes en el servidor.
-\item Database port: Es el puerto del servidor MySQL, a menos que el
-  administrador del servidor haya decidido seleccionar uno diferente,
-  el puerto por defecto es 3306.
-\item Admin username: Es el nombre de usuario del administrador de la
-  base de datos de HORUS. Este usuario es el encargado de realizar las
-  modificaciones principales en la base de datos y de crear nuevos
-  usuarios con privilegios limitados.
-\item Admin password: Es la contraseña del usuario administrador de la
-  base de datos.
-\item Database SQL file: Se debe seleccionar el archivo en formato SQL
-  con la especificación del esquema relacional de HORUS. Este archivo
-  se provee junto con el software en \verb!examples/horus.sql!. Sin
-  embargo, es posible definir otro esquema siempre y cuando cumpla con
-  las especificaciones de la base de datos, con datos insertados en
-  las tablas de la base de datos.
-\item Apply configuration: Este botón ejecuta la configuración creando
-  el esquema de la base de datos en el servidor MySQL y el usuario
-  administrador. Desde aquí es posible insertar información en la base
-  de datos utilizando el usuario administrador.
-\end{enumerate}
 
 \subsection{Configuración manual}
 
-\subsubsection{Configuración del cliente de MySQL}
+% \subsubsection{Configuración del cliente de MySQL}
 
-Para establecer la conexión a una base de datos MySQL existente, es
-necesario configurar MATLAB para trabajar como cliente. En MATLAB
-existe una variable de entorno llamada \verb!$matlabroot! que
-representa el directorio de instalación de MATLAB (e.g.\@
-\verb!C:\MATLAB\R2011b!), y la utilizaremos para localizar los
-archivos propios de MATLAB. Los pasos para lograr esto son los
-siguientes:
+% En este pasoAsegurarse que el \textit{Database Toolbox} de MATLAB esté
+%   instalado junto con MATLAB.
 
-\begin{enumerate}
-\item Asegurarse que el \textit{Database Toolbox} de MATLAB esté
-  instalado junto con MATLAB.
-\item Descargar el \textit{plugin} para conexión con MySQL. En el
-  momento de escribir este manual, este plugin se puede descargar
-  desde \texttt{\url{http://dev.mysql.com/downloads/connector/j}}
-  seleccionando el sistema operativo correspondiente.
-\item Descomprimir el archivo.
-\item En el directorio descomprimido hay un archivo llamado\\
-  \verb!mysql-connector-java-<version>-bin.jar! (donde
-  \verb!<version>! es la versión del plugin). Copiar este archivo al
-  directorio \verb!$matlabroot/java/jarext/!.
-\item Agregar al archivo
-  \verb!$matlabroot/toolbox/local/classpath.txt! la línea\\
-  \verb!$matlabroot/java/jarext/mysql-connector-java-<version>-bin.jar!\\
-  (donde \verb!<version>! es la versión del plugin). En el sistema operativo 
-  Windows 7 este archivo no se puede editar por la ubicación en la que se 
-  encuentra por esta razón se debe copiar este archivo en otra carpeta como 
-  por ejemplo en el escritorio, hacer el cambio y reemplazar el archivo anterior. 
-  Por último si MATLAB se encontraba ejecutándose para que los cambios funcionen 
-  se debe de cerrar y volver a abrir.
-\end{enumerate}
+% Para establecer la conexión a una base de datos MySQL existente, es
+% necesario configurar MATLAB para trabajar como cliente. En MATLAB
+% existe una variable de entorno llamada \verb!$matlabroot! que
+% representa el directorio de instalación de MATLAB (e.g.\@
+% \verb!C:\MATLAB\R2011b!), y la utilizaremos para localizar los
+% archivos propios de MATLAB. Los pasos para lograr esto son los
+% siguientes:
 
-Ahora, es posible que las funciones de MATLAB hagan conexión con una
-base de datos existente. Se debe establecer la dirección de conexión
-del servidor de la base de datos.
+% \begin{enumerate}
+% \item 
+% \item Descargar el \textit{plugin} para conexión con MySQL. En el
+%   momento de escribir este manual, este plugin se puede descargar
+%   desde \texttt{\url{http://dev.mysql.com/downloads/connector/j}}
+%   seleccionando el sistema operativo correspondiente.
+% \item Descomprimir el archivo.
+% \item En el directorio descomprimido hay un archivo llamado\\
+%   \verb!mysql-connector-java-<version>-bin.jar! (donde
+%   \verb!<version>! es la versión del plugin). Copiar este archivo al
+%   directorio \verb!$matlabroot/java/jarext/!.
+% \item Agregar al archivo
+%   \verb!$matlabroot/toolbox/local/classpath.txt! la línea\\
+%   \verb!$matlabroot/java/jarext/mysql-connector-java-<version>-bin.jar!\\
+%   (donde \verb!<version>! es la versión del plugin). En el sistema operativo 
+%   Windows 7 este archivo no se puede editar por la ubicación en la que se 
+%   encuentra por esta razón se debe copiar este archivo en otra carpeta como 
+%   por ejemplo en el escritorio, hacer el cambio y reemplazar el archivo anterior. 
+%   Por último si MATLAB se encontraba ejecutándose para que los cambios funcionen 
+%   se debe de cerrar y volver a abrir.
+% \end{enumerate}
 
-\subsubsection{Configuración de una nueva base de datos}
+% Ahora, es posible que las funciones de MATLAB hagan conexión con una
+% base de datos existente. Se debe establecer la dirección de conexión
+% del servidor de la base de datos.
 
 Las funciones de HORUS utilizan una base de datos cuya estructura se
 detalla en el capítulo~\ref{sec:dbdesign}. Para crear una nueva base
@@ -134,9 +94,9 @@ anteriores):
 
 \begin{enumerate}
 \item Instalar el servidor de MySQL, que se puede descargar desde
-  \texttt{\url{http://dev.mysql.com/downloads/mysql/}}. En los pasos
-  de la instalación se deben tener en cuenta los siguientes aspectos
-  en Windows:
+  \texttt{\url{http://dev.mysql.com/downloads/mysql/}} (se recomienda
+  utilizar la versión 5.5). En los pasos de la instalación se deben
+  tener en cuenta los siguientes aspectos en Windows:
   \begin{itemize}
   \item Seleccionar instalación \emph{Típica}.
   \item Seleccionar la opción ``Instalar como \emph{Servicio del
@@ -151,9 +111,9 @@ anteriores):
   Si se quiere instalar el servidor de MySQL en Linux, es suficiente
   con instalarlo desde el repositorio de paquetes de la distribución
   específica.
-\item Inicialmente, el único usuario en MySQL es el usuario
-  \texttt{root}. En la línea de comandos acceder a MySQL mediante el
-  comando:
+\item En este paso se supone que el usuario sabe la contraseña del
+  usuario \texttt{root} en el servidor MySQL. En la línea de comandos
+  del sistema acceder a MySQL mediante el comando:
 
   \begin{flushleft}
     \verb!mysql -h <dirección> -u root -p!
@@ -244,3 +204,51 @@ hacer así:
 \begin{verbatim}
 close(conn)
 \end{verbatim}
+
+\subsection{Configuración mediante la interfaz gráfica \emph{Setup
+    database}}
+
+La interfaz \emph{Setup database} se puede ejecutar presionando el
+botón correspondiente en la interfaz principal de HORUS
+(\texttt{gui\_main}) o escribiendo el comando
+\verb!gui_configure_database! en la línea de comandos de Matlab. En la
+figura~\ref{fig:setupdb} se muestra la interfaz.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{img/setupdb}
+  \caption{Interfaz para configuración inicial de la base de datos}
+  \label{fig:setupdb}
+\end{figure}
+
+Las componentes numeradas en la interfaz se explican a continuación (los
+campos con * son obligatorios):
+
+\begin{enumerate}
+\item Database host: Es la dirección IP o nombre del host donde se
+  encuentra el servidor MySQL.
+\item Database name: Todas las bases de datos deben tener un
+  nombre. En este campo se especifica este nombre, el cual es
+  diferente para las bases de datos presentes en el servidor.
+\item Database port: Es el puerto del servidor MySQL, a menos que el
+  administrador del servidor haya decidido seleccionar uno diferente,
+  el puerto por defecto es 3306.
+\item Admin username: Es el nombre de usuario del administrador de la
+  base de datos de HORUS. Este usuario es el encargado de realizar las
+  modificaciones principales en la base de datos y de crear nuevos
+  usuarios con privilegios limitados.
+\item Admin password: Es la contraseña del usuario administrador de la
+  base de datos.
+\item Database SQL file: Se debe seleccionar el archivo en formato SQL
+  con la especificación del esquema relacional de HORUS. Este archivo
+  se provee junto con el software en \verb!examples/horus.sql!. Sin
+  embargo, es posible definir otro esquema siempre y cuando cumpla con
+  las especificaciones de la base de datos, con datos insertados en
+  las tablas de la base de datos.
+\item Apply configuration: Este botón ejecuta la configuración creando
+  el esquema de la base de datos en el servidor MySQL y el usuario
+  administrador. Después de presionar el botón, se debe ingresar la
+  contraseña del usuario \texttt{root} de MySQL en la ventana que se
+  despliega. Desde aquí es posible insertar información en la base de
+  datos utilizando el usuario administrador.
+\end{enumerate}

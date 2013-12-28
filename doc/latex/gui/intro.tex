@@ -54,11 +54,11 @@ datos se debe multiplicar la cantidad de imágenes tomadas en una
 captura por 0.5 KB (de acuerdo a los tamaños de los campos definidos
 en la base de datos). En la etapa de procesamiento lo que se haga va a
 depender de las opciones que haya seleccionado el administrador de la
-estación, pero en forma general, se fusionan las imágenes oblicuas y
-se fusionan las imágenes rectificadas de tipo \textit{snap} y
-\textit{timex} y se generan miniaturas de estas imágenes. A medida que
-se van generando las nuevas imágenes, éstas son insertadas en la base
-de datos satélite, para luego ser enviadas al \textit{hosting}.
+estación, pero en forma general, se rectifican y fusionan las imágenes
+oblicuas y se fusionan las imágenes rectificadas de tipo \textit{snap}
+y \textit{timex} y se generan miniaturas de estas imágenes. A medida
+que se van generando las nuevas imágenes, éstas son insertadas en la
+base de datos satélite, para luego ser enviadas al \textit{hosting}.
 \\
 
 Las bases de datos satélites envían información cada cierto tiempo $t$
@@ -106,10 +106,12 @@ Por último, se debe configurar el procesamiento en el sistema de
 archivos A1, en el cual se pondrá la hora de inicio y fin como 6:50 y
 18:50, respectivamente, y el $\Delta$t que será de 30 minutos. También
 se configuran las opciones que se quieren procesar, en este caso:
-fusionar imágenes oblicuas, fusionar imágenes rectificadas de tipo
-\textit{snap} y \textit{timex}, generar miniaturas de estas imágenes,
-y se configuran los datos para transferir las miniaturas al
-\textit{hosting}. Las imágenes generadas son insertadas en S1 y las miniaturas son enviadas al \textit{hosting}.
+rectificar y fusionar imágenes oblicuas, fusionar imágenes
+rectificadas de tipo \textit{snap} y \textit{timex}, generar
+miniaturas de estas imágenes, y se configuran los datos para
+transferir las miniaturas al \textit{hosting}. Las imágenes generadas
+son insertadas en S1 y las miniaturas son enviadas al
+\textit{hosting}.
 
 Para mayor información de cómo hacer estas configuraciones ver el
 apartado de automáticos ~\ref{sect:processconf}.
@@ -147,7 +149,7 @@ información suministrada para configurar la captura.
 
 En la figura~\ref{fig:time_line} se muestra una línea de tiempo de los
 procesos antes configurados, con el fin de evaluar si los tiempos son
-los adecuados y que no haya solapes. Estos tiempos se calculan con las
+los adecuados y que no hayan solapes. Estos tiempos se calculan con las
 siguientes fórmulas:
 
 \begin{itemize}
