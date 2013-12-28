@@ -259,8 +259,9 @@ seguir los siguientes pasos:
   (si ya existe una instalación anterior de MySQL, no es necesario
   volver a instalarlo ya que puede generar problemas debido a cuentas
   de usuario anteriores). Se puede descargar desde
-  \texttt{\url{http://dev.mysql.com/downloads/mysql/}}. En los pasos
-  de la instalación se deben tener en cuenta los siguientes aspectos:
+  \texttt{\url{http://dev.mysql.com/downloads/mysql/}} (se recomienda
+  utilizar la versión 5.5). En los pasos de la instalación se deben
+  tener en cuenta los siguientes aspectos:
   \begin{itemize}
   \item Seleccionar instalación \emph{Típica}.
   \item Seleccionar la opción ``Instalar como \emph{Servicio del
@@ -283,7 +284,16 @@ Para configurar la base de datos de HORUS se debe presionar el botón
 \textbf{Setup database} de la interfaz principal, el cual despliega la
 interfaz de configuración de la base de datos de HORUS. Para este
 tutorial, la información diligenciada en los campos de la interfaz
-son:
+son: dirección del servidor (\emph{Database host}), nombre de la base
+de datos (\emph{Database name}), puerto de la base de datos en el
+servidor (\emph{Database port}), nombre de usuario del administrador
+de la base de datos de HORUS (\emph{Admin username}, no es el usuario
+\emph{root} de la instalación de MySQL), contraseña del usuario
+administrador (\emph{Admin password}) y la ruta del archivo con la
+estructura de la base de datos de HORUS (\emph{Database SQL
+  file}). Para más información, diríjase al manual de HORUS, Capítulo
+\emph{Instalación}, Sección \emph{Base de Datos}. Para el ejemplo, los
+campos rellenados son:
 
 \begin{itemize}
 \item \emph{Database host}: \texttt{localhost}
@@ -915,9 +925,9 @@ superior izquierda de la interfaz se cuenta con las opciones de
 \textit{zoom}, desplazamiento sobre la imagen y borrado de los puntos
 marcados si es necesario.  Por último, para agregar el ROI a la
 interfaz de calibración, se debe cerrar esta interfaz haciendo clic en
-la \textbf{X} en la parte superior derecha. En la
-figura~\ref{fig:tutorial_roi} se muestra la interfaz diligenciada para
-la cámara C1.
+el botón \emph{Save ROI} o en la \textbf{X} en la parte superior
+derecha. En la figura~\ref{fig:tutorial_roi} se muestra la interfaz
+diligenciada para la cámara C1.
 
 \begin{figure}[htbp!]
   \centering
@@ -1067,8 +1077,9 @@ saldrá una ventana confirmando la acción, en la cual indicaremos
   calibration} la cual, después de haber generado una calibración se
 puede volver a visualizar. Si se quiere ver la imagen rectificada de
 nuevo se puede hacer clic en este mismo menú en \textit{Show rectified
-  image}.  Para el ejemplo, se deben guardar las calibraciones de las
-cámaras C1, C2, C3 con los errores antes mencionados. En las
+  image with/without grid}.  Para el ejemplo, se deben guardar las
+calibraciones de las cámaras C1, C2, C3 con los errores antes
+mencionados. En las
 figuras~\ref{fig:tutorial_rectgoodC1},~\ref{fig:tutorial_rectgoodC2}
 y~\ref{fig:tutorial_rectgoodC3} se muestran imágenes rectificadas para
 las cámaras C1, C2 y C3 con calibraciones adecuadas; y en las
@@ -1143,7 +1154,7 @@ configuración. Para el ejemplo, se ingresa la siguiente información:
 \item \emph{Station}: CARTAGENA
 \item \emph{Image type}: snap
 \item \emph{Camera}: C1
-\item \emph{Select a calibration}: Default
+\item \emph{Select a calibration}: \emph{Default (nearest before time)}
 \item \emph{Initial time}: 01/05/2010 10:45:00
 \item \emph{Final time}: 01/05/2010 22:45:00
 \item \emph{Time error}: 3
@@ -1471,7 +1482,8 @@ el ejemplo, se ingresa la siguiente información:
 \begin{enumerate}
 \item \emph{Station}: CARTAGENA
 \item \emph{Image type}: snap
-\item \emph{Select a fusion}: Default
+\item Seleccionar la opción \emph{Merge oblique images}.
+\item \emph{Select a fusion}: \emph{Default (nearest before time)}.
 \item \emph{Initial time}: 01/05/2010 10:45:00
 \item \emph{Final time}: 01/05/2010 22:45:00
 \item \emph{Time error}: 3
@@ -1523,8 +1535,8 @@ el ejemplo, se ingresa la siguiente información:
 \begin{enumerate}
 \item \emph{Station}: CARTAGENA
 \item \emph{Image type}: snap
-\item \emph{Select a fusion}: Default
-\item Seleccionar la opción: \emph{Rectify and merge oblique images}
+\item Seleccionar la opción \emph{Rectify and merge oblique images}
+\item \emph{Select a fusion}: \emph{Default (nearest before time)}.
 \item \emph{Initial time}: 01/05/2010 10:45:00
 \item \emph{Final time}: 01/05/2010 22:45:00
 \item \emph{Time error}: 3
@@ -1940,7 +1952,15 @@ Si la compilación se realizó mediante la interfaz, se genera el
 archivo ejecutable\\ \texttt{run\_auto\_process\_images.bat}. Al
 presionar el botón que lleva a cabo la compilación, se le pide al
 usuario ingresar el tamaño de paso y el error (en minutos) para la
-búsqueda de las imágenes que se desean procesar.
+búsqueda de las imágenes que se desean procesar. El tamaño de paso se
+refiere al tiempo entre imágenes consecutivas, por ejemplo, si es 30
+minutos, y el tiempo de la primera imagen es 06:00, entonces las
+imágenes se buscan en los tiempos 06:00, 06:30, 07:00, etc. El error
+se refiere a la desviación con respecto al tiempo en el que se espera
+encontrar una imagen, por ejemplo, si el error es de 3 minutos, y el
+tiempo de búsqueda es 06:30, entonces cualquier imagen entre 06:27 y
+06:33 se puede considerar. Siempre se escoge la imagen con tiempo más
+cercano al tiempo de búsqueda.
 
 Si el archivo se compiló manualmente, en el sistema operativo Windows,
 se genera un ejecutable\\ \texttt{auto\_process\_images.exe}, el cual
@@ -2070,9 +2090,16 @@ siguientes:
 \item \emph{X}: 658.45269
 \item \emph{Y}: 756.1568
 \item \emph{Z}: 0
+\item \emph{Is this a virtual sensor?}: \emph{No}. Este campo se
+  refiere a si el sensor es virtual, es decir, si es un modelo
+  computacional que genera mediciones.
 \item \emph{Description}: Este sensor reporta datos de marea
   correspondientes a la bahía de Cartagena.
 \end{enumerate}
+
+Si se tiene un archivo con mediciones para un sensor, se pueden
+agregar automáticamente presionando el botón \emph{Import sensor
+  data}.
 
 En la figura~\ref{fig:tutorial_sensor} se muestra la interfaz
 diligenciada.
@@ -2151,8 +2178,9 @@ valores de $Y$, y en la tercera los valores de $Z$. En la
 figura~\ref{fig:tutorial_measurement} se muestra la interfaz
 diligenciada.  Después de haber seleccionado el archivo, se presiona
 el botón \emph{Insert} para almacenar toda la información en la base
-de datos. Esta inserción puede tardar unos segundos dependiendo de la
-cantidad de datos a insertar.
+de datos. Para confirmar la inserción, presionar el botón \emph{Yes}
+en la ventana de confirmación. Esta inserción puede tardar unos
+segundos dependiendo de la cantidad de datos a insertar.
 
 \begin{figure}[htbp!]
   \centering

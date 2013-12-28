@@ -143,8 +143,8 @@ ya sean rectificadas u oblicuas (este tipo se encuentra en la entidad
 \item \emph{filename (PK, FK)}: Clave foránea a la entidad
   \textit{Image}.
 \item \emph{idfusion (FK)}: Clave foránea a la entidad
-  \textit{Fusion}. Representa la geometría utilizada para fusionar varias
-  imágenes.
+  \textit{Fusion}. Representa la calibración utilizada para fusionar
+  varias imágenes.
 \end{itemize}
   
 \subsubsection{ObliqueImage}
@@ -183,32 +183,12 @@ de red. Sus atributos son:
   \textit{timestack}. Es clave foránea a la entidad \textit{Camera}.
 \item \emph{inittime}: Tiempo de inicio de la captura.
 
-\item \emph{path}: Localización del archivo del \textit{timestack}
-  (e.g.\ /home/horus/stacks/).
+\item \emph{path}: Localización del \textit{timestack} (e.g.\
+  /home/horus/stacks/).
 \item \emph{fps}: Frecuencia o \textit{framerate} en Hertz. Es el
   número de imágenes que se capturan por segundo (e.g.\ $2$).
 \item \emph{numFrames}: Número de frames que se capturan a la
   frecuencia dada (e.g.\ $1200$).
-\end{itemize}
-  
-\subsubsection{GCP}
-
-Esta entidad representa a los puntos de control georeferenciados para
-un sitio que sirven como punto de partida para los modelos de
-optimización utilizados para rectificar y fusionar imágenes. Sus
-atributos son:
-
-\begin{itemize}
-\item \emph{idgcp (PK)}: Es un identificador de cada punto en un
-  sitio. Es posible que haya dos GCPs en estaciones distintas con el
-  mismo identificador.
-\item \emph{station (PK)}: Nombre de la estación a la que corresponde
-  un GCP\@. Junto con el \emph{idgcp} identifican de manera única un
-  GCP en la base de datos.
-\item \emph{name}: Nombre que se le da al GCP para facilidad de
-  representación (e.g.\ GCP001).
-\item \emph{x, y, z}: Coordenada georreferenciada del GCP (e.g.\ $500$,
-  $1000$, $0$).
 \end{itemize}
 
 \subsubsection{Calibration}
@@ -236,28 +216,7 @@ son:
     
 \end{itemize}
   
-\subsubsection{PickedGCP}
 
-Para cada calibración, hay un subconjunto de los GCP de una estación
-que son escogidos como insumo para el modelo de optimización. Esta
-entidad representa cuáles GCP que corresponde a una estación están
-relacionados con una calibración en particular y la relación entre sus
-coordenadas $(x, y, z)$ y las coordenadas $(u, v)$ marcadas por el
-usuario. Los atributos son:
-
-\begin{itemize}
-\item \emph{calibration (PK, FK)}: Es la calibración a la que están
-  relacionados los puntos. Es clave foránea a la entidad
-  \textit{Calibration}.
-\item \emph{gcp (PK, FK)}: Es el número del punto de control que se
-  relaciona. Es clave foránea a la entidad \textit{GCP}.
-\item \emph{station (PK, FK)}: Es la estación a la que corresponde el
-  GCP\@. Es clave foránea a la entidad \textit{GCP}.
-\item \emph{u, v}: Posición en píxeles en la cámara de cada punto de
-  control transformado mediante los parámetros de la calibración a la
-  que está relacionado (e.g.\ $300$, $200$).
-\end{itemize}
-  
 \subsubsection{CalibrationParameter}
 
 Esta entidad representa los parámetros que pueden ser matrices o
@@ -269,7 +228,7 @@ parámetro, sino su información. Los atributos son:
   parámetro en la base de datos. Se representa como el alias de la
   estación más un autonumérico (e.g.\ CRTG00023).
 \item \emph{calibration (FK)}: Es la clave foránea o la referencia a
-  la calibración que está relacionada con el parámetro.
+  la entidad \emph{Calibration} que está relacionada con el parámetro.
 \item \emph{name}: Es el nombre del parámetro, es útil para saber
   exactamente a qué matriz o valor escalar se refiere el parámetro
   (e.g.\ H, P, K).
@@ -294,6 +253,49 @@ de fila, y valor. Los atributos son:
   índices comienzan en 1).
 \item \emph{value}: Valor escalar de cada elemento de la matriz.
 \end{itemize}
+
+\subsubsection{GCP}
+
+Esta entidad representa a los puntos de control georeferenciados para
+un sitio que sirven como punto de partida para los modelos de
+optimización utilizados para rectificar y fusionar imágenes. Sus
+atributos son:
+
+\begin{itemize}
+\item \emph{idgcp (PK)}: Es un identificador de cada punto en un
+  sitio. Es posible que haya dos GCPs en estaciones distintas con el
+  mismo identificador.
+\item \emph{station (PK)}: Nombre de la estación a la que corresponde
+  un GCP\@. Junto con el \emph{idgcp} identifican de manera única un
+  GCP en la base de datos.
+\item \emph{name}: Nombre que se le da al GCP para facilidad de
+  representación (e.g.\ GCP001).
+\item \emph{x, y, z}: Coordenada georreferenciada del GCP (e.g.\ $500$,
+  $1000$, $0$).
+\end{itemize}
+
+\subsubsection{PickedGCP}
+
+Para cada calibración, hay un subconjunto de los GCP de una estación
+que son escogidos como insumo para el modelo de optimización. Esta
+entidad representa cuáles GCP que corresponde a una estación están
+relacionados con una calibración en particular y la relación entre sus
+coordenadas $(x, y, z)$ y las coordenadas $(u, v)$ marcadas por el
+usuario. Los atributos son:
+
+\begin{itemize}
+\item \emph{calibration (PK, FK)}: Es la calibración a la que están
+  relacionados los puntos. Es clave foránea a la entidad
+  \textit{Calibration}.
+\item \emph{gcp (PK, FK)}: Es el número del punto de control que se
+  relaciona. Es clave foránea a la entidad \textit{GCP}.
+\item \emph{station (PK, FK)}: Es la estación a la que corresponde el
+  GCP\@. Es clave foránea a la entidad \textit{GCP}.
+\item \emph{u, v}: Posición en píxeles en la cámara de cada punto de
+  control transformado mediante los parámetros de la calibración a la
+  que está relacionado (e.g.\ $300$, $200$).
+\end{itemize}
+  
   
 \subsubsection{Fusion}
 
@@ -360,7 +362,7 @@ las cámaras relacionadas y el orden de cada una. Los atributos son:
 
 \begin{itemize}
 \item \emph{idfusion (PK, FK)}: Es la clave foránea o referencia a la
-  fusión a la que se le quieren relacionar las cámaras.
+  entidad \emph{Fusion} a la que se le quieren relacionar las cámaras.
 \item \emph{camera (PK, FK)}: Es el identificador de la cámara que se
   quiere incluir. Es clave foránea a la entidad \textit{Camera}.
 \item \emph{station (PK, FK)}: Es la estación en la que se realiza el
@@ -420,33 +422,34 @@ Esta entidad representa las coordenadas de los vértices del polígono
 que definen un ROI en particular. Los atributos son:
 
 \begin{itemize}
-\item \emph{idroi (PK, FK)}: Es la clave foránea al ROI al que
-  pertenece cada coordenada.
+\item \emph{idroi (PK, FK)}: Es la clave foránea a la entidad
+  \emph{ROI} al que pertenece cada coordenada.
 \item \emph{idcoord (PK)}: Es un número que identifica cada
   coordenada. Pueden haber números iguales en distintos ROIs. El
   polígono se forma uniendo mediante líneas rectas dos puntos con
   \textit{idcoord} consecutivos. El último se une con el primero.
 \item \emph{u, v}: El valor de la coordenada en píxeles.
 \end{itemize}
-  
-\subsubsection{Measurement}
+ 
 
-Esta entidad representa las series de tiempo de medición de
-diversas variables que es interesante mantener almacenadas, por
-ejemplo, altura de ola, marea astronómica, densidad de usuarios,
-posición de la línea de costa, entre otros. En esta entidad no se
-guarda el valor como tal de la medición ya que puede ser un
-escalar, una matriz de dos o incluso tres dimensiones. Los atributos
-son:
+  
+\subsubsection{Sensor}
+
+Esta entidad representa la información de un sensor con el que se mide
+algún tipo de medición (e.g.\@ Boya es un sensor para medir altura
+de ola, período de la ola, entre otros). Los atributos son los
+siguientes:
 
 \begin{itemize}
-\item \emph{idmeasurement (PK)}: Autonumérico que identifica de manera
-  única a una medición en la base de datos.
-\item \emph{station}: Nombre de la estación a la que está relacionado
-  (e.g.\ Cartagena, Magdalena).
-\item \emph{type (FK)}: Tipo de medición. Es clave foránea a la
-  entidad MeasurementType.
-\item \emph{timestamp}: Tiempo de la medición.
+\item \emph{name (PK)}: Nombre único del sensor (e.g.\ DCX22).
+\item \emph{station (PK, FK)}: Nombre de la estación a la que está
+  relacionado el sensor. Es clave foránea a la entidad
+  \textit{Station}.
+\item \emph{x, y, z}: Coordenada georreferenciada del sensor (e.g.\
+  $500$, $1000$, $0$).
+\item \emph{isvirtual}: Campo que determina si el sensor es virtual o
+  no.
+\item \emph{description}: Descripción verbal del sensor.
 \end{itemize}
   
 \subsubsection{MeasurementType}
@@ -457,8 +460,8 @@ atributos son:
 \begin{itemize}
 \item \emph{id (PK)}: Autonumérico que identifica a un tipo de
   medición en la base de datos.
-\item \emph{station (PK FK)}: Estación a la que pertenece la
-  medición.
+\item \emph{station (PK, FK)}: Estación a la que pertenece la
+  medición.  Es la clave foránea a la entidad \emph{Sensor}.
 \item \emph{sensor (FK)}: Es la clave foránea a la entidad
   \textit{Sensor} y representa el sensor con el que se miden las
   mediciones de un tipo en particular.
@@ -480,6 +483,27 @@ atributos son:
   una gráfica.
 \item \emph{description}: Descripción verbal del tipo de medición.
 \end{itemize}
+
+\subsubsection{Measurement}
+
+Esta entidad representa las series de tiempo de medición de
+diversas variables que es interesante mantener almacenadas, por
+ejemplo, altura de ola, marea astronómica, densidad de usuarios,
+posición de la línea de costa, entre otros. En esta entidad no se
+guarda el valor como tal de la medición ya que puede ser un
+escalar, una matriz de dos o incluso tres dimensiones. Los atributos
+son:
+
+\begin{itemize}
+\item \emph{idmeasurement (PK)}: Autonumérico que identifica de manera
+  única a una medición en la base de datos.
+\item \emph{station (FK)}: Nombre de la estación a la que está
+  relacionado (e.g.\ Cartagena, Magdalena). Es clave foránea a la
+  entidad \emph{MeasurementType}.
+\item \emph{type (FK)}: Tipo de medición. Es clave foránea a la
+  entidad MeasurementType.
+\item \emph{timestamp}: Tiempo de la medición.
+\end{itemize}
   
 \subsubsection{MeasurementValue}
 
@@ -491,9 +515,10 @@ profundidad. Los atributos son:
 
 \begin{itemize}
 \item \emph{idmeasurement (PK, FK)}: Clave foránea o referencia a la
-  medición a la que corresponde cada elemento de la matriz.
-\item \emph{station (PK FK)}: Estación a la que pertenece la
-  medición.
+  entidad \emph{Measurement} a la que corresponde cada elemento de la
+  matriz.
+\item \emph{station (PK, FK)}: Estación a la que pertenece la
+  medición. Es la clave foránea a la entidad \emph{Measurement}.
 \item \emph{idcol (PK)}: Identificador de la columna de la matriz (los
   índices comienzan en 1).
 \item \emph{idrow (PK)}: Identificador de la fila de la matriz (los
@@ -503,23 +528,6 @@ profundidad. Los atributos son:
 \item \emph{value}: Valor del elemento de la matriz.
 \end{itemize}
 
-  
-\subsubsection{Sensor}
-
-Esta entidad representa la información de un sensor con el que se mide
-algún tipo de medición (e.g.\@ Boya es un sensor para medir altura
-de ola, período de la ola, entre otros). Los atributos son los
-siguientes:
-
-\begin{itemize}
-\item \emph{name}: Nombre único del sensor (e.g.\ DCX22).
-\item \emph{station (PK FK)}: Nombre de la estación a la que está
-  relacionado el sensor. Es clave foránea a la entidad
-  \textit{Station}.
-\item \emph{x, y, z}: Coordenada georreferenciada del sensor (e.g.\
-  $500$, $1000$, $0$).
-\item \emph{description}: Descripción verbal del sensor.
-\end{itemize}
 
 \subsubsection{AutomaticParams}
 
@@ -530,8 +538,9 @@ la rectificación y fusión automáticas. Los atributos que contiene son:
 \begin{itemize}
 \item \emph{idauto (PK)}: Autonumérico que identifica de manera
   única a un automático en la base de datos.
-\item \emph{station (FK)}: Estación a la que pertenece la captura.
-\item \emph{type}: Tipo de la captura, puede ser \textit{image},
+\item \emph{station (FK)}: Estación a la que pertenece la captura. Es
+  clave foránea a la entidad \emph{Station}.
+\item \emph{type}: Tipo del automático, puede ser \textit{image},
   \textit{stack}, \textit{transfer} o \textit{process}.
 \item \emph{start\_hour}: Hora de inicio de la captura en el día
   (e.g.\ $06$).

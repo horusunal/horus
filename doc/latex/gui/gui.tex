@@ -46,18 +46,13 @@ Las componentes numeradas de la interfaz son:
 
 \begin{enumerate}
 \item Nombre de usuario de la base de datos.
-\item Contraseña (no se muestran los caracteres mientras se digitan).
+\item Contraseña del usuario.
 \item Nombre o dirección del servidor donde se encuentra alojada la
   base de datos (\texttt{localhost} si es local).
 \item Nombre del esquema de la base de datos (por defecto es
   \texttt{horus}).
 \item Puerto de la base de datos (por defecto es \texttt{3306}).
 \end{enumerate}
-
-\emph{NOTA}: Es posible que cuando se esté utilizando una interfaz
-gráfica, la conexión con la base de datos caduque, en ese caso, es
-necesario cerrar y abrir nuevamente la interfaz con el fin de renovar
-la conexión.
 
 El manejo de sesiones en HORUS no tiene que ver con la conexión a la
 base de datos y la vigencia de ésta, sino con la información del
@@ -74,7 +69,8 @@ desea cerrar la sesión, en caso afirmativo, el archivo
 \texttt{userinfo.dat} es borrado, y en caso negativo el archivo
 permanece.  En conclusión, mientras el archivo \texttt{userinfo.dat}
 exista, hay una sesión de HORUS abierta, y se cierra cuando el archivo
-es borrado.
+es borrado. En caso de problemas de conexión con la base de datos, el
+archivo \texttt{userinfo.dat} es eliminado.
 
 \section{Setup database}
 
@@ -96,7 +92,8 @@ actualizar o insertar estaciones, cámaras, GCPs, sensores y tipos de
 mediciones. A continuación se explica cada una de las opciones de la
 interfaz.
 
-El comando para ejecutar esta interfaz es: \texttt{gui\_db\_editor}.
+El comando para ejecutar esta interfaz es: \texttt{gui\_db\_editor}, o
+desde la interfaz principal, presionar el botón \emph{Edit database}.
 
 \subsection{Estación}
 
@@ -152,6 +149,7 @@ campos con * son obligatorios):
 \item Menú para insertar, actualizar o eliminar un sensor.
 \item Menú para insertar, actualizar o eliminar un tipo de
   medición.
+\item Menú para insertar o actualizar las rutas de las imágenes.
 \end{enumerate}
 
 
@@ -365,7 +363,10 @@ campos con * son obligatorios):
 \item Valor real de la coordenada $x$ del sensor.
 \item Valor real de la coordenada $y$ del sensor.
 \item Valor real de la coordenada $z$ del sensor.
+\item Opción para determinar si el sensor es virtual o no.
 \item Descripción verbal del sensor.
+\item Botón para importar los datos del sensor (solamente archivos
+  TXT).
 \item Botones para insertar/actualizar y eliminar un sensor. El primer
   botón se habilita cuando se ha ingresado la información
   correctamente, se comprueba que sólo el campo de descripción pueda
@@ -497,7 +498,7 @@ separador decimal del archivo debe ser un punto (.).
 
 Si se ha insertado un tipo de medición y luego se quiere agregar
 más datos a éste se puede hacer seleccionándolo en el campo (2) y luego
-seleccionando el archivo por medio del campo (11), y finalmente dando
+seleccionando el archivo por medio del campo (14), y finalmente haciendo
 clic en el botón ``\textit{Update}''.
 
 En la figura~\ref{fig:measurementtype3} se muestra un diagrama de
@@ -518,7 +519,7 @@ la función que utiliza.
 \label{sec:pathdbeditor}
 
 Todas las imágenes generadas por HORUS se deben almacenar en el disco
-duro local. La interfaz \emph{Generate Image Paths}, permite, dado un
+duro local. El menú \emph{Generate Image Paths}, permite, dado un
 directorio raíz, generar automáticamente las rutas para los diferentes
 tipos de imágenes procesadas (oblicuas, rectificadas,
 oblicuas--fusionadas, rectificadas--fusionadas y miniaturas).
@@ -614,7 +615,8 @@ de cámaras.
   \label{fig:confcam}
 \end{figure}
 
-El comando para ejecutar esta interfaz es:
+Para ejecutar esta interfaz, presionar el botón \emph{Configure
+  cameras} desde la interfaz principal o con el comando:
 \texttt{gui\_configure\_cameras}.
 
 Las componentes numeradas en la figura se explican a continuación:
@@ -642,7 +644,7 @@ Las componentes numeradas en la figura se explican a continuación:
   configuración de la cámara.
 \item Botón para guardar la configuración de la cámara. Esta
   configuración se guarda en un archivo XML llamado
-  \texttt{capture\_info.xml}.
+  \texttt{capture\_info.xml} en el directorio \texttt{data}.
 \item Previsualización de la imagen de la cámara.
 \end{enumerate}
 
@@ -695,7 +697,8 @@ interfaz.
   \label{fig:edit_path2}
 \end{figure}
 
-El comando para ejecutar esta interfaz es:
+Para ejecutar esta interfaz, presionar el botón \emph{Setup image
+  paths} desde la interfaz principal o con el comando:
 \texttt{gui\_paths\_editor}.
 
 Las componentes numeradas en la figura se explican a continuación (los
@@ -802,7 +805,8 @@ interfaz.
   \label{fig:cal}
 \end{figure}
 
-El comando para ejecutar esta interfaz es:
+Para ejecutar esta interfaz, presionar el botón \emph{Configure
+  rectification} desde la interfaz principal o con el comando:
 \texttt{gui\_gencalibration}.
 
 Las componentes numeradas en la figura se explican a continuación:
@@ -832,7 +836,7 @@ Las componentes numeradas en la figura se explican a continuación:
 \item Coordenadas $(u, v)$ del GCP actual, si el usuario ya marcó
   estas coordenadas en la imagen. Es posible escribir las coordenadas
   directamente en los campos de texto.
-\item Botón para seleccionar una ROI en la imagen.  Este botón
+\item Botón para seleccionar un ROI en la imagen.  Este botón
   despliega la interfaz para seleccionar un ROI.
 \item Botón para seleccionar un archivo donde está la información de
   los GCPs escogidos si existe de antemano. El archivo debe tener
@@ -895,7 +899,7 @@ Las componentes numeradas en la figura se explican a continuación:
   para los GCPs marcados en la imagen mediante el menú \emph{Options}
   -> \emph{Show calibration}. También puede ver en cualquier momento
   la imagen rectificada de prueba en el menú \emph{Options} ->
-  \emph{Show rectified image}.
+  \emph{Show rectified image with/without grid}.
 
 \end{enumerate}
 
@@ -942,7 +946,8 @@ o eliminar.
   \label{fig:roi2}
 \end{figure}
 
-El comando para ejecutar esta interfaz es: \texttt{gui\_roi\_tool}.
+Para ejecutar esta interfaz, presionar el botón \emph{Create new ROI}
+desde la interfaz principal o con el comando: \texttt{gui\_roi\_tool}.
 
 Las componentes numeradas en la figura se explican a continuación (los
 campos con * son obligatorios):
@@ -970,20 +975,20 @@ campos con * son obligatorios):
   (15), si esto no se hace no se podrá mostrar la imagen. Las imágenes
   que se listan son las veinte primeras imágenes que existan a partir
   de la fecha que se muestra acá y hasta doce horas después de ésta.
-\item Posiciones en $u$ (valores reales), si se escogió la opción de
-  actualizar y hay información en la base de datos, por el contrario,
-  si se escogió la opción de insertar se mostrará vacío para que se
-  ingrese la información. El campo que se muestra al lado derecho es
-  para visualizar la posición de los puntos cuando se está haciendo la
-  marcación con (11). Deben ser mínimo tres puntos para poder así
-  cerrar el polígono.
-\item Posiciones en $v$ (valores reales), si se escogió la opción de
-  actualizar y hay información en la base de datos, por el contrario,
-  si se escogió insertar se mostrará vacío para que se ingrese la
-  información. El campo que se muestra al lado derecho es para
-  visualizar la posición de los puntos cuando se está haciendo la
-  marcación con (11).  Deben ser mínimo tres puntos para poder así
-  cerrar el polígono.
+\item Se mostrarán las posiciones en $u$ (valores reales) si se
+  escogió la opción de actualizar y hay información en la base de
+  datos, por el contrario, si se escogió la opción de insertar se
+  mostrará vacío para que se ingrese la información. El campo que se
+  muestra al lado derecho es para visualizar la posición de los puntos
+  cuando se está haciendo la marcación con (11). Deben ser mínimo tres
+  puntos para poder así cerrar el polígono.
+\item Se mostrarán las posiciones en $v$ (valores reales) si se
+  escogió la opción de actualizar y hay información en la base de
+  datos, por el contrario, si se escogió insertar se mostrará vacío
+  para que se ingrese la información. El campo que se muestra al lado
+  derecho es para visualizar la posición de los puntos cuando se está
+  haciendo la marcación con (11).  Deben ser mínimo tres puntos para
+  poder así cerrar el polígono.
 \item Lista para seleccionar la imagen que se quiere mostrar en (15) y
   sobre la cual se hará la marcación.
 \item Botón para comenzar las marcaciones de los puntos $(u, v)$ sobre
@@ -1057,7 +1062,8 @@ interfaz.
   \label{fig:rect}
 \end{figure}
 
-El comando para ejecutar esta interfaz es:
+Para ejecutar esta interfaz, presionar el botón \emph{Manually rectify
+  images} desde la interfaz principal o con el comando:
 \texttt{gui\_rectify\_images}.
 
 Las componentes numeradas en la figura se explican a continuación:
@@ -1103,14 +1109,16 @@ Las componentes numeradas en la figura se explican a continuación:
 \item Botón que despliega una interfaz para seleccionar un ROI en la
   cámara para la rectificación de las imágenes.
 \item El usuario tiene la opción de guardar las imágenes generadas por
-  el proceso de rectificación en la base de datos y en la ruta en el
-  disco para almacenar estas imágenes por defecto (esta ruta es
-  escogida por el usuario cuando configura por primera vez una
-  estación, y se almacena en \texttt{path\_info.xml}), o puede
-  seleccionar una ruta diferente en el disco, en caso de que no quiera
-  guardar estas imágenes en la base de datos.
+  el proceso de rectificación en la base de datos y almacenar las
+  imágenes en la ruta por defecto del disco especificada con
+  anterioridad (esta ruta es escogida por el usuario cuando configura
+  por primera vez una estación, y se almacena en
+  \texttt{path\_info.xml}), o puede seleccionar una ruta diferente en
+  el disco, en caso de que no quiera guardar estas imágenes en la base
+  de datos.
 \item Botón para seleccionar la ruta del nuevo directorio donde se
-  guardarán las imágenes rectificadas.
+  guardarán las imágenes rectificadas. Éste se habilita cuando se
+  escoge en (11) la opción de almacenar sólo en el disco.
 \item Luego de que todos los parámetros de la rectificación se han
   seleccionado, este botón comienza el proceso de rectificación. Se
   buscan las imágenes en la base de datos, se carga la calibración más
@@ -1160,7 +1168,9 @@ figura~\ref{fig:calfusion} se muestra la interfaz.
   \label{fig:calfusion}
 \end{figure}
 
-El comando para ejecutar esta interfaz es: \texttt{gui\_genfusion}.
+Para ejecutar esta interfaz, presionar el botón \emph{Configure
+  fusion} desde la interfaz principal o con el comando:
+\texttt{gui\_genfusion}.
 
 Las componentes numeradas en la figura se explican a continuación:
 
@@ -1176,7 +1186,9 @@ Las componentes numeradas en la figura se explican a continuación:
 \item Selección de las cámaras y el orden entre ellas. En la lista
   desplegable se listan todas las cámaras de la estación escogida, y
   mediante el botón ``$\gg$'' se cargan para la calibración. El botón
-  ``$\ll$'' borra de la lista de cámaras la cámara seleccionada.
+  ``$\ll$'' borra de la lista de cámaras la cámara seleccionada. Las
+  cámaras se deben agregar en el orden en el que se realiza la fusión.
+\item Opción para escoger el tipo de la imagen.
 \item Lista desplegable para seleccionar el tipo de imagen que se
   utilizará para realizar la calibración. Se recomienda usar imágenes
   \textit{timex} para minimizar los cambios en la rotura del oleaje
@@ -1189,7 +1201,7 @@ Las componentes numeradas en la figura se explican a continuación:
   cámaras \emph{C2} y \emph{C3}.
 \item Lista desplegable donde aparecen todos los puntos de control
   comunes para el par de imágenes actuales. Si un punto se escoge para
-  la calibración, junto a su nombre aparece un ``*'' y se dibuja en
+  la fusión, junto a su nombre aparece un ``*'' y se dibuja en
   las imágenes correspondientes.
 \item Botón para agregar un punto de control común. Cuando el usuario
   presiona este botón debe marcar el punto en la imagen de la
@@ -1278,11 +1290,12 @@ búsqueda de un grupo de imágenes y fusionarlas dados una estación, un
 tipo de imagen y un rango de tiempo. El usuario tiene la opción de
 fusionar imágenes oblicuas, fusionar imágenes ya rectificadas, o de
 rectificar y luego fusionar las imágenes, para un conjunto de
-cámaras. Por defecto, se escoge la última calibración almacenada en la
-base de datos cuyo tiempo de generación sea el más cercano antes del
-tiempo de cada conjunto de imágenes, sin embargo, es posible escoger
-cualquier otra calibración para fusionar el conjunto completo de
-imágenes. En la figura~\ref{fig:fusion} se muestra la interfaz.
+cámaras. Por defecto, se escoge la última calibración de fusión
+almacenada en la base de datos cuyo tiempo de generación sea el más
+cercano antes del tiempo de cada conjunto de imágenes, sin embargo, es
+posible escoger cualquier otra calibración para fusionar el conjunto
+completo de imágenes. En la figura~\ref{fig:fusion} se muestra la
+interfaz.
 
 \begin{figure}[htbp!]
   \centering
@@ -1291,7 +1304,8 @@ imágenes. En la figura~\ref{fig:fusion} se muestra la interfaz.
   \label{fig:fusion}
 \end{figure}
 
-El comando para ejecutar esta interfaz es:
+Para ejecutar esta interfaz, presionar el botón \emph{Manually merge
+  images} desde la interfaz principal o con el comando:
 \texttt{gui\_merging\_images}.
 
 Las componentes numeradas en la figura se explican a continuación:
@@ -1303,8 +1317,10 @@ Las componentes numeradas en la figura se explican a continuación:
   imágenes disponibles en la base de datos (e.g.\@\textit{Snap, Timex,
     Var}).
 \item Se puede seleccionar una de las siguientes tres opciones:
-  ``Merge oblique images'', ``Rectify and merge oblique images'' y
-  ``Merge rectified images''.
+  ``Merge oblique images'' para fusionar imágenes oblicuas (sin
+  rectificar), ``Rectify and merge oblique images'' para rectificar
+  primero y luego fusionar imágenes oblicuas, y ``Merge rectified
+  images'' para fusionar imágenes ya rectificadas.
 \item Lista desplegable donde se puede escoger la fecha de una fusión
   almacenada en la base de datos para fusionar todo el conjunto de
   imágenes. Si se deja la opción por defecto, para cada imagen se
@@ -1335,14 +1351,15 @@ Las componentes numeradas en la figura se explican a continuación:
   \wedge t = t_i + k \cdot \Delta t\}$, donde $k \in \{0, 1, 2,
   \ldots\}$.
 \item El usuario tiene la opción de guardar las imágenes generadas por
-  el proceso de fusión en la base de datos y en la ruta en el disco
-  para almacenar estas imágenes por defecto (esta ruta es escogida por
-  el usuario cuando configura por primera vez una estación, y se
-  almacena en \texttt{path\_info.xml}), o puede seleccionar una ruta
-  diferente en el disco, en caso de que no quiera guardar estas
-  imágenes en la base de datos.
+  el proceso de fusión en la base de datos y almacenar las imágenes en
+  la ruta por defecto del disco especificada con anterioridad (esta
+  ruta es escogida por el usuario cuando configura por primera vez una
+  estación, y se almacena en \texttt{path\_info.xml}), o puede
+  seleccionar una ruta diferente en el disco, en caso de que no quiera
+  guardar estas imágenes en la base de datos.
 \item Botón para seleccionar la ruta del nuevo directorio donde se
-  guardarán las imágenes fusionadas.
+  guardarán las imágenes fusionadas. Este se habilita cuando se escoge
+  en (10) la opción de almacenar sólo en el disco.
 \item Cuando el usuario ya ha seleccionado todos los criterios de
   búsqueda de imágenes para fusionar, este botón comienza el proceso
   de fusión. La fusión se realiza utilizando los parámetros de fusión
@@ -1372,8 +1389,8 @@ En esta sección, se muestra la interfaz para configurar la captura de
 imágenes oblicuas. Entre las cosas que se configuran se encuentran las
 horas del día en que se capturan imágenes y \textit{stacks}, así como
 la información para el envío de los datos. La configuración se guarda
-en el archivo XML \texttt{capture\_info.xml} que utiliza el programa
-automático de captura.
+en el archivo XML \texttt{capture\_info.xml} en el directorio
+\texttt{data} que utiliza el programa automático de captura.
 
 En la figura~\ref{fig:captureconf} se muestra la interfaz de
 configuración de captura.
@@ -1385,7 +1402,8 @@ configuración de captura.
   \label{fig:captureconf}
 \end{figure}
 
-El comando para ejecutar esta interfaz es:
+Para ejecutar esta interfaz, presionar el botón \emph{Configure
+  capture automatic} desde la interfaz principal o con el comando:
 \texttt{gui\_configure\_capture}.
 
 Las componentes numeradas en la figura se explican a continuación:
@@ -1395,8 +1413,15 @@ Las componentes numeradas en la figura se explican a continuación:
 \item Tiempo inicial de la captura de imágenes.
 \item Tiempo final de la captura de imágenes.
 \item Tiempo de espera entre capturas consecutivas, en minutos.
-\item Tiempo de captura, en segundos.
-\item Tipos de imágenes que se desean capturar.
+\item Tiempo de captura, en segundos. Este campo indica el tiempo en
+  el que se capturan imágenes a alta frecuencia (indicada al
+  configurar las cámaras) con el fin de producir las imágenes
+  \emph{timex} y \emph{variance}.
+\item Tipos de imágenes que se desean capturar. Para escoger un tipo
+  de imagen, se selecciona de la lista desplegable y con el botón
+  $\gg$ se pasa a la lista de tipos seleccionados. Para deseleccionar
+  un tipo de imagen, se hace clic sobre el nombre en la lista de la
+  derecha, y con el botón $\ll$ se elimina de la lista.
 \item Lista desplegable donde se puede seleccionar una configuración
   de captura de \textit{stacks} para actualización o la opción de
   crear una nueva configuración.
@@ -1422,12 +1447,13 @@ Las componentes numeradas en la figura se explican a continuación:
   captura una imagen y la muestra para seleccionar los puntos
   correspondientes a los vértices del polígono que conforma el ROI.
 \item Botón para generar el automático de captura de imágenes y
-  \textit{stacks}.
+  \textit{stacks}. Este botón sólo se habilita cuando se guarda la
+  configuración.
 \item La configuración del envío de datos contiene varios campos. Este
   campo es la dirección del servidor SSH al que se envían las
   imágenes.
-\item Nombre de usuario del cliente SSH.
-\item Contraseña del cliente SSH.
+\item Nombre de usuario del servidor SSH.
+\item Contraseña del servidor SSH.
 \item Tiempo inicial del envío.
 \item Tiempo final del envío.
 \item Tiempo de espera entre envíos consecutivos, en minutos.
@@ -1438,7 +1464,8 @@ Las componentes numeradas en la figura se explican a continuación:
   de error.
 \item Ruta remota en el servidor en donde se almacenarán los datos
   enviados.
-\item Botón para generar el automático de transferencia.
+\item Botón para generar el automático de transferencia. Este botón
+  sólo se habilita cuando se guarda la configuración.
 \item Botón para almacenar la configuración en el archivo XML y en la
   base de datos (si todos los campos son válidos y no hay solapamiento
   entre tiempos de captura).
@@ -1493,7 +1520,8 @@ que el directorio de HORUS es \verb!C:\horus!):
 \end{flushleft}
 
 Si la compilación se realizó mediante la interfaz, se generan los
-archivos ejecutables \texttt{run\_auto\_capture\_images.bat} y
+archivos ejecutables\\
+ \texttt{run\_auto\_capture\_images.bat} y
 \texttt{run\_auto\_transfer.bat}.
 
 Si los archivos se compilaron manualmente, en el sistema operativo
@@ -1530,7 +1558,7 @@ deseable que estos procesos se hagan automáticamente. En esta sección
 se describe la interfaz para configurar el automático de procesamiento
 para rectificar, fusionar, miniaturizar y enviar a la web las
 imágenes. La información de la configuración se guarda en el archivo
-XML \texttt{processing\_info.xml}.
+XML \texttt{processing\_info.xml} en el directorio \texttt{data}.
 
 En la figura~\ref{fig:processconf} se muestra la interfaz para
 configurar el automático de procesamiento.
@@ -1542,7 +1570,9 @@ configurar el automático de procesamiento.
   \label{fig:processconf}
 \end{figure}
 
-El comando para ejecutar esta interfaz es: \texttt{gui\_processing}.
+Para ejecutar esta interfaz, presionar el botón \emph{Configure
+  processing automatic} desde la interfaz principal o con el comando:
+\texttt{gui\_processing}.
 
 Las componentes numeradas en la figura se explican a continuación:
 
@@ -1559,17 +1589,18 @@ Las componentes numeradas en la figura se explican a continuación:
 \item Tipos de imágenes que se van a procesar.
 \item Esta opción se habilita cuando se quiere enviar las miniaturas
   por Internet a un servidor web.
-\item Nombre del servidor.
-\item Nombre del usuario para acceder al servidor.
-\item Contraseña para acceder al servidor.
+\item Nombre del servidor FTP.
+\item Nombre del usuario para acceder al servidor FTP.
+\item Contraseña para acceder al servidor FTP.
 \item Para ser visualizadas las imágenes procesadas en la web, es
   necesario generar miniaturas de estas imágenes. Aquí se seleccionan
   los tipos de imágenes procesadas que se van a miniaturizar.
-\item Tipos de las imágenes que fueron procesadas.
+\item Tipos de las imágenes que serán procesadas.
 \item Ancho deseado de la miniatura. Se calcula el tamaño para la
   miniatura de tal manera que el ancho sea el especificado en este
   campo, y la altura sea proporcional.
-\item Botón para generar el automático de procesamiento.
+\item Botón para generar el automático de procesamiento. Este botón
+  sólo se habilita cuando se guarda la configuración.
 \item Botón para almacenar la configuración del automático en el
   archivo XML y en la base de datos.
 \item Botón para mostrar de manera gráfica los tiempos de captura y
@@ -1625,12 +1656,20 @@ presionar el botón que lleva a cabo la compilación, se le pide al
 usuario ingresar el tamaño de paso y el error (en minutos) para la
 búsqueda de las imágenes que se desean procesar.
 
-Si el archivo se compiló manualmente, en el sistema operativo Windows, se genera un
-ejecutable\\ \texttt{auto\_process\_images.exe}, el cual recibe unos
-parámetros de entrada: nombre de la estación, tamaño de paso para la
-búsqueda de imágenes (en minutos) y error en la búsqueda (en
-minutos). Para ejecutarlo, se debe crear un archivo BAT que recibe los
-parámetros. Un ejemplo de archivo BAT para el automático de
+Si el archivo se compiló manualmente, en el sistema operativo Windows,
+se genera un ejecutable \texttt{auto\_process\_images.exe}, el cual
+recibe unos parámetros de entrada: nombre de la estación, tamaño de
+paso para la búsqueda de imágenes (en minutos) y error en la búsqueda
+(en minutos). El tamaño de paso es el tiempo entre las imágenes
+consecutivas para la búsqueda, por ejemplo, si la primera imagen se
+encuentra a las 06:00 y el tamaño de paso es de 30 minutos, las
+siguientes imágenes se buscarán en el tiempo 06:30, 07:00, 07:30, etc;
+el error de búsqueda es la desviación en el tiempo de búsqueda, por
+ejemplo, si el error es de 3 minutos, y se busca una imagen a las
+06:30, entonces las imágenes desde las 06:27 hasta 06:33 son
+consideradas (siempre se escoge la imagen con tiempo más cercano al
+tiempo de búsqueda). Para ejecutarlo, se debe crear un archivo BAT que
+recibe los parámetros. Un ejemplo de archivo BAT para el automático de
 procesamiento podría contener el siguiente código\\
 (\texttt{run\_auto\_process\_images.bat}):
 
@@ -1678,8 +1717,9 @@ configurar el automático de sincronización.
   \label{fig:sync}
 \end{figure}
 
-El comando para ejecutar esta interfaz es:
-\texttt{gui\_configure\_sync}.
+Para ejecutar esta interfaz, presionar el botón \emph{Configure
+  database synchronization automatic} desde la interfaz principal o
+con el comando: \texttt{gui\_configure\_sync}.
 
 Las componentes numeradas en la figura se explican a continuación:
 
@@ -1703,7 +1743,8 @@ Las componentes numeradas en la figura se explican a continuación:
   archivo XML, se encripta).
 \item Nombre de la base de datos remota.
 \item Puerto donde escucha el servidor de la base de datos remota.
-\item Botón para generar el automático de sincronización.
+\item Botón para generar el automático de sincronización. Este botón
+  sólo se habilita cuando se guarda la configuración.
 \item Botón para guardar la configuración en el archivo
   \texttt{sync\_info.xml}.
 \item Botón para mostrar gráficamente los tiempos de ejecución de los
@@ -1770,7 +1811,8 @@ figuras~\ref{fig:min} y~\ref{fig:min2} se muestra la interfaz.
   \label{fig:min2}
 \end{figure}
 
-El comando para ejecutar esta interfaz es:
+Para ejecutar esta interfaz, presionar el botón \emph{Configure
+  thumbnail generation} desde la interfaz principal o con el comando:
 \texttt{gui\_thumbnails\_tool}.
 
 Las componentes numeradas en la figura se explican a continuación (los
@@ -1803,7 +1845,9 @@ campos con * son obligatorios):
   mayor que la de inicio.
   
 \item Ancho en pixeles de las miniaturas. Se recomienda que el ancho
-  de la miniatura sea aproximadamente 120 píxeles.
+  de la miniatura sea aproximadamente 120 píxeles (el alto de la
+  imagen se calcula automáticamente para que la imagen sea
+  proporcional al ancho seleccionado).
 \item Se debe seleccionar si se desea que las imágenes sean subidas a
   un servidor web o si se desea que se guarde la información en la
   base de datos de HORUS y en la ruta configurada con anterioridad, o
@@ -1812,11 +1856,13 @@ campos con * son obligatorios):
   también las opciones ``\textit{Insert to Disk}'' y ``\textit{Upload
     hosting}'' son excluyentes. Solo se podrán escoger en simultáneo
   las opciones ``\textit{Insert to Database}'' y ``\textit{Upload
-    hosting}''. Al seleccionar ``\textit{Upload hosting}'' se 
-  creará un archivo con la información para subir las imágenes al 
-  servidor web. Para configurar los datos de conexión del 
-  \texttt{hosting} y subir las imágenes como tal se debe usar 
-  la interfaz \texttt{gui\_upload\_hosting}.
+    hosting}''. Al seleccionar ``\textit{Upload hosting}'' se creará
+  un archivo con la información para subir las imágenes al servidor
+  web. Para configurar los datos de conexión del \texttt{hosting} y
+  subir las imágenes como tal se debe usar la interfaz \emph{Configure
+    thumbnail upload}, para ejecutar esta interfaz, presionar el botón
+  \emph{Configure thumbnail upload} desde la interfaz principal o con
+  el comando: \texttt{gui\_upload\_hosting}.
 \item Selección de al menos un tipo de imagen para generar las
   miniaturas, los básicos son: \textit{Snap}, \textit{Timex} y
   \textit{Var}. Los tipos de imágenes son leídos de la base de datos.
@@ -1839,12 +1885,14 @@ En la figura~\ref{fig:upload_hosting} se muestra la interfaz que tiene
 como fin subir las miniaturas que se han generado, donde se ingresan
 los datos de conexión del servidor de datos. Las componentes numeradas
 en la figura se explican a continuación (Todos los campos son
-obligatorios):
+obligatorios). Para ejecutar esta interfaz, presionar el botón
+\emph{Configure thumbnail upload} desde la interfaz principal o con el
+comando \texttt{gui\_upload\_hosting}:
 
 \begin{enumerate}
 \item Lista para seleccionar la estación para la que se quieren subir
   las imágenes miniaturas.
-\item Host del servidor que puede ser una dirección IP o un nombre de
+\item Host del servidor FTP que puede ser una dirección IP o un nombre de
   dominio.
 \item Se debe ingresar el usuario.
 \item Se debe ingresar la contraseña.
