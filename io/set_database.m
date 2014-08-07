@@ -53,7 +53,10 @@ try
 
     % Create a connection with the root account
     conn = database('', 'root', passwd, jdbcDriver, jdbcString);
-    
+    if isempty(conn.Driver)
+        message = 'Error detected! Check the fields!';
+        return;
+    end
     % Create database schema and main user
     exec(conn, ['CREATE DATABASE ' dbname]);
     exec(conn, ['CREATE USER ''' username '''@''' host ''' IDENTIFIED BY ''' userpass '''']);
@@ -77,7 +80,11 @@ try
     
     % Create the HORUS database structure, if available
     if exist(sql, 'file')
-        command = ['mysql -h ' host ' -u ' username ' -p' userpass ' ' dbname ' < ' sql];
+        if ismac
+            command = ['/usr/local/mysql/bin/mysql -h ' host ' -u ' username ' -p' userpass ' ' dbname ' < ' sql];
+        else    
+            command = ['mysql -h ' host ' -u ' username ' -p' userpass ' ' dbname ' < ' sql];
+        end
         [status, message] = dos(command);
     end
     if status == 0
