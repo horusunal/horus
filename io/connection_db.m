@@ -39,7 +39,7 @@ try
     end
     
     ok = false;
-    dbConn = database();
+    %dbConn = database();
     
     if isdeployed
         pathinfo = what('tmp');
