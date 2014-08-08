@@ -82,10 +82,12 @@ try
     if exist(sql, 'file')
         if ismac
             command = ['/usr/local/mysql/bin/mysql -h ' host ' -u ' username ' -p' userpass ' ' dbname ' < ' sql];
+            [status, message] = unix(command);
         else    
             command = ['mysql -h ' host ' -u ' username ' -p' userpass ' ' dbname ' < ' sql];
+            [status, message] = dos(command);
         end
-        [status, message] = dos(command);
+        
     end
     if status == 0
         message = 'Successful database configuration!';

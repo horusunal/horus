@@ -30,8 +30,14 @@ try
         varargout(1)={1}; % Initially, failure
     end
     filename=[filename '.sql'];
-    command = ['mysqldump --opt -h localhost -u horus -psol123 -B horus > ' fullfile(path,filename)];
-    status = dos(command);
+    if ismac
+        command = ['/usr/local/mysql/bin/mysqldump --opt -h localhost -u horus -psol123 -B horus > ' fullfile(path,filename)];
+        [status, message] = unix(command);
+    else    
+        command = ['mysqldump --opt -h localhost -u horus -psol123 -B horus > ' fullfile(path,filename)];
+        [status, message] = dos(command);
+    end
+
     if ~status
         if nargout==1
             varargout(1)={0}; % Success

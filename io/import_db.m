@@ -29,8 +29,14 @@ try
     if nargout==1
         varargout(1)={1}; % Initially, failure
     end
-    command = ['mysql -h localhost -u horus -psol123 < ' fullfile(path,filename)];
-    status = dos(command);
+    if ismac
+        command = ['/usr/local/mysql/bin/mysql -h localhost -u horus -psol123 < ' fullfile(path,filename)];
+        [status, message] = unix(command);
+    else    
+        command = ['mysql -h localhost -u horus -psol123 < ' fullfile(path,filename)];
+        [status, message] = dos(command);
+    end
+
     if ~status
         if nargout==1
             varargout(1)={0}; % Success
